@@ -23,8 +23,11 @@ nav {
 
   ul {
     display: flex;
+    align-items: center;
+    gap: 10px;
     list-style: none;
     margin-left: auto;
+    padding-right: 30px;
   }
 
   .logo {

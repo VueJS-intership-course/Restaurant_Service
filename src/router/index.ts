@@ -32,7 +32,6 @@ const routes = [
     name: "employeeLogin",
     component: EmployeeLoginPage,
   },
-  ,
   {
     path: "/menu",
     name: "menu",

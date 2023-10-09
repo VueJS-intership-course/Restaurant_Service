@@ -1,5 +1,5 @@
 <template>
-  <input type="text" class="inp" :style="inputStyle"/>
+  <input type="text" :class="inputStyle"/>
 
 </template>
 

@@ -1,5 +1,5 @@
 <template>
-  <button class="btn" :style="btnStyle">
+  <button class="btn" :class="btnStyle">
     <slot></slot>
   </button>
 </template>
@@ -14,9 +14,9 @@ defineProps({
 </script>
 
 <style lang="scss" scoped>
-
+@import "../styles/_variables.scss";
 .default-button {
-  color: $base-color1;
+  background-color: $blue;
   border: none;
   padding: 10px 20px;
   border-radius: 5px;

@@ -6,6 +6,8 @@ import TableSelectPage from "../pages/TableSelectPage.vue";
 import EmployeeLoginPage from "../pages/EmployeeLoginPage.vue";
 import MenuPage from "../pages/MenuPage.vue";
 
+
+
 const routes = [
   {
     path: "/",
@@ -35,8 +37,8 @@ const routes = [
   {
     path: "/menu",
     name: "menu",
-    component: MenuPage,
-  },
+    component: MenuPage
+  }
 ];
 
 const router = createRouter({

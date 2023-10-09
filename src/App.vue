@@ -1,6 +1,6 @@
 <template>
     <header-component></header-component>
-    <button-component btn-color="#3f3f3f">BUTTON</button-component>
+    <button-component btn-style="default-button">BUTTON</button-component>
 </template>
 
 <script setup lang="ts">

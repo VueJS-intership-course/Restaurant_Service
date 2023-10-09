@@ -5,10 +5,10 @@
       </div>
       <ul>
         <li>
-          <p>Login</p>
+          <span>Login</span>
         </li>
         <li>
-          <p>About Us</p>
+          <span>About Us</span>
         </li>
       </ul>
   </nav>

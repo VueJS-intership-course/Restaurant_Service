@@ -3,7 +3,7 @@
     <button-component btn-color="#3f3f3f">BUTTON</button-component>
 </template>
 
-<script setup lang="ts">
+<script setup lang="ts">  
 /*
    imports
 */

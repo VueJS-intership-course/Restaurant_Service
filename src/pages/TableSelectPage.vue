@@ -1,4 +1,6 @@
-<template></template>
+<template>
+    <h1>Tables</h1>
+</template>
 
 <script setup lang="ts"></script>
 

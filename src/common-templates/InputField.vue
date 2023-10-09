@@ -1,6 +1,5 @@
 <template>
-  <input type="text" :class="inputStyle"/>
-
+  <input type="text" :class="inputStyle" />
 </template>
 
 <script setup lang="ts">
@@ -12,24 +11,20 @@ defineProps({
 });
 </script>
 
-
-
 <style lang="scss" scoped>
+@import "../styles/_variables.scss";
+
 .default-input {
-    background-color: rgb(0, 119, 255);
-  color: rgb(255, 255, 255);
-  border: none;
-  padding: 10px 20px;
+  border: 2px solid $dark-blue;
+  padding: 6px 15px;
   border-radius: 5px;
   cursor: pointer;
 }
 
-.input-large{
-//todo
+.input-large {
+  border: 2px solid $dark-blue;
+  padding: 8px 30px;
+  border-radius: 5px;
+  cursor: pointer;
 }
-
-.input-default{
-//todo
-}
-
 </style>

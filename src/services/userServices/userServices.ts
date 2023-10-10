@@ -72,7 +72,7 @@ function validateSchema(user: Employee) {
         throw new Error('Password must be at least 8 characters long');
     }
 
-    if (user.role) {
+    if (!user.role) {
         throw new Error('Invalid role choice');
     }
 

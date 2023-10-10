@@ -1,4 +1,7 @@
 <template>
+  <div>
+    <h3>Create an employee</h3>
+  </div>
   <form @submit.prevent="register">
     <div>
       <label>Username</label>
@@ -33,7 +36,6 @@
 import { ref } from "vue";
 import type { Ref } from "vue";
 import userServices from "../../services/userServices/userServices";
-import InputField from "../../common-templates/InputField.vue";
 import ButtonComponent from "../../common-templates/ButtonComponent.vue";
 
 const roles: string[] = ["employee", "admin", "manager"];

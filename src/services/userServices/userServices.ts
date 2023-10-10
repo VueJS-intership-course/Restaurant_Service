@@ -3,7 +3,6 @@ import fireBaseData from "../firebaseConfig";
 class Employee {
     constructor(
         public username: string,
-        public password: string,
         public email: string,
         public role: 'employee' | 'admin' | 'manager',
         public id?: string,
@@ -17,8 +16,11 @@ export default {
             const querySnapshot = await fireBaseData.fireStore.collection('user-profiles').get();
 
             querySnapshot.forEach((doc: any) => {
-                const { id, username, password, email, role } = doc.data();
-                const user = new Employee(username, password, email, role, id);
+                const { username, email, role } = doc.data();
+
+                const id = doc.id;
+
+                const user = new Employee(username, email, role, id);
                 console.log(user);
 
                 data.push(user);

@@ -46,15 +46,15 @@ const emailInput: Ref<string> = ref("");
 const passInput: Ref<string | undefined> = ref();
 
 const register = () => {
-  console.log("asdasd");
-
   if (emailInput.value && passInput.value) {
-    userServices.signUp({
-      email: emailInput.value,
-      password: passInput.value,
-      username: usernameInput.value,
-      role: roleInput.value,
-    });
+    userServices.signUp(
+      {
+        email: emailInput.value,
+        username: usernameInput.value,
+        role: roleInput.value,
+      },
+      passInput.value
+    );
   }
 };
 </script>

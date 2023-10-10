@@ -30,12 +30,7 @@ const routes = [
       path: "/menu",
       name: "menu",
       component: MenuPage
-    },
-    {
-      path: "/orders",
-      name: "orders",
-      component: OrdersPage,
-    },
+    }
   ];
 
   export default routes;

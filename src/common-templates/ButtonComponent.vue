@@ -31,6 +31,10 @@ defineProps({
   padding: 10px 20px;
   border-radius: 8px;
   cursor: pointer;
+
+  &:hover {
+    background-color: $dark-yellow;
+  }
 }
 
 .default-button-medium {

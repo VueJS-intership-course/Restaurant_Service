@@ -25,3 +25,38 @@ const firebaseData = {
 
 
 export default firebaseData
+
+// Schemas:
+
+// Order:
+// {
+//     id,
+//         status,
+//         userId,
+//         items: [],
+//             createdAt,
+//             updatedAt,
+// }
+
+// Emplyee:
+// {
+//     id,
+//         username,
+//         name,
+//         email,
+//       role,
+// }
+
+// Products / Menu:
+// {
+//     id,
+//         name,
+//         price,
+//         description
+// }
+
+// User:
+// {
+//     id,
+//         name,
+// }

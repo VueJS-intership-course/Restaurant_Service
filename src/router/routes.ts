@@ -1,7 +1,6 @@
 import HomePage from "../pages/HomePage.vue";
 import AboutUsPage from "../pages/AboutUsPage.vue";
 import AdminPanelPage from "../pages/AdminPanelPage.vue";
-import TableSelectPage from "../pages/TableSelectPage.vue";
 import EmployeeLoginPage from "../pages/EmployeeLoginPage.vue";
 import MenuPage from "../pages/MenuPage.vue";
 
@@ -20,11 +19,6 @@ const routes = [
       path: "/control-panel",
       name: "controlPanel",
       component: AdminPanelPage,
-    },
-    {
-      path: "/table-select",
-      name: "tableSelect",
-      component: TableSelectPage,
     },
     {
       path: "/login",

@@ -68,7 +68,7 @@ function validateSchema(user: Employee) {
         throw new Error('Invalid email address');
     }
 
-    if (user.password.length < 8 || user.password) {
+    if (user.password.length < 8 || !user.password) {
         throw new Error('Password must be at least 8 characters long');
     }
 

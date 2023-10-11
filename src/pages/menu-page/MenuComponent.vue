@@ -42,9 +42,11 @@
 import { ref, computed } from "vue";
 import { useProductStore } from "../../store/productStore.ts";
 import { Menu } from "../../services/menuServices/menuServices.ts";
+import {useOrderStore} from '../../store/orderStore.ts';
 
 const store = useProductStore();
-const isAdmin = computed(() => true); //TODO => implement check for admin
+const orderStore = useOrderStore();
+const isAdmin = computed(() => false); //TODO => implement check for admin
 
 const handleAddProduct = () => {
   store.addProduct(newProduct.value);
@@ -107,6 +109,8 @@ const cancelEdit = () => {
 
 const addToCart = (product: Menu) => {
 //   TODO => implement add to cart
+
+  orderStore.addToOrder(product);
 };
 </script>
 

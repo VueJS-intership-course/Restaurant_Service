@@ -1,11 +1,14 @@
-class Orders {
+import fireBaseData from "../firebaseConfig";
+import { Menu } from "../menuServices/menuServices";
+
+export class Orders {
     constructor(
         public status: 'pending' | 'done' | 'confirmed',
         public userId: string,
-        public items: string[],
+        public items: Menu[],
         public createdAt: Date,
         public updatedAt: Date
-    ) { }
+    ) {}
 }
 
 

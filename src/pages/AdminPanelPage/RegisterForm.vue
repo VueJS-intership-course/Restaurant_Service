@@ -32,15 +32,11 @@
 <script setup lang="ts">
 import ButtonComponent from "../../common-templates/ButtonComponent.vue";
 import { usersStore } from "../../store/usersStore";
+import userServices from "../../services/userServices/userServices";
 
 import { Field, Form, ErrorMessage } from "vee-validate";
 
 const store = usersStore();
-
-// const usernameInput: Ref<string> = ref("");
-// const emailInput: Ref<string> = ref("");
-// const passInput: Ref<string | undefined> = ref();
-// const repeatPassInput: Ref<string | undefined> = ref();
 
 const emailRules = (value: string) => {
   if (!value) {
@@ -82,31 +78,21 @@ const passwordRepeatRules = (value: string) => {
   return true;
 };
 
-const register = (values: {
-  email: string;
-  password: string;
-  repeatPassword: string;
-  username: string;
-}) => {
-  // if (emailInput.value && passInput.value) {
-  //   try {
-  //     userServices.signUp(
-  //       {
-  //         email: emailInput.value,
-  //         username: usernameInput.value,
-  //       },
-  //       passInput.value
-  //     );
-  //     emailInput.value = "";
-  //     usernameInput.value = "";
-  //     passInput.value = "";
-  //     repeatPassInput.value = "";
-  //     store.getAllUsers();
-  //   } catch (error) {
-  //     alert(error);
-  //   }
-  // }
-  console.log(values);
+const register = (values, { resetForm }) => {
+  try {
+    userServices.signUp(
+      {
+        email: values.email,
+        username: values.username,
+      },
+      values.password
+    );
+
+    store.getAllUsers();
+    resetForm();
+  } catch (error) {
+    alert(error);
+  }
 };
 </script>
 

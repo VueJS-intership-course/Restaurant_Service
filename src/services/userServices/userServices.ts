@@ -6,10 +6,9 @@ export class Employee {
   constructor(
     public username: string,
     public email: string,
-    public role: "employee" | "admin" | "manager",
     public id?: string,
     public password?: string
-  ) {}
+  ) { }
 }
 
 export default {
@@ -36,7 +35,7 @@ export default {
     }
   },
 
-  async signUp(user: Employee, password:string) {
+  async signUp(user: Employee, password: string) {
     try {
       validateSchema(user, password);
       const userCredential = await fireBaseData.fireAuth.createUserWithEmailAndPassword(
@@ -51,7 +50,6 @@ export default {
           .set({
             email: user.email,
             username: user.username,
-            role: user.role,
           });
       }
     } catch (error) {
@@ -65,12 +63,12 @@ export default {
       await fireBaseData.fireAuth.signInWithEmailAndPassword(email, password);
       const auth = getAuth()
       setPersistence(auth, browserLocalPersistence)
-      .then(() => {
+        .then(() => {
           return signInWithEmailAndPassword(auth, email, password);
-      })
-      .catch((err) => {
+        })
+        .catch((err) => {
           throw err.message;
-      })
+        })
 
     } catch (error) {
       console.error("Error signing in:", error);
@@ -79,7 +77,7 @@ export default {
   },
 };
 
-function validateSchema(user: Employee, password:string) {
+function validateSchema(user: Employee, password: string) {
   const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
   if (!emailRegex.test(user.email)) {
     throw new Error("Invalid email address");
@@ -87,10 +85,6 @@ function validateSchema(user: Employee, password:string) {
 
   if (password.length < 8 || !password) {
     throw new Error("Password must be at least 8 characters long");
-  }
-
-  if (!user.role) {
-    throw new Error("Invalid role choice");
   }
 
   if (!user.username || !user.username.trim()) {

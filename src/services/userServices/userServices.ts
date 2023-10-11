@@ -1,4 +1,6 @@
 import fireBaseData from "../firebaseConfig";
+import { setPersistence, signInWithEmailAndPassword, browserLocalPersistence, getAuth } from "firebase/auth";
+
 
 export class Employee {
   constructor(
@@ -34,7 +36,7 @@ export default {
     }
   },
 
-  async signUp(user: Employee, password) {
+  async signUp(user: Employee, password:string) {
     try {
       validateSchema(user, password);
       const userCredential = await fireBaseData.fireAuth.createUserWithEmailAndPassword(
@@ -61,6 +63,15 @@ export default {
   async signIn(email: string, password: string) {
     try {
       await fireBaseData.fireAuth.signInWithEmailAndPassword(email, password);
+      const auth = getAuth()
+      setPersistence(auth, browserLocalPersistence)
+      .then(() => {
+          return signInWithEmailAndPassword(auth, email, password);
+      })
+      .catch((err) => {
+          throw err.message;
+      })
+
     } catch (error) {
       console.error("Error signing in:", error);
       throw error;
@@ -68,7 +79,7 @@ export default {
   },
 };
 
-function validateSchema(user: Employee, password) {
+function validateSchema(user: Employee, password:string) {
   const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
   if (!emailRegex.test(user.email)) {
     throw new Error("Invalid email address");

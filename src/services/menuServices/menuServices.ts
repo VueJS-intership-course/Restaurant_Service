@@ -1,3 +1,4 @@
+import firebaseData from "../firebaseConfig";
 import fireBaseData from "../firebaseConfig";
 
 export class Menu {
@@ -55,22 +56,59 @@ export default {
     });
   },
 
+  // async deleteProduct(product: Menu) {
+  //   const docRef = fireBaseData.fireStore.collection("menu").doc.id;
+  //   try {
+  //     await docRef.delete();
+  //     console.log("Product deleted successfully");
+  //   } catch (error) {
+  //     console.error("Error deleting product:", error);
+  //   }
+  // },
+
   async deleteProduct(product: Menu) {
-    const docRef = fireBaseData.fireStore.collection("menu").doc(product.id);
-    try {
-      await docRef.delete();
-      console.log("Product deleted successfully");
-    } catch (error) {
-      console.error("Error deleting product:", error);
-    }
+    firebaseData.fireStore
+      .collection("menu")
+      .where("id", "==", product.id)
+      .get()
+      .then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          doc.ref
+            .delete()
+            .then(() => {
+              console.log("Done");
+            })
+            .catch((error) => {
+              console.error("Error removing item: ", error);
+            });
+        });
+      });
   },
 
-  async editProduct(product:Menu){
-    await fireBaseData.fireStore.collection("menu").doc(product.id).update({
-    name: product.name,
-    price: product.price,
-    description: product.description,
-  });
-  }
-  
+  // async editProduct(product: Menu) {
+  //   await fireBaseData.fireStore.collection("menu").doc(product.id).update({
+  //     name: product.name,
+  //     price: product.price,
+  //     description: product.description,
+  //   });
+  // },
+
+  async editProduct(product: Menu) {
+    firebaseData.fireStore
+      .collection("menu")
+      .where("id", "==", product.id)
+      .get()
+      .then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          doc.ref
+            .delete()
+            .then(() => {
+              console.log("Done");
+            })
+            .catch((error) => {
+              console.error("Error removing item: ", error);
+            });
+        });
+      });
+  },
 };

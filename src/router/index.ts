@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 import HomePage from "../pages/HomePage.vue";
 import AboutUsPage from "../pages/AboutUsPage.vue";
-import AdminPanelPage from "../pages/AdminPanelPage.vue";
+import AdminPanelPage from "../pages/AdminPanelPage/AdminPanelPage.vue";
 import EmployeeLoginPage from "../pages/EmployeeLoginPage.vue";
 import MenuPage from "../pages/menu-page/MenuComponent.vue";
 

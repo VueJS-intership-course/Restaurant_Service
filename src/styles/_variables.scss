@@ -5,4 +5,16 @@ $yellow: #f7cf64;
 $dark-yellow: #f7b401;
 $blue: #6edee8;
 $dark-blue: #266488;
-$dark-yellow:#aa8b35;
+$dark-yellow: #aa8b35;
+
+
+@mixin main-button {
+    background: $dark-yellow;
+    padding: 0.4rem 1.5rem;
+    border: solid $yellow ;
+    font-size: 1rem;
+    border-radius: 5%;
+    cursor: pointer;
+    opacity: 0.8;
+    transition: all 0.5s;
+}

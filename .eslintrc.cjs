@@ -2,7 +2,18 @@ module.exports = {
   env: {
     node: true,
   },
-  extends: ['eslint:recommended', 'plugin:vue/vue3-recommended', 'prettier'],
+  extends: [
+    'eslint:recommended',
+    'plugin:vue/vue3-recommended',
+    'plugin:@typescript-eslint/recommended',
+    'prettier',
+  ],
+  parser: 'vue-eslint-parser',
+  parserOptions: {
+    parser: '@typescript-eslint/parser',
+    sourceType: 'module',
+  },
+  plugins: ['@typescript-eslint'],
   rules: {
     'vue/no-unused-vars': 'warn',
     'vue/require-v-for-key': 'warn',
@@ -18,6 +29,6 @@ module.exports = {
     'array-bracket-newline': 'warn',
     'array-bracket-spacing': 'warn',
     'block-spacing': 'warn',
-    'camelcase': 'warn'
+    'camelcase': 'warn',
   },
 };

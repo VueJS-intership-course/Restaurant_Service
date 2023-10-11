@@ -1,4 +1,3 @@
-import firebaseData from "../firebaseConfig";
 import fireBaseData from "../firebaseConfig";
 
 export class Menu {
@@ -43,26 +42,23 @@ export default {
   },
 
   async addProduct(product: Menu) {
-    await fireBaseData.fireStore.collection("menu").add({
-      id: product.id,
-      name: product.name,
-      price: product.price,
-      description: product.description,
-    });
+    try {
+      validateMenu(product);
+
+      await fireBaseData.fireStore.collection("menu").add({
+        id: product.id,
+        name: product.name,
+        price: product.price,
+        description: product.description,
+      });
+    } catch (error) {
+      console.error("Error validating menu item:", error);
+      throw error;
+    }
   },
 
-  // async deleteProduct(product: Menu) {
-  //   const docRef = fireBaseData.fireStore.collection("menu").doc.id;
-  //   try {
-  //     await docRef.delete();
-  //     console.log("Product deleted successfully");
-  //   } catch (error) {
-  //     console.error("Error deleting product:", error);
-  //   }
-  // },
-
   async deleteProduct(product: Menu) {
-    firebaseData.fireStore
+    fireBaseData.fireStore
       .collection("menu")
       .where("id", "==", product.id)
       .get()
@@ -71,7 +67,7 @@ export default {
           doc.ref
             .delete()
             .then(() => {
-              console.log("Done");
+              console.log("Done deleting");
             })
             .catch((error) => {
               console.error("Error removing item: ", error);
@@ -80,25 +76,21 @@ export default {
       });
   },
 
-  // async editProduct(product: Menu) {
-  //   await fireBaseData.fireStore.collection("menu").doc(product.id).update({
-  //     name: product.name,
-  //     price: product.price,
-  //     description: product.description,
-  //   });
-  // },
-
   async editProduct(product: Menu) {
-    firebaseData.fireStore
+    fireBaseData.fireStore
       .collection("menu")
       .where("id", "==", product.id)
       .get()
       .then((querySnapshot) => {
         querySnapshot.forEach((doc) => {
           doc.ref
-            .delete()
+            .update({
+              name: product.name,
+              price: product.price,
+              description: product.description,
+            })
             .then(() => {
-              console.log("Done");
+              console.log("Done editing");
             })
             .catch((error) => {
               console.error("Error removing item: ", error);

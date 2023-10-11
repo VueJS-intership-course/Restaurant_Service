@@ -10,7 +10,6 @@
 /*
    imports
 */
-import { defineProps } from 'vue';
 /*
    props
 */

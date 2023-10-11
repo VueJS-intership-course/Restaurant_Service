@@ -13,9 +13,13 @@ import { onMounted } from "vue";
 // import ButtonComponent from "./common-templates/ButtonComponent.vue";
 import HeaderComponent from "./common-templates/HeaderComponent.vue";
 import userServices from "./services/userServices/userServices";
+import menuServices from "./services/menuServices/menuServices";
+import { useProductStore } from "./store/productStore.ts";
 
 onMounted(() => {
   userServices.getAll();
+  menuServices.getAll();
+  useProductStore().getProductList();
 });
 </script>
 

@@ -12,6 +12,11 @@
         </RouterLink>
       </li>
       <li>
+        <RouterLink :to="'/orders'" class="navbar-link">
+          <span>Orders</span>
+        </RouterLink>
+      </li>
+      <li>
         <RouterLink :to="'/about'" class="navbar-link">
           <span>About Us</span>
         </RouterLink>

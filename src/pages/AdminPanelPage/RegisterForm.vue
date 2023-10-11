@@ -2,7 +2,7 @@
   <div>
     <h3>Create an employee</h3>
   </div>
-  <Form @submit.prevent="register">
+  <Form @submit="register">
     <div>
       <label>Username</label>
       <Field type="text" name="username" />
@@ -12,12 +12,6 @@
       <label>Email:</label>
       <Field type="email" name="email" />
       <ErrorMessage name="email" />
-    </div>
-    <div>
-      <label>Role:</label>
-      <Field name="role" as="select">
-        <option v-for="role in roles">{{ role }}</option>
-      </Field>
     </div>
     <div>
       <label>Password:</label>

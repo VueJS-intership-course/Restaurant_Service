@@ -17,6 +17,11 @@
         </RouterLink>
       </li>
       <li>
+        <RouterLink :to="'/menu'" class="navbar-link">
+          <span>Menu</span>
+        </RouterLink>
+      </li>
+      <li>
         <RouterLink :to="'/about'" class="navbar-link">
           <span>About Us</span>
         </RouterLink>
@@ -26,7 +31,7 @@
 </template>
 
 <style scoped lang="scss">
-@import '../styles/_variables.scss';
+@import "../styles/_variables.scss";
 nav {
   display: flex;
   background-color: $green;
@@ -49,7 +54,7 @@ nav {
         color: #f7cf64;
 
         :hover {
-          color: #79E59B;
+          color: #79e59b;
         }
       }
     }

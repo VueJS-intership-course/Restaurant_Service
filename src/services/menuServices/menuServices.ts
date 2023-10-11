@@ -1,4 +1,3 @@
-import firebaseData from "../firebaseConfig";
 import fireBaseData from "../firebaseConfig";
 
 export class Menu {
@@ -64,7 +63,7 @@ export default {
   },
 
   async deleteProduct(product: Menu) {
-    firebaseData.fireStore
+    fireBaseData.fireStore
       .collection("menu")
       .where("id", "==", product.id)
       .get()
@@ -83,7 +82,7 @@ export default {
   },
 
   async editProduct(product: Menu) {
-    firebaseData.fireStore
+    fireBaseData.fireStore
       .collection("menu")
       .where("id", "==", product.id)
       .get()

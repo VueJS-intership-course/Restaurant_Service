@@ -2,8 +2,8 @@
     <card-component>
         <h1>Welcome to Ninja Turtles Restaurant</h1>
         <div>
-            <button @click="changePage('client')">Client</button>
-            <button @click="changePage('menu')">Employee</button>
+            <button @click="changePage('menu')">Client</button>
+            <button @click="changePage('login')">Employee</button>
         </div>
     </card-component>
 </template>

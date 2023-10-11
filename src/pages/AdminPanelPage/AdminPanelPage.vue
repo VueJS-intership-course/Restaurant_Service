@@ -26,7 +26,7 @@ const viewChange = () => {
 };
 
 const viewName = computed(() => {
-  return section.value ? "Create an Empoyee" : "Employees list";
+  return section.value ? "Employees list" : "Create an Empoyee";
 });
 </script>
 

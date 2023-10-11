@@ -2,25 +2,28 @@
     <card-component>
         <h1>Welcome to Ninja Turtles Restaurant</h1>
         <div>
-            <button>Client</button>
-            <button>Employee</button>
+            <button @click="changePage('client')">Client</button>
+            <button @click="changePage('menu')">Employee</button>
         </div>
     </card-component>
-    <button @click="logout">Logout</button>
-    <button @click="login">login</button>
 </template>
 
 <script setup lang="ts">
+/*
+   imports
+*/
+
 import CardComponent from '../common-templates/CardComponent.vue';
-import userServices from '../services/userServices/userServices'
+import { useRouter } from 'vue-router';
 
-const login = async () => {
-    await userServices.signIn('Adming@abv.bg', '123456789')
-}
+/*
+    router
+*/
 
+const router = useRouter();
 
-const logout = async () => {
-    await userServices.logout()
+const changePage = (page:string) => {
+   router.push({path:page})
 }
 
 </script>
@@ -45,14 +48,7 @@ div {
     gap: 1rem;
 
     button {
-        background: $dark-yellow;
-        padding: 0.4rem 1.5rem;
-        border: solid $yellow ;
-        font-size: 1rem;
-        border-radius: 5%;
-        cursor: pointer;
-        opacity: 0.8;
-        transition: all 0.5s;
+       @include main-button;
     }
 
     button:hover {

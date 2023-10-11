@@ -10,7 +10,7 @@
 .card {
     display: flex;
     position: absolute;
-    left: 20%;
+    left: 25%;
     top: 20%;
     flex-direction: column;
     gap: 1rem;

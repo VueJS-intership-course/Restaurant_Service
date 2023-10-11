@@ -22,13 +22,3 @@ function validateOrders(order: Orders) {
         throw new Error('Invalid user id')
     }
 }
-
-// Order:
-// {
-//     id,
-//         status,
-//         userId,
-//         items: [],
-//             createdAt,
-//             updatedAt,
-// }

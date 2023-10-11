@@ -1,15 +1,16 @@
 <template>
-  <div>
-    <h1>Admin Panel Page</h1>
+  <div class="wrapper">
+    <div>
+      <h1>Admin Panel Page</h1>
+    </div>
+    <ButtonComponent @click="viewChange">{{ viewName }}</ButtonComponent>
+    <div v-if="section">
+      <RegisterForm />
+    </div>
+    <div v-else>
+      <UsersList />
+    </div>
   </div>
-  <ButtonComponent @click="viewChange">{{ viewName }}</ButtonComponent>
-  <div v-if="section">
-    <RegisterForm />
-  </div>
-  <div v-else>
-    <UsersList />
-  </div>
-  <div></div>
 </template>
 
 <script setup lang="ts">
@@ -30,4 +31,12 @@ const viewName = computed(() => {
 });
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.wrapper {
+  margin: auto;
+  display: flex;
+  width: 40%;
+  flex-direction: column;
+  align-items: center;
+}
+</style>

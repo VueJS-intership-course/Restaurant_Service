@@ -7,10 +7,7 @@
 </template>
 
 <script setup lang="ts">
-/*
-   imports
-*/
-import { defineProps } from 'vue';
+
 /*
    props
 */

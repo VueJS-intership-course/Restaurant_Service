@@ -28,18 +28,13 @@ export default {
   async getAll() {
     try {
       const data: Menu[] = [];
-      const querySnapshot = await fireBaseData.fireStore
-        .collection("menu")
-        .get();
+      const querySnapshot = await fireBaseData.fireStore.collection("menu").get();
 
       querySnapshot.forEach((doc: any) => {
         const { id, name, price, description } = doc.data();
         const menu = new Menu(id, name, price, description);
-        console.log(menu);
         data.push(menu);
       });
-
-      console.log(data);
       return data;
     } catch (error) {
       console.error("Error fetching menu:", error);

@@ -10,6 +10,9 @@
     <div v-else>
       <UsersList />
     </div>
+    <div>
+      <TestVeeValidateForm />
+    </div>
   </div>
 </template>
 
@@ -19,6 +22,7 @@ import RegisterForm from "./RegisterForm.vue";
 import UsersList from "./UsersList.vue";
 import { ref, computed } from "vue";
 import type { Ref } from "vue";
+import TestVeeValidateForm from "./testVeeValidateForm.vue";
 
 const section: Ref<boolean> = ref(true);
 

@@ -22,7 +22,6 @@ export default {
         const id = doc.id;
 
         const user = new Employee(username, email, role, id);
-        console.log(user);
 
         data.push(user);
       });

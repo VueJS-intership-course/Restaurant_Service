@@ -33,7 +33,6 @@ export default {
       querySnapshot.forEach((doc: any) => {
         const { id, name, price, description, category } = doc.data();
         const menu = new Menu(id, name, price, description, category);
-        console.log(menu);
         data.push(menu);
       });
       return data;

@@ -1,6 +1,10 @@
 import fireBaseData from "../firebaseConfig";
-import { setPersistence, signInWithEmailAndPassword, browserLocalPersistence, getAuth } from "firebase/auth";
-
+import {
+  setPersistence,
+  signInWithEmailAndPassword,
+  browserLocalPersistence,
+  getAuth,
+} from "firebase/auth";
 
 export class Employee {
   constructor(
@@ -8,7 +12,7 @@ export class Employee {
     public email: string,
     public id?: string,
     public password?: string
-  ) { }
+  ) {}
 }
 
 export default {
@@ -23,7 +27,6 @@ export default {
         const id = doc.id;
 
         const user = new Employee(username, email, id);
-        console.log(user);
 
         data.push(user);
       });
@@ -61,15 +64,14 @@ export default {
   async signIn(email: string, password: string) {
     try {
       await fireBaseData.fireAuth.signInWithEmailAndPassword(email, password);
-      const auth = getAuth()
+      const auth = getAuth();
       setPersistence(auth, browserLocalPersistence)
         .then(() => {
           return signInWithEmailAndPassword(auth, email, password);
         })
         .catch((err) => {
           throw err.message;
-        })
-
+        });
     } catch (error) {
       console.error("Error signing in:", error);
       throw error;

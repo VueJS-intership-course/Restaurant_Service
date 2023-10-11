@@ -63,6 +63,9 @@ export default {
                 .then(() => {
                     return signInWithEmailAndPassword(auth, email, password);
                 })
+                .catch((err) => {
+                    throw err.message;
+                })
 
         } catch (error) {
             console.error("Error signing in:", error);

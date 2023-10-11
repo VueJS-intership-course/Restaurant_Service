@@ -2,23 +2,29 @@
   <div class="order-page">
     <div class="orders">
       <h1>Orders</h1>
-      <div v-for="order in orderStore.orderItems" class="meal-container">
+      <div v-for="(order, index) in orderStore.orderItems" :key="index" class="meal-container">
         <span>Meal: {{ order.name }}</span>
         <span>Price: {{ order.price }}</span>
+        <ButtonComponent btn-style="button-danger" @click="removeMeal(index)" style="width: 100px; align-self: center;">Remove</ButtonComponent>
       </div>
     </div>
     <div class="total">
       <h1>Total</h1>
       <div>
-        <span>Sum: {{ calculateTotalSum() }}</span>
-        <button>Order</button>
+        <span v-if="calculateTotalSum() === 0">Sum: 0</span>
+        <span v-else>Sum: {{ calculateTotalSum() }}$</span>
+        <div class="buttons">
+          <button>Clear order</button>
+          <button>Order</button>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import {useOrderStore} from '../store/orderStore.ts';
+import { useOrderStore } from '../store/orderStore.ts';
+import ButtonComponent from '../common-templates/ButtonComponent.vue';
 
 const orderStore = useOrderStore();
 
@@ -26,9 +32,13 @@ const calculateTotalSum = (): number => {
   let total: number = 0;
 
   for (const order of orderStore.orderItems) {
-    total += order.price 
+    total += order.price;
   }
   return total;
+};
+
+const removeMeal = (index: number) => {
+  orderStore.removeFromOrder(index);
 }
 </script>
 
@@ -66,34 +76,43 @@ const calculateTotalSum = (): number => {
       }
     }
   }
-}
-
-.total {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 22%;
-  background-color: #d44435;
-  color: black;
-  padding: 20px;
-  border-radius: 10px;
-
-  div {
+  .total {
     display: flex;
     flex-direction: column;
-    gap: 10px;
-    
-    button {
-      width: 100px;
-      background-color: red;
-      color: black;
-      font-weight: bold;
-      border: none;
-      padding: 10px 20px;
-      border-radius: 8px;
-      cursor: pointer;
+    align-items: center;
+    width: 22%;
+    background-color: #d44435;
+    color: black;
+    padding: 20px;
+    border-radius: 10px;
+  
+    div {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+
+      span {
+        font-size: 18px;
+      }
+
+      .buttons {
+        display: flex;
+        flex-direction: row;
+        button {
+        width: 100px;
+          background-color: red;
+          color: black;
+          font-weight: bold;
+          font-size: 18px;
+          border: none;
+          padding: 10px 20px;
+          border-radius: 8px;
+          cursor: pointer;
+        }
+      }
+  
     }
   }
-
 }
+
 </style>

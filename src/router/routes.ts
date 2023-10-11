@@ -3,6 +3,7 @@ import AboutUsPage from "../pages/AboutUsPage.vue";
 import AdminPanelPage from "../pages/AdminPanelPage.vue";
 import EmployeeLoginPage from "../pages/EmployeeLoginPage.vue";
 import MenuPage from "../pages/MenuPage.vue";
+import OrdersPage from '../pages/OrdersPage.vue';
 
 const routes = [
     {
@@ -29,7 +30,12 @@ const routes = [
       path: "/menu",
       name: "menu",
       component: MenuPage
-    }
+    },
+    {
+      path: "/orders",
+      name: "orders",
+      component: OrdersPage,
+    },
   ];
 
   export default routes;

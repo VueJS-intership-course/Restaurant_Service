@@ -29,6 +29,15 @@ import FormComponent from '../../common-templates/FormComponent.vue';
 import ButtonComponent from '../../common-templates/ButtonComponent.vue';
 import userServices from '../../services/userServices/userServices';
 import ErrorModal from '../../common-templates/ErrorModal.vue';
+import { useRouter } from 'vue-router';
+
+
+/*
+    router
+*/
+
+
+const router = useRouter();
 
 /*
     login
@@ -53,7 +62,8 @@ const erorrShown = computed(() => errorMsg.value.length > 1);
 const signIn = async () => {
     try {
         validateLogin(email.value, password.value);
-        await userServices.signIn(email.value, password.value)
+        await userServices.signIn(email.value, password.value);
+        router.push({path:'menu'})
     } catch (error:any) {
         errorMsg.value = error.message
     }

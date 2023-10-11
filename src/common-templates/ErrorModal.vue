@@ -7,17 +7,15 @@
 </template>
 
 <script setup lang="ts">
-
 /*
    props
 */
 
-const props = defineProps({
-    errorMsg: {
-        type: String,
-        required: true
-    }
-});
+
+const props = defineProps<{
+  errorMsg: string;
+}>();
+
 
 /*
    emits

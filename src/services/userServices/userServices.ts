@@ -17,7 +17,7 @@ export default {
             const data: Employee[] = [];
             const querySnapshot = await fireBaseData.fireStore.collection('user-profiles').get();
 
-            querySnapshot.forEach((doc: any) => {
+            querySnapshot.forEach((doc) => {
                 const { username, email, role } = doc.data();
 
                 const id = doc.id;

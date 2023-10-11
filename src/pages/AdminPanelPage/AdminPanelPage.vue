@@ -3,7 +3,7 @@
     <div>
       <h1>Admin Panel Page</h1>
     </div>
-    <ButtonComponent @click="viewChange">{{ viewName }}</ButtonComponent>
+    <ButtonComponent @click="panelChange">{{ viewName }}</ButtonComponent>
     <div v-if="section">
       <RegisterForm />
     </div>
@@ -22,7 +22,7 @@ import type { Ref } from "vue";
 
 const section: Ref<boolean> = ref(true);
 
-const viewChange = () => {
+const panelChange = () => {
   section.value = !section.value;
 };
 

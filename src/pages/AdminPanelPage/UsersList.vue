@@ -4,7 +4,7 @@
   </div>
   <div>
     <ul>
-      <li v-for="user in users" :key="user.email">
+      <li v-for="user in store.userList" :key="user.email">
         <p>{{ user.username }}</p>
         <p>{{ user.role }}</p>
       </li>
@@ -13,12 +13,22 @@
 </template>
 
 <script setup lang="ts">
-import userServices from "../../services/userServices/userServices";
-import { ref, onMounted } from "vue";
+// import userServices from "../../services/userServices/userServices";
+import { onMounted } from "vue";
+import { usersStore } from "../../store/usersStore";
 
-const users = ref();
+// const users = ref();
+
+const store = usersStore();
 
 onMounted(async () => {
-  users.value = await userServices.getAll();
+  store.getAllUsers();
 });
 </script>
+
+<style lang="scss" scoped>
+li {
+  list-style-type: none;
+  border: 1px solid black;
+}
+</style>

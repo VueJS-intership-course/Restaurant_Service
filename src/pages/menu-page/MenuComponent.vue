@@ -89,10 +89,13 @@
 import { ref, computed } from "vue";
 import { useProductStore } from "../../store/productStore.ts";
 import { Menu } from "../../services/menuServices/menuServices.ts";
+import {useOrderStore} from '../../store/orderStore.ts';
 import ButtonComponent from "../../common-templates/ButtonComponent.vue";
 
+
 const store = useProductStore();
-const isAdmin = computed(() => true); //TODO => implement check for admin
+const orderStore = useOrderStore();
+const isAdmin = computed(() => false); //TODO => implement check for admin
 
 const handleAddProduct = () => {
   store.addProduct(newProduct.value);
@@ -168,7 +171,8 @@ const filteredProducts = computed(() => {
 });
 
 const addToCart = (product: Menu) => {
-  //   TODO => implement add to cart
+//   TODO => implement add to cart
+orderStore.addToOrder(product);
 };
 </script>
 

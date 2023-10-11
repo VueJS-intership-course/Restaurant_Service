@@ -2,15 +2,15 @@
   <div class="order-page">
     <div class="orders">
       <h1>Orders</h1>
-      <div class="meal-price">
-        <span>Meal:</span>
-        <span>Price:</span>
+      <div v-for="order in orderStore.orderItems" class="meal-container">
+        <span>Meal: {{ order.name }}</span>
+        <span>Price: {{ order.price }}</span>
       </div>
     </div>
     <div class="total">
       <h1>Total</h1>
       <div>
-        <span>Sum(number)</span>
+        <span>Sum: {{ calculateTotalSum() }}</span>
         <button>Order</button>
       </div>
     </div>
@@ -18,7 +18,18 @@
 </template>
 
 <script setup lang="ts">
+import {useOrderStore} from '../store/orderStore.ts';
 
+const orderStore = useOrderStore();
+
+const calculateTotalSum = (): number => {
+  let total: number = 0;
+
+  for (const order of orderStore.orderItems) {
+    total += order.price 
+  }
+  return total;
+}
 </script>
 
 <style scoped lang="scss">
@@ -38,12 +49,16 @@
     h1 {
       color: black;
     }
-    .meal-price {
+    .meal-container {
       display: flex;
       flex-direction: column;
       justify-content: center;
       gap: 25px;
       margin-top: 10px;
+      background-color: rgb(167, 134, 3);
+      padding: 50px;
+      margin-bottom: 10px;
+      border-radius: 5px;
 
       span {
         font-size: 20px;

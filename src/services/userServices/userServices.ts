@@ -4,7 +4,6 @@ export class Employee {
   constructor(
     public username: string,
     public email: string,
-    public role: "employee" | "admin" | "manager",
     public id?: string,
     public password?: string
   ) {}
@@ -17,11 +16,11 @@ export default {
       const querySnapshot = await fireBaseData.fireStore.collection("user-profiles").get();
 
       querySnapshot.forEach((doc: any) => {
-        const { username, email, role } = doc.data();
+        const { username, email } = doc.data();
 
         const id = doc.id;
 
-        const user = new Employee(username, email, role, id);
+        const user = new Employee(username, email, id);
         console.log(user);
 
         data.push(user);
@@ -49,7 +48,6 @@ export default {
           .set({
             email: user.email,
             username: user.username,
-            role: user.role,
           });
       }
     } catch (error) {
@@ -76,10 +74,6 @@ function validateSchema(user: Employee, password) {
 
   if (password.length < 8 || !password) {
     throw new Error("Password must be at least 8 characters long");
-  }
-
-  if (!user.role) {
-    throw new Error("Invalid role choice");
   }
 
   if (!user.username || !user.username.trim()) {

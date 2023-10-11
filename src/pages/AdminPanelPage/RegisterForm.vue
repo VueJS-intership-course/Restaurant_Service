@@ -46,10 +46,7 @@ import { Field, Form, ErrorMessage } from "vee-validate";
 
 const store = usersStore();
 
-const roles: string[] = ["employee", "admin", "manager"];
-
 const usernameInput: Ref<string> = ref("");
-const roleInput: Ref<"employee" | "admin" | "manager"> = ref("employee");
 const emailInput: Ref<string> = ref("");
 const passInput: Ref<string | undefined> = ref();
 const repeatPassInput: Ref<string | undefined> = ref();
@@ -61,7 +58,6 @@ const register = () => {
         {
           email: emailInput.value,
           username: usernameInput.value,
-          role: roleInput.value,
         },
         passInput.value
       );

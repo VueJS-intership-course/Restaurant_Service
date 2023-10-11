@@ -6,7 +6,7 @@
     <ul>
       <li v-for="user in store.userList" :key="user.email">
         <p>{{ user.username }}</p>
-        <p>{{ user.role }}</p>
+        <p>{{ user.email }}</p>
       </li>
     </ul>
   </div>

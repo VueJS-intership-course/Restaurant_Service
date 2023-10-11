@@ -14,11 +14,11 @@
 <script setup lang="ts">
 import { Field, Form, ErrorMessage } from "vee-validate";
 
-const createUser = (value) => {
+const createUser = (value: {}) => {
   console.log(value);
 };
 
-const validateUsername = (value) => {
+const validateUsername = (value: string) => {
   if (!value) {
     return "This field is required!";
   }

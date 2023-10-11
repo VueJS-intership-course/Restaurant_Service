@@ -2,33 +2,37 @@
   <div>
     <h3>Create an employee</h3>
   </div>
-  <form @submit.prevent="register">
+  <Form @submit.prevent="register">
     <div>
       <label>Username</label>
-      <input type="text" v-model="usernameInput" />
+      <Field type="text" name="username" />
+      <ErrorMessage name="username" />
     </div>
     <div>
       <label>Email:</label>
-      <input v-model="emailInput" type="email" />
+      <Field type="email" name="email" />
+      <ErrorMessage name="email" />
     </div>
     <div>
       <label>Role:</label>
-      <select v-model="roleInput">
+      <Field name="role" as="select">
         <option v-for="role in roles">{{ role }}</option>
-      </select>
+      </Field>
     </div>
     <div>
       <label>Password:</label>
-      <input v-model="passInput" type="password" />
+      <Field name="password" type="password" />
+      <ErrorMessage name="password" />
     </div>
     <div>
       <label>Repeat Password:</label>
-      <input v-model="repeatPassInput" type="password" />
+      <Field name="repeatPassword" type="password" />
+      <ErrorMessage name="password" />
     </div>
     <div>
       <ButtonComponent btn-style="default-button-small">Register</ButtonComponent>
     </div>
-  </form>
+  </Form>
 </template>
 
 <script setup lang="ts">
@@ -38,7 +42,7 @@ import userServices from "../../services/userServices/userServices";
 import ButtonComponent from "../../common-templates/ButtonComponent.vue";
 import { usersStore } from "../../store/usersStore";
 
-// import { Field, Form, ErrorMessage } from "vee-validate";
+import { Field, Form, ErrorMessage } from "vee-validate";
 
 const store = usersStore();
 

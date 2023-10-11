@@ -1,20 +1,47 @@
 <template>
   <div :class="{ 'admin-container': isAdmin, 'client-container': !isAdmin }">
+    <div class="filters">
+      <label class="category-filter" for="category-filter"
+        >Filter by Category:</label
+      >
+      <select id="category-filter" v-model="selectedCategory">
+        <option value="all">All</option>
+        <option value="main dishes">Main Dishes</option>
+        <option value="desserts">Desserts</option>
+        <option value="salads">Salads</option>
+        <option value="drinks">Drinks</option>
+      </select>
+    </div>
     <div
-      v-for="product in store.products"
+      v-for="product in filteredProducts"
       :key="product.id"
       class="product-container"
     >
       <h2>{{ product.name }}</h2>
       <p>{{ product.description }}</p>
       <p>Price: ${{ product.price }}</p>
-      <button @click="addToCart(product)" v-if="!isAdmin" class="button">Add to Cart</button>
-      <button @click="editProduct(product)" v-if="isAdmin" class="button">
+      <p>Category: {{ product.category }}</p>
+      <ButtonComponent
+        btn-style="default-button-db"
+        @click="addToCart(product)"
+        v-if="!isAdmin"
+      >
+        Add to Cart
+      </ButtonComponent>
+      <ButtonComponent
+        btn-style="default-button-db"
+        @click="editProduct(product)"
+        v-if="isAdmin"
+      >
         Edit
-      </button>
-      <button @click="deleteProduct(product)" v-if="isAdmin" class="button-delete ">
+      </ButtonComponent>
+      <ButtonComponent
+        btn-style="button-danger"
+        @click="deleteProduct(product)"
+        v-if="isAdmin"
+      >
         Delete
-      </button>
+      </ButtonComponent>
 
       <!-- edit form -->
       <div v-if="isEditing && product.id === editedProductId" class="edit-form">
@@ -22,8 +49,20 @@
         <input v-model="editedProduct.name" placeholder="Name" />
         <input v-model.number="editedProduct.price" placeholder="Price" />
         <input v-model="editedProduct.description" placeholder="Description" />
-        <button @click="saveEditedProduct" class="button">Save</button>
-        <button @click="cancelEdit" class="button-delete ">Cancel</button>
+        <select v-model="editedProduct.category">
+          <option value="main dishes">Main Dishes</option>
+          <option value="desserts">Desserts</option>
+          <option value="salads">Salads</option>
+          <option value="drinks">Drinks</option>
+        </select>
+        <ButtonComponent
+          btn-style="default-button-db"
+          @click="saveEditedProduct"
+          >Save</ButtonComponent
+        >
+        <ButtonComponent @click="cancelEdit" btn-style="button-danger"
+          >Cancel</ButtonComponent
+        >
       </div>
     </div>
 
@@ -33,7 +72,15 @@
       <input v-model="newProduct.name" placeholder="Name" />
       <input v-model.number="newProduct.price" placeholder="Price" />
       <input v-model="newProduct.description" placeholder="Description" />
-      <button @click="handleAddProduct" class="button">Create</button>
+      <select v-model="newProduct.category">
+        <option value="main dishes">Main Dishes</option>
+        <option value="desserts">Desserts</option>
+        <option value="salads">Salads</option>
+        <option value="drinks">Drinks</option>
+      </select>
+      <ButtonComponent btn-style="default-button-db" @click="handleAddProduct"
+        >Create</ButtonComponent
+      >
     </div>
   </div>
 </template>
@@ -42,6 +89,7 @@
 import { ref, computed } from "vue";
 import { useProductStore } from "../../store/productStore.ts";
 import { Menu } from "../../services/menuServices/menuServices.ts";
+import ButtonComponent from "../../common-templates/ButtonComponent.vue";
 
 const store = useProductStore();
 const isAdmin = computed(() => true); //TODO => implement check for admin
@@ -60,6 +108,7 @@ const editProduct = (product: Menu) => {
   editedProduct.value = { ...product };
 };
 
+const selectedCategory = ref("all");
 const isEditing = ref(false);
 const editedProductId = ref("");
 const editedProduct = ref<Menu>({
@@ -67,6 +116,7 @@ const editedProduct = ref<Menu>({
   name: "",
   price: 0,
   description: "",
+  category: "main dishes",
 });
 
 const newProduct = ref<Menu>({
@@ -74,13 +124,12 @@ const newProduct = ref<Menu>({
   name: "",
   price: 0,
   description: "",
+  category: "main dishes",
 });
 
 const saveEditedProduct = async () => {
   try {
-    // Update the product in Firestore using editedProduct
     store.editProduct(editedProduct.value);
-    // Reset the editing state
     isEditing.value = false;
     editedProductId.value = "";
     editedProduct.value = {
@@ -88,6 +137,7 @@ const saveEditedProduct = async () => {
       name: "",
       price: 0,
       description: "",
+      category: "main dishes",
     };
   } catch (error) {
     console.error("Error updating product:", error);
@@ -102,11 +152,23 @@ const cancelEdit = () => {
     name: "",
     price: 0,
     description: "",
+    category: "main dishes",
   };
 };
 
+const filteredProducts = computed(() => {
+  if (!store.products) return [];
+  if (!selectedCategory.value || selectedCategory.value === "all") {
+    return store.products;
+  } else {
+    return store.products.filter(
+      (product) => product.category === selectedCategory.value
+    );
+  }
+});
+
 const addToCart = (product: Menu) => {
-//   TODO => implement add to cart
+  //   TODO => implement add to cart
 };
 </script>
 
@@ -152,27 +214,13 @@ const addToCart = (product: Menu) => {
   margin-bottom: 10px;
 }
 
-.button {
-  background-color: $dark-blue;
-  color: white;
-  padding: 10px 20px;
-  margin: 5px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
+.filters {
+  padding: 15px;
 }
 
-.button-delete {
-  background-color: $red;
-  color: white;
-  padding: 10px 20px;
-  margin: 5px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.button:hover {
-  background-color: $green;
+.category-filter {
+  font-size: large;
+  margin: 15px;
+  color: $dark-blue;
 }
 </style>

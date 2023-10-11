@@ -5,7 +5,8 @@ export class Menu {
     public id: string,
     public name: string,
     public price: number,
-    public description: string
+    public description: string,
+    public category: string
   ) {}
 }
 
@@ -27,18 +28,14 @@ export default {
   async getAll() {
     try {
       const data: Menu[] = [];
-      const querySnapshot = await fireBaseData.fireStore
-        .collection("menu")
-        .get();
+      const querySnapshot = await fireBaseData.fireStore.collection("menu").get();
 
       querySnapshot.forEach((doc: any) => {
-        const { id, name, price, description } = doc.data();
-        const menu = new Menu(id, name, price, description);
+        const { id, name, price, description, category } = doc.data();
+        const menu = new Menu(id, name, price, description, category);
         console.log(menu);
         data.push(menu);
       });
-
-      console.log(data);
       return data;
     } catch (error) {
       console.error("Error fetching menu:", error);
@@ -55,6 +52,7 @@ export default {
         name: product.name,
         price: product.price,
         description: product.description,
+        category: product.category,
       });
     } catch (error) {
       console.error("Error validating menu item:", error);
@@ -93,6 +91,7 @@ export default {
               name: product.name,
               price: product.price,
               description: product.description,
+              category: product.category,
             })
             .then(() => {
               console.log("Done editing");

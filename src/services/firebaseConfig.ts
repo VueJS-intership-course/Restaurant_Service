@@ -1,6 +1,6 @@
-import firebase from 'firebase/app';
-import 'firebase/firestore';
-import 'firebase/auth';
+import firebase from 'firebase/compat/app';
+import 'firebase/compat/firestore';
+import 'firebase/compat/auth';
 
 const firebaseConfig = {
     apiKey: "AIzaSyBsYhazj1y-sKeng24krpe45EwI9UR1PtY",
@@ -12,51 +12,15 @@ const firebaseConfig = {
     measurementId: "G-FK413PQTT5"
 };
 
-
 firebase.initializeApp(firebaseConfig);
 
 const fireStore = firebase.firestore();
-const fireAuth = firebase.auth()
+const fireAuth = firebase.auth();
+
 
 const firebaseData = {
-    fireStore,
-    fireAuth
-}
+  fireStore,
+  fireAuth,
+};
 
-
-export default firebaseData
-
-// Schemas:
-
-// Order:
-// {
-//     id,
-//         status,
-//         userId,
-//         items: [],
-//             createdAt,
-//             updatedAt,
-// }
-
-// Emplyee:
-// {
-//     id,
-//         username,
-//         name,
-//         email,
-//       role,
-// }
-
-// Products / Menu:
-// {
-//     id,
-//         name,
-//         price,
-//         description
-// }
-
-// User:
-// {
-//     id,
-//         name,
-// }
+export default firebaseData;

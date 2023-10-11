@@ -6,10 +6,22 @@
             <button>Employee</button>
         </div>
     </card-component>
+    <button @click="logout">Logout</button>
+    <button @click="login">login</button>
 </template>
 
 <script setup lang="ts">
 import CardComponent from '../common-templates/CardComponent.vue';
+import userServices from '../services/userServices/userServices'
+
+const login = async () => {
+    await userServices.signIn('Adming@abv.bg', '123456789')
+}
+
+
+const logout = async () => {
+    await userServices.logout()
+}
 
 </script>
 
@@ -30,7 +42,7 @@ div {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap:1rem;
+    gap: 1rem;
 
     button {
         background: $dark-yellow;

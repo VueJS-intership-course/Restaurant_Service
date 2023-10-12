@@ -20,6 +20,7 @@ export const useOrderStore = defineStore({
     },
     handleFinishOrder(order: any) {
       orderServices.finishOrder(order);
+      this.orderItems = [];
     }
   },
 });

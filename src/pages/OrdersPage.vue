@@ -82,8 +82,12 @@ const plural = (orderName: string) => {
 }
 
 const makeOrder = () => {
+  const possibleStatus = ['pending', 'done', 'confirmed'];
+  const randomIndex = Math.floor(Math.random() * possibleStatus.length);
+  const randomStatus = possibleStatus[randomIndex];
+
   const order = {
-       status: 'pending',
+       status: randomStatus,
         items: uniqueOrders.value,
         createdAt: new Date(),
   };

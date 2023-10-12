@@ -66,6 +66,7 @@ export default {
     try {
       await fireBaseData.fireAuth.signInWithEmailAndPassword(email, password);
       const auth = getAuth();
+
       setPersistence(auth, browserLocalPersistence)
         .then(() => {
           return signInWithEmailAndPassword(auth, email, password);
@@ -79,19 +80,10 @@ export default {
     }
   },
 
-  getCurrentUser() {
-    const auth = getAuth();
-    return new Promise((resolve, _) => {
-      onAuthStateChanged(auth, (user) => {
-        if (user) {
-          resolve(user);
-        } else {
-          console.log("No user signed in");
-          resolve(null); 
-        }
-      });
-    });
+  async logout() {
+    await fireBaseData.fireAuth.signOut()
   }
+
 };
 
 function validateSchema(user: Employee, password: string) {

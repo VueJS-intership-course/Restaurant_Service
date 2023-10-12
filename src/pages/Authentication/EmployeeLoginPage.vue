@@ -1,24 +1,24 @@
 <template>
-    <Form @submit="signIn">
-        <div>
-            <h1>Sign In</h1>
-        </div>
-        <div class="form-inputs">
-            <div class="form-inputs_username">
-                <label for="email">Email:</label>
-                <Field type="email" name="email" :rules="emailRules" />
-                <ErrorMessage name="email" />
-            </div>
-            <div class="form-inputs_password">
-                <label for="password">Password:</label>
-                <Field name="password" type="password" :rules="passwordRules" />
-                <ErrorMessage name="password" />
-            </div>
-        </div>
-        <div class="form-controls">
-            <button-component type="submit" btn-style="default-button-small">Submit</button-component>
-        </div>
-    </Form>
+  <Form @submit="signIn">
+    <div>
+      <h1>Sign In</h1>
+    </div>
+    <div class="form-inputs">
+      <div class="form-inputs_username">
+        <label for="email">Email:</label>
+        <Field type="email" name="email" :rules="emailRules" />
+        <ErrorMessage name="email" />
+      </div>
+      <div class="form-inputs_password">
+        <label for="password">Password:</label>
+        <Field name="password" type="password" :rules="passwordRules" />
+        <ErrorMessage name="password" />
+      </div>
+    </div>
+    <div class="form-controls">
+      <button-component type="submit" btn-style="default-button-small">Submit</button-component>
+    </div>
+  </Form>
 </template>
 
 <script setup lang="ts">
@@ -55,7 +55,7 @@ const passwordRules = (value: string) => {
   return true
 };
 
-const signIn = (values) => {
+const signIn = (values: { email: string, password: string }) => {
   try {
     userServices.signIn(values.email, values.password);
     router.push({ path: 'menu' });
@@ -71,39 +71,39 @@ const signIn = (values) => {
 @import '../../styles/variables';
 
 h1 {
-    color: $yellow
+  color: $yellow
 }
 
 form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  padding: 3rem 6rem;
+  background-color: $green;
+  position: absolute;
+  top: 35%;
+  left: 35%;
+  border-radius: 8%;
+
+  span {
+    color: red;
+    font-size: large;
+  }
+
+  .form-inputs {
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 1rem;
-    padding: 3rem 6rem;
-    background-color: $green;
-    position: absolute;
-    top: 35%;
-    left: 35%;
-    border-radius: 8%;
+    gap: 0.5rem;
 
-    span {
-        color: red;
-        font-size: large;
+    .form-inputs_username {
+      @include input-label
     }
 
-    .form-inputs {
-        display: flex;
-        flex-direction: column;
-        gap: 0.5rem;
-
-        .form-inputs_username {
-            @include input-label
-        }
-
-        .form-inputs_password {
-            @include input-label
-        }
+    .form-inputs_password {
+      @include input-label
     }
+  }
 }
 </style>

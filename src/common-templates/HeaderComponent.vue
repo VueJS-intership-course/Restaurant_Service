@@ -26,9 +26,20 @@
           <span>About Us</span>
         </RouterLink>
       </li>
+      <li>
+        <button @click="logout">Logout</button>
+      </li>
     </ul>
   </nav>
 </template>
+
+<script setup lang="ts">
+import userServices from '../services/userServices/userServices'
+const logout = async () => {
+  await userServices.logout()
+}
+</script>
+
 
 <style scoped lang="scss">
 @import "../styles/_variables.scss";

@@ -5,22 +5,34 @@
   <Form @submit="register">
     <div>
       <label>Username</label>
-      <Field type="text" name="username" :rules="usernameRules" />
+      <!-- prettier-ignore -->
+      <Field type="text" name="username" :rules="(usernameRules as RuleExpression<unknown>)" />
       <ErrorMessage name="username" />
     </div>
     <div>
       <label>Email:</label>
-      <Field type="email" name="email" :rules="emailRules" />
+      <!-- prettier-ignore -->
+      <Field type="email" name="email" :rules="(emailRules as RuleExpression<unknown>)" />
       <ErrorMessage name="email" />
     </div>
     <div>
       <label>Password:</label>
-      <Field name="password" type="password" :rules="passwordRules" />
+      <!-- prettier-ignore -->
+      <Field
+        name="password"
+        type="password"
+        :rules="(passwordRules as RuleExpression<unknown>)"
+      />
       <ErrorMessage name="password" />
     </div>
     <div>
       <label>Repeat Password:</label>
-      <Field name="repeatPassword" type="password" :rules="passwordRepeatRules" />
+      <!-- prettier-ignore -->
+      <Field
+        name="repeatPassword"
+        type="password"
+        :rules="(passwordRepeatRules as RuleExpression<unknown>)"
+      />
       <ErrorMessage name="password" />
     </div>
     <div>
@@ -34,6 +46,7 @@ import ButtonComponent from "../../common-templates/ButtonComponent.vue";
 import { usersStore } from "../../store/usersStore";
 import userServices from "../../services/userServices/userServices";
 
+import { RuleExpression } from "vee-validate";
 import { Field, Form, ErrorMessage } from "vee-validate";
 
 interface FormInputs {

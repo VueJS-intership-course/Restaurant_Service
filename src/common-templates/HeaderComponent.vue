@@ -18,7 +18,7 @@
       </li>
       <li>
         <RouterLink :to="'/orders'" class="navbar-link">
-          <span>Orders</span>
+          <span>Cart</span>
         </RouterLink>
       </li>
       <li>

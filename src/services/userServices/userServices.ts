@@ -2,6 +2,7 @@ import fireBaseData from "../firebaseConfig";
 import {
   setPersistence,
   signInWithEmailAndPassword,
+  onAuthStateChanged,
   browserLocalPersistence,
   getAuth,
 } from "firebase/auth";
@@ -80,12 +81,15 @@ export default {
 
   getCurrentUser() {
     const auth = getAuth();
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        return user
-      } else {
-        console.log("No user signed in");
-      }
+    return new Promise((resolve, _) => {
+      onAuthStateChanged(auth, (user) => {
+        if (user) {
+          resolve(user);
+        } else {
+          console.log("No user signed in");
+          resolve(null); 
+        }
+      });
     });
   }
 };

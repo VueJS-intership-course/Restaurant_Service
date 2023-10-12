@@ -20,10 +20,11 @@ import { useRouter } from 'vue-router';
     router
 */
 
+
 const router = useRouter();
 
-const changePage = (page:string) => {
-   router.push({path:page})
+const changePage = (page: string) => {
+    router.push({ path: page })
 }
 
 </script>
@@ -48,7 +49,7 @@ div {
     gap: 1rem;
 
     button {
-       @include main-button;
+        @include main-button;
     }
 
     button:hover {

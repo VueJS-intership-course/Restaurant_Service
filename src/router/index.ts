@@ -4,8 +4,8 @@ import AboutUsPage from "../pages/AboutUsPage.vue";
 import AdminPanelPage from "../pages/AdminPanelPage/AdminPanelPage.vue";
 import EmployeeLoginPage from "../pages/Authentication/EmployeeLoginPage.vue";
 import MenuPage from "../pages/menu-page/MenuComponent.vue";
-import OrdersPage from '../pages/OrdersPage.vue';
-
+import OrdersPage from "../pages/OrdersPage.vue";
+import { usersStore } from "../store/usersStore";
 
 const routes = [
   {
@@ -43,6 +43,13 @@ const routes = [
 const router = createRouter({
   history: createWebHistory(),
   routes,
+});
+
+router.beforeEach((to, from, next) => {
+  const store = usersStore();
+  const user = store.currentUser._delegate.email;
+  console.log(user);
+  if (!user) console.log("no user");
 });
 
 export default router;

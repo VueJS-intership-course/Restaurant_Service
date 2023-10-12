@@ -12,6 +12,11 @@
         </RouterLink>
       </li>
       <li>
+        <RouterLink :to="'/control-panel'" class="navbar-link">
+          <span>Admin Panel</span>
+        </RouterLink>
+      </li>
+      <li>
         <RouterLink :to="'/orders'" class="navbar-link">
           <span>Orders</span>
         </RouterLink>
@@ -26,9 +31,20 @@
           <span>About Us</span>
         </RouterLink>
       </li>
+      <li>
+        <button @click="logout">Logout</button>
+      </li>
     </ul>
   </nav>
 </template>
+
+<script setup lang="ts">
+import userServices from '../services/userServices/userServices'
+const logout = async () => {
+  await userServices.logout()
+}
+</script>
+
 
 <style scoped lang="scss">
 @import "../styles/_variables.scss";

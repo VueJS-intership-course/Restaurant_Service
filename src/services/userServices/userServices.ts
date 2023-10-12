@@ -12,7 +12,7 @@ export class Employee {
     public email: string,
     public id?: string,
     public password?: string
-  ) {}
+  ) { }
 }
 
 export default {
@@ -77,6 +77,17 @@ export default {
       throw error;
     }
   },
+
+  getCurrentUser() {
+    const auth = getAuth();
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        return user
+      } else {
+        console.log("No user signed in");
+      }
+    });
+  }
 };
 
 function validateSchema(user: Employee, password: string) {

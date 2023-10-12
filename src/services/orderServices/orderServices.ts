@@ -23,7 +23,6 @@ function validateOrders(order: Orders) {
 export default {
   async finishOrder() {
     try {
-      const orderStore = useOrderStore();
       const order = new Orders(
         'pending',
         orderStore.orderItems,

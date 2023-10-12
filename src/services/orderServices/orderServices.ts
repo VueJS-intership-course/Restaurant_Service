@@ -7,7 +7,6 @@ export class Orders {
         public userId: string,
         public items: Menu[],
         public createdAt: Date,
-        public updatedAt: Date
     ) {}
 }
 

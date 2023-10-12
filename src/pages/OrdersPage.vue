@@ -2,23 +2,33 @@
   <div class="order-page">
     <div class="orders">
       <h1>Orders</h1>
-      <div v-for="order in orderStore.orderItems" class="meal-container">
-        <span>Meal: {{ order.name }}</span>
+      <div v-for="(order) in uniqueOrders" :key="order.id" class="meal-container">
+        <span v-if="mealCounter(order.id) > 1">Meal: {{ mealCounter(order.id) }} {{ order.name }}{{ plural(order.name) }}</span>
+        <span v-else>Meal: {{ order.name }}</span>
         <span>Price: {{ order.price }}</span>
+        <ButtonComponent btn-style="button-danger" @click="handleRemoveMeal(order.id)" style="width: 100px; align-self: center;">Remove</ButtonComponent>
       </div>
     </div>
     <div class="total">
       <h1>Total</h1>
       <div>
-        <span>Sum: {{ calculateTotalSum() }}</span>
-        <button>Order</button>
+        <span v-if="calculateTotalSum() === 0">Choose meal</span>
+        <span v-else>Sum: {{ calculateTotalSum() }}$</span>
+        <div class="buttons">
+          <button @click="handleClearOrder">Clear order</button>
+          <button @click="makeOrder">Order!</button>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import {useOrderStore} from '../store/orderStore.ts';
+import { computed } from 'vue';
+import { useOrderStore } from '../store/orderStore.ts';
+import ButtonComponent from '../common-templates/ButtonComponent.vue';
+// import { Menu } from '../services/menuServices/menuServices';
+// import { Orders } from '../services/orderServices/orderServices';
 
 const orderStore = useOrderStore();
 
@@ -26,9 +36,59 @@ const calculateTotalSum = (): number => {
   let total: number = 0;
 
   for (const order of orderStore.orderItems) {
-    total += order.price 
+    total += order.price;
   }
   return total;
+};
+
+const handleRemoveMeal = (mealId: string) => {
+  const index = orderStore.orderItems.findIndex(order => order.id === mealId);
+  if (index !== -1) {
+    orderStore.removeFromOrder(index);
+  }
+}
+
+const handleClearOrder = () => {
+  orderStore.clearOrder();
+}
+
+const mealCounter = (mealId: string) => {
+  const count = orderStore.orderItems.filter(order => order.id === mealId).length;
+  return count;
+}
+
+const uniqueOrders = computed(() => {
+  const groupedOrders = new Map();
+  for (const order of orderStore.orderItems) {
+    if (groupedOrders.has(order.id)) {
+      const existingOrder = groupedOrders.get(order.id);
+      existingOrder.count++;
+    } else {
+      groupedOrders.set(order.id, { ...order, count: 1 });
+    }
+  }
+  
+  return Array.from(groupedOrders.values());
+});
+
+const plural = (orderName: string) => {
+  if (orderName.endsWith('s')) {
+    return 'es';
+  } else if (orderName.endsWith('y')) {
+    return `${orderName.slice(0, -1)}ies`;
+  } else {
+    return 's';
+  }
+}
+
+const makeOrder = () => {
+  const order = {
+       status: 'pending',
+        items: uniqueOrders.value,
+        createdAt: new Date(),
+  };
+      
+  orderStore.handleFinishOrder(order);
 }
 </script>
 
@@ -66,34 +126,43 @@ const calculateTotalSum = (): number => {
       }
     }
   }
-}
-
-.total {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 22%;
-  background-color: #d44435;
-  color: black;
-  padding: 20px;
-  border-radius: 10px;
-
-  div {
+  .total {
     display: flex;
     flex-direction: column;
-    gap: 10px;
-    
-    button {
-      width: 100px;
-      background-color: red;
-      color: black;
-      font-weight: bold;
-      border: none;
-      padding: 10px 20px;
-      border-radius: 8px;
-      cursor: pointer;
+    align-items: center;
+    width: 22%;
+    background-color: #d44435;
+    color: black;
+    padding: 20px;
+    border-radius: 10px;
+  
+    div {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+
+      span {
+        font-size: 18px;
+      }
+
+      .buttons {
+        display: flex;
+        flex-direction: row;
+        button {
+        width: 100px;
+          background-color: red;
+          color: black;
+          font-weight: bold;
+          font-size: 18px;
+          border: none;
+          padding: 10px 20px;
+          border-radius: 8px;
+          cursor: pointer;
+        }
+      }
+  
     }
   }
-
 }
+
 </style>

@@ -2,6 +2,7 @@ import fireBaseData from "../firebaseConfig";
 import {
   setPersistence,
   signInWithEmailAndPassword,
+  onAuthStateChanged,
   browserLocalPersistence,
   getAuth,
 } from "firebase/auth";
@@ -12,7 +13,7 @@ export class Employee {
     public email: string,
     public id?: string,
     public password?: string
-  ) {}
+  ) { }
 }
 
 export default {
@@ -65,6 +66,7 @@ export default {
     try {
       await fireBaseData.fireAuth.signInWithEmailAndPassword(email, password);
       const auth = getAuth();
+
       setPersistence(auth, browserLocalPersistence)
         .then(() => {
           return signInWithEmailAndPassword(auth, email, password);
@@ -77,6 +79,11 @@ export default {
       throw error;
     }
   },
+
+  async logout() {
+    await fireBaseData.fireAuth.signOut()
+  }
+
 };
 
 function validateSchema(user: Employee, password: string) {

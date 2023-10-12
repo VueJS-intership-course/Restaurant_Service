@@ -8,12 +8,6 @@ export const useProductStore = defineStore({
     products: [] as Menu[],
   }),
 
-  getters: {
-    isAdmin: (state) => {
-      return true;
-    },
-
-  },
 
   actions: {
     async getProductList() {

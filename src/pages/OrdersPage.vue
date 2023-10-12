@@ -27,7 +27,7 @@
 import { computed } from 'vue';
 import { useOrderStore } from '../store/orderStore.ts';
 import ButtonComponent from '../common-templates/ButtonComponent.vue';
-import orderService from "../services/orderServices/orderServices.ts"
+import { Orders } from '../services/orderServices/orderServices';
 
 const orderStore = useOrderStore();
 
@@ -81,7 +81,13 @@ const plural = (orderName: string) => {
 }
 
 const makeOrder = () => {
-  orderService.finishOrder()
+  const order = new Orders(
+        'pending',
+        orderStore.orderItems,
+        new Date(),
+      );
+      
+  orderStore.handleFinishOrder();
 }
 </script>
 

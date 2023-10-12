@@ -21,17 +21,17 @@ function validateOrders(order: Orders) {
 }
 
 export default {
-  async finishOrder() {
+  async finishOrder(order) {
     try {
-      const order = new Orders(
-        'pending',
-        orderStore.orderItems,
-        new Date(),
-      );
+      // const order = new Orders(
+      //   'pending',
+      //   orderStore.orderItems,
+      //   new Date(),
+      // );
       
       validateOrders(order);
 
-      console.log('Fire');
+      console.log(order);
       await fireBaseData.fireStore.collection('orders').add(order);
   
     } catch (error) {

@@ -67,7 +67,7 @@ import ProductItem from "./MenuItem.vue";
 const store = useProductStore();
 const orderStore = useOrderStore();
 
-const isAdmin = computed(() => true); //TODO => implement check for admin
+const isAdmin = computed(() => false); //TODO => implement check for admin
 
 const handleAddProduct = () => {
   store.addProduct(newProduct.value);

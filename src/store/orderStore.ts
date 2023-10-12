@@ -16,5 +16,6 @@ export const useOrderStore = defineStore('order', {
     clearOrder() {
       this.orderItems = [];
     },
+    
   },
 });

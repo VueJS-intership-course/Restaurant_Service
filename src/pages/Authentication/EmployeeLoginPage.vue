@@ -1,82 +1,70 @@
 <template>
-    <error-modal v-show="erorrShown" :error-msg="errorMsg" @close-modal="closeModal"></error-modal>
-    <form-component @submit.prevent="signIn">
+    <Form @submit="signIn">
         <div>
             <h1>Sign In</h1>
         </div>
         <div class="form-inputs">
             <div class="form-inputs_username">
                 <label for="email">Email:</label>
-                <input type="email" name="email" id="email" v-model="email">
+                <Field type="email" name="email" :rules="emailRules" />
+                <ErrorMessage name="email" />
             </div>
             <div class="form-inputs_password">
                 <label for="password">Password:</label>
-                <input type="password" name="password" id="password" v-model="password">
+                <Field name="password" type="password" :rules="passwordRules" />
+                <ErrorMessage name="password" />
             </div>
         </div>
         <div class="form-controls">
-            <button-component type="submit" btn-style="default-button-small ">Submit</button-component>
+            <button-component type="submit" btn-style="default-button-small">Submit</button-component>
         </div>
-    </form-component>
+    </Form>
 </template>
 
 <script setup lang="ts">
-/*
-    imports
-*/
-import { ref, computed } from 'vue';
-import FormComponent from '../../common-templates/FormComponent.vue';
+import { ref } from 'vue';
 import ButtonComponent from '../../common-templates/ButtonComponent.vue';
 import userServices from '../../services/userServices/userServices';
-import ErrorModal from '../../common-templates/ErrorModal.vue';
 import { useRouter } from 'vue-router';
-
-
-/*
-    router
-*/
-
+import { Field, Form, ErrorMessage } from 'vee-validate';
 
 const router = useRouter();
 
-/*
-    login
-*/
 
-const email = ref<string>('');
-const password = ref<string>('');
 const errorMsg = ref<string>('');
 
-const validateLogin = (email: string, password: string) => {
-    if (!email.length || !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(email)) {
-        throw new Error('Invalid email, please try again!')
-    }
+const emailRules = (value: string) => {
+  if (!value) {
+    return 'Email field is required!';
+  }
+  const regex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
+  if (!regex.test(value)) {
+    return 'Invalid email entered!';
+  }
 
-    if (password.length < 8 || !password.length) {
-        throw new Error('Invalid password, please try again!')
-    }
-}
+  return true
+};
 
-const erorrShown = computed(() => errorMsg.value.length > 1);
+const passwordRules = (value: string) => {
+  if (!value) {
+    return 'Password field is required!';
+  }
+  if (value.length < 8) {
+    return 'Password must be at least 8 symbols!';
+  }
+  return true
+};
 
-const signIn = async () => {
-    try {
-        validateLogin(email.value, password.value);
-        await userServices.signIn(email.value, password.value);
-        router.push({path:'menu'})
-    } catch (error:any) {
-        errorMsg.value = error.message
-    }
-}
-
-/*
-   modal
-*/
-
-const closeModal = () => {
-   errorMsg.value = '';
-}
+const signIn = (values) => {
+  try {
+    userServices.signIn(values.email, values.password);
+    router.push({ path: 'menu' });
+  } catch (error: any) {
+    errorMsg.value = error.message;
+  }
+};
 </script>
+
 
 
 <style scoped lang="scss">
@@ -86,17 +74,36 @@ h1 {
     color: $yellow
 }
 
-.form-inputs {
+form {
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    padding: 3rem 6rem;
+    background-color: $green;
+    position: absolute;
+    top: 35%;
+    left: 35%;
+    border-radius: 8%;
 
-    .form-inputs_username {
-        @include input-label
+    span {
+        color: red;
+        font-size: large;
     }
 
-    .form-inputs_password {
-        @include input-label
+    .form-inputs {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+
+        .form-inputs_username {
+            @include input-label
+        }
+
+        .form-inputs_password {
+            @include input-label
+        }
     }
 }
 </style>

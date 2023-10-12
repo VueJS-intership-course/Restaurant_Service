@@ -6,12 +6,12 @@
     <div class="form-inputs">
       <div class="form-inputs_username">
         <label for="email">Email:</label>
-        <Field type="email" name="email" :rules="emailRules" />
+        <Field type="email" name="email" :rules="(emailRules as RuleExpression<unknown>)" />
         <ErrorMessage name="email" />
       </div>
       <div class="form-inputs_password">
         <label for="password">Password:</label>
-        <Field name="password" type="password" :rules="passwordRules" />
+        <Field name="password" type="password" :rules="(passwordRules as RuleExpression<unknown>)" />
         <ErrorMessage name="password" />
       </div>
     </div>
@@ -22,14 +22,24 @@
 </template>
 
 <script setup lang="ts">
+/*
+    imports
+*/
 import { ref } from 'vue';
 import ButtonComponent from '../../common-templates/ButtonComponent.vue';
 import userServices from '../../services/userServices/userServices';
 import { useRouter } from 'vue-router';
-import { Field, Form, ErrorMessage } from 'vee-validate';
+import { Field, Form, ErrorMessage, GenericObject, RuleExpression } from 'vee-validate';
+
+/*
+    router
+*/
 
 const router = useRouter();
 
+/*
+    validation
+*/
 
 const errorMsg = ref<string>('');
 
@@ -41,7 +51,6 @@ const emailRules = (value: string) => {
   if (!regex.test(value)) {
     return 'Invalid email entered!';
   }
-
   return true
 };
 
@@ -55,7 +64,11 @@ const passwordRules = (value: string) => {
   return true
 };
 
-const signIn = (values: { email: string, password: string }) => {
+/*
+    sign in
+*/
+
+const signIn = <T extends GenericObject>(values: T): void => {
   try {
     userServices.signIn(values.email, values.password);
     router.push({ path: 'menu' });

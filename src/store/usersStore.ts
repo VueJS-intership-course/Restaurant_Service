@@ -6,7 +6,7 @@ export const usersStore = defineStore({
   id: "usersStore",
   state: () => ({
     userList: [] as Employee[],
-    currentUser: {}
+    currentUser: {},
   }),
   actions: {
     async getAllUsers() {
@@ -14,9 +14,7 @@ export const usersStore = defineStore({
     },
 
     setCurrentUser(user: any) {
-      this.currentUser = user
-      console.log(this.currentUser);
-    }
-
+      this.currentUser = user;
+    },
   },
 });

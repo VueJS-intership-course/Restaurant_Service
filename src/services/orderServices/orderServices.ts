@@ -1,7 +1,6 @@
 import fireBaseData from "../firebaseConfig";
 import { Menu } from "../menuServices/menuServices";
 import { useOrderStore } from "../../store/orderStore.ts";
-//Trolololo
 export class Orders {
   constructor(
     public status: "pending" | "done" | "confirmed",

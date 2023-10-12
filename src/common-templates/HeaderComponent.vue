@@ -12,6 +12,11 @@
         </RouterLink>
       </li>
       <li>
+        <RouterLink :to="'/control-panel'" class="navbar-link">
+          <span>Admin Panel</span>
+        </RouterLink>
+      </li>
+      <li>
         <RouterLink :to="'/orders'" class="navbar-link">
           <span>Orders</span>
         </RouterLink>

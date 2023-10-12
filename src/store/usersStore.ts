@@ -6,6 +6,7 @@ export const usersStore = defineStore({
   id: "usersStore",
   state: () => ({
     userList: [] as Employee[],
+    currentUserEmail: "",
   }),
   actions: {
     async getAllUsers() {

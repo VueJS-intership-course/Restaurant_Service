@@ -12,7 +12,9 @@
         <option value="drinks">Drinks</option>
       </select>
 
-      <label class="category-filter" for="search-input">Search by Name or Description:</label>
+      <label class="category-filter" for="search-input"
+        >Search by Name or Description:</label
+      >
       <input
         id="search-input"
         v-model="searchQuery"
@@ -21,56 +23,19 @@
       />
     </div>
   </div>
-  <div
-    v-for="product in filteredProducts"
-    :key="product.id"
-    class="product-container"
-  >
-    <h2>{{ product.name }}</h2>
-    <p>{{ product.description }}</p>
-    <p>Price: ${{ product.price }}</p>
-    <p>Category: {{ product.category }}</p>
-    <ButtonComponent
-      btn-style="default-button-db"
-      @click="addToCart(product)"
-      v-if="!isAdmin"
-    >
-      Add to Cart
-    </ButtonComponent>
-    <ButtonComponent
-      btn-style="default-button-db"
-      @click="editProduct(product)"
-      v-if="isAdmin"
-    >
-      Edit
-    </ButtonComponent>
-    <ButtonComponent
-      btn-style="button-danger"
-      @click="deleteProduct(product)"
-      v-if="isAdmin"
-    >
-      Delete
-    </ButtonComponent>
-
-    <!-- edit form -->
-    <div v-if="isEditing && product.id === editedProductId" class="edit-form">
-      <h3>Edit Product</h3>
-      <input v-model="editedProduct.name" placeholder="Name" />
-      <input v-model.number="editedProduct.price" placeholder="Price" />
-      <input v-model="editedProduct.description" placeholder="Description" />
-      <select v-model="editedProduct.category">
-        <option value="main dishes">Main Dishes</option>
-        <option value="desserts">Desserts</option>
-        <option value="salads">Salads</option>
-        <option value="drinks">Drinks</option>
-      </select>
-      <ButtonComponent btn-style="default-button-db" @click="saveEditedProduct"
-        >Save</ButtonComponent
-      >
-      <ButtonComponent @click="cancelEdit" btn-style="button-danger"
-        >Cancel</ButtonComponent
-      >
-    </div>
+  <div v-for="product in filteredProducts" :key="product.id">
+    <product-item
+      :product="product"
+      :isAdmin="isAdmin"
+      :isEditing="isEditing"
+      :editedProductId="editedProductId"
+      :editedProduct="editedProduct"
+      @addToCart="addToCart"
+      @editProduct="editProduct"
+      @deleteProduct="deleteProduct"
+      @saveEditedProduct="saveEditedProduct"
+      @cancelEdit="cancelEdit"
+    ></product-item>
   </div>
 
   <div v-if="isAdmin" class="admin-container">
@@ -97,10 +62,12 @@ import { useProductStore } from "../../store/productStore.ts";
 import { Menu } from "../../services/menuServices/menuServices.ts";
 import { useOrderStore } from "../../store/orderStore.ts";
 import ButtonComponent from "../../common-templates/ButtonComponent.vue";
+import ProductItem from "./MenuItem.vue";
 
 const store = useProductStore();
 const orderStore = useOrderStore();
-const isAdmin = computed(() => false); //TODO => implement check for admin
+
+const isAdmin = computed(() => true); //TODO => implement check for admin
 
 const handleAddProduct = () => {
   store.addProduct(newProduct.value);
@@ -163,7 +130,6 @@ const cancelEdit = () => {
     category: "main dishes",
   };
 };
-
 
 const searchQuery = ref("");
 const filteredProducts = computed(() => {

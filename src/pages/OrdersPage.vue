@@ -2,20 +2,21 @@
   <div class="order-page">
     <div class="orders">
       <h1>Orders</h1>
-      <div v-for="(order, index) in orderStore.orderItems" :key="index" class="meal-container">
-        <span>Meal: {{ order.name }}</span>
+      <div v-for="(order) in uniqueOrders" :key="order.id" class="meal-container">
+        <span v-if="mealCounter(order.id) > 1">Meal: {{ mealCounter(order.id) }} {{ order.name }}{{ plural(order.name) }}</span>
+        <span v-else>Meal: {{ order.name }}</span>
         <span>Price: {{ order.price }}</span>
-        <ButtonComponent btn-style="button-danger" @click="removeMeal(index)" style="width: 100px; align-self: center;">Remove</ButtonComponent>
+        <ButtonComponent btn-style="button-danger" @click="handleRemoveMeal(order.id)" style="width: 100px; align-self: center;">Remove</ButtonComponent>
       </div>
     </div>
     <div class="total">
       <h1>Total</h1>
       <div>
-        <span v-if="calculateTotalSum() === 0">Sum: 0</span>
+        <span v-if="calculateTotalSum() === 0">Choose meal</span>
         <span v-else>Sum: {{ calculateTotalSum() }}$</span>
         <div class="buttons">
-          <button>Clear order</button>
-          <button>Order</button>
+          <button @click="handleClearOrder">Clear order</button>
+          <button @click="makeOrder">Order!</button>
         </div>
       </div>
     </div>
@@ -23,8 +24,10 @@
 </template>
 
 <script setup lang="ts">
+import { computed } from 'vue';
 import { useOrderStore } from '../store/orderStore.ts';
 import ButtonComponent from '../common-templates/ButtonComponent.vue';
+import orderService from "../services/orderServices/orderServices.ts"
 
 const orderStore = useOrderStore();
 
@@ -37,8 +40,48 @@ const calculateTotalSum = (): number => {
   return total;
 };
 
-const removeMeal = (index: number) => {
-  orderStore.removeFromOrder(index);
+const handleRemoveMeal = (mealId: string) => {
+  const index = orderStore.orderItems.findIndex(order => order.id === mealId);
+  if (index !== -1) {
+    orderStore.removeFromOrder(index);
+  }
+}
+
+const handleClearOrder = () => {
+  orderStore.clearOrder();
+}
+
+const mealCounter = (mealId: string) => {
+  const count = orderStore.orderItems.filter(order => order.id === mealId).length;
+  return count;
+}
+
+const uniqueOrders = computed(() => {
+  const groupedOrders = new Map();
+  for (const order of orderStore.orderItems) {
+    if (groupedOrders.has(order.id)) {
+      const existingOrder = groupedOrders.get(order.id);
+      existingOrder.count++;
+    } else {
+      groupedOrders.set(order.id, { ...order, count: 1 });
+    }
+  }
+  
+  return Array.from(groupedOrders.values());
+});
+
+const plural = (orderName: string) => {
+  if (orderName.endsWith('s')) {
+    return 'es';
+  } else if (orderName.endsWith('y')) {
+    return `${orderName.slice(0, -1)}ies`;
+  } else {
+    return 's';
+  }
+}
+
+const makeOrder = () => {
+  orderService.finishOrder()
 }
 </script>
 

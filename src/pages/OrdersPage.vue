@@ -84,7 +84,7 @@ const plural = (orderName: string) => {
 const makeOrder = () => {
   const order = {
        status: 'pending',
-        items: orderStore.orderItems,
+        items: uniqueOrders.value,
         createdAt: new Date(),
   };
       

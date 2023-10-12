@@ -8,14 +8,6 @@ export class Orders {
     public items: Menu[],
     public createdAt: Date,
   ) {}
-
-  // toObject() {
-  //   return {
-  //     status: this.status,
-  //     items: this.items.map(item => item.toObject()),
-  //     createdAt: this.createdAt.toISOString(),
-  //   };
-  // }
 }
 
 function validateOrders(order: Orders) {
@@ -31,18 +23,9 @@ function validateOrders(order: Orders) {
 export default {
   async finishOrder(order) {
     try {
-      // const order = new Orders(
-      //   'pending',
-      //   orderStore.orderItems,
-      //   new Date(),
-      // );
-      // const order = new Orders('pending', orderStore.orderItems, new Date());
-      
       validateOrders(order);
 
-      // const orderData = order.toObject();
       console.log(order);
-      // await fireBaseData.fireStore.collection('orders').addDoc(order);
       await fireBaseData.fireStore.collection('orders').doc().set(order);
   
     } catch (error) {

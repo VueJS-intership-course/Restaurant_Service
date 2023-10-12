@@ -2,17 +2,17 @@
   <div>
     <h3>Create an employee</h3>
   </div>
-  <Form @submit="register">
+  <Form @submit="register" :validation-schema="schema">
     <div>
       <label>Username</label>
       <!-- prettier-ignore -->
-      <Field type="text" name="username" :rules="(usernameRules as RuleExpression<unknown>)" />
+      <Field type="text" name="username" />
       <ErrorMessage name="username" />
     </div>
     <div>
       <label>Email:</label>
       <!-- prettier-ignore -->
-      <Field type="email" name="email" :rules="(emailRules as RuleExpression<unknown>)" />
+      <Field type="email" name="email"  />
       <ErrorMessage name="email" />
     </div>
     <div>
@@ -21,7 +21,6 @@
       <Field
         name="password"
         type="password"
-        :rules="(passwordRules as RuleExpression<unknown>)"
       />
       <ErrorMessage name="password" />
     </div>
@@ -31,7 +30,6 @@
       <Field
         name="repeatPassword"
         type="password"
-        :rules="(passwordRepeatRules as RuleExpression<unknown>)"
       />
       <ErrorMessage name="password" />
     </div>
@@ -46,8 +44,9 @@ import ButtonComponent from "../../common-templates/ButtonComponent.vue";
 import { usersStore } from "../../store/usersStore";
 import userServices from "../../services/userServices/userServices";
 
-import { RuleExpression } from "vee-validate";
+// import { RuleExpression } from "vee-validate";
 import { Field, Form, ErrorMessage } from "vee-validate";
+import * as yup from "yup";
 
 interface FormInputs {
   username: string;
@@ -56,47 +55,60 @@ interface FormInputs {
   repeatPassword: string;
 }
 
+const schema = yup.object({
+  email: yup.string().email().required(),
+  username: yup.string().required().min(4, "Username must be at least 4 symbols!"),
+  password: yup
+    .string()
+    .min(8, "Password must be at least 8 symbols!")
+    .required("This field is required!"),
+  repeatPassword: yup
+    .string()
+    .required()
+    .oneOf([yup.ref("password")], "Passwords does not match"),
+});
+
 const store = usersStore();
 
-const emailRules = (value: string) => {
-  if (!value) {
-    return "This field is required!";
-  }
-  const regex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
-  if (!regex.test(value)) {
-    return "Invalid email entered!";
-  }
-  return true;
-};
+// const emailRules = (value: string) => {
+//   if (!value) {
+//     return "This field is required!";
+//   }
+//   const regex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
+//   if (!regex.test(value)) {
+//     return "Invalid email entered!";
+//   }
+//   return true;
+// };
 
-const usernameRules = (value: string) => {
-  if (!value) {
-    return "This field is required!";
-  }
-  if (value.trim().length < 4) {
-    return "Username should be atleast 4 symbols!";
-  }
+// const usernameRules = (value: string) => {
+//   if (!value) {
+//     return "This field is required!";
+//   }
+//   if (value.trim().length < 4) {
+//     return "Username should be atleast 4 symbols!";
+//   }
 
-  return true;
-};
+//   return true;
+// };
 
-const passwordRules = (value: string) => {
-  if (!value) {
-    return "This field is required!";
-  }
-  if (value.length < 8) {
-    return "Password must be atleast 8 symbols!";
-  }
+// const passwordRules = (value: string) => {
+//   if (!value) {
+//     return "This field is required!";
+//   }
+//   if (value.length < 8) {
+//     return "Password must be atleast 8 symbols!";
+//   }
 
-  return true;
-};
+//   return true;
+// };
 
-const passwordRepeatRules = (value: string) => {
-  if (!value) {
-    return "This field is required!";
-  }
-  return true;
-};
+// const passwordRepeatRules = (value: string) => {
+//   if (!value) {
+//     return "This field is required!";
+//   }
+//   return true;
+// };
 
 const register = (values: FormInputs, { resetForm }) => {
   try {

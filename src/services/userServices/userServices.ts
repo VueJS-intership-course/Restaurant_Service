@@ -2,7 +2,6 @@ import fireBaseData from "../firebaseConfig";
 import {
   setPersistence,
   signInWithEmailAndPassword,
-  onAuthStateChanged,
   browserLocalPersistence,
   getAuth,
 } from "firebase/auth";

@@ -32,7 +32,7 @@
         </RouterLink>
       </li>
       <li>
-        <button @click="logout">Logout</button>
+        <ButtonComponent @click="logout" class="default-button-small">Logout</ButtonComponent>
       </li>
     </ul>
   </nav>
@@ -40,6 +40,7 @@
 
 <script setup lang="ts">
 import userServices from '../services/userServices/userServices'
+import ButtonComponent from './ButtonComponent.vue';
 const logout = async () => {
   await userServices.logout()
 }

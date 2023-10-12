@@ -15,7 +15,6 @@ export const usersStore = defineStore({
 
     setCurrentUser(user: any) {
       this.currentUser = user
-      console.log(this.currentUser);
     }
 
   },

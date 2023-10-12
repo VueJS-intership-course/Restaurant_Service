@@ -5,22 +5,22 @@
   <Form @submit="register">
     <div>
       <label>Username</label>
-      <Field type="text" name="username" :rules?="usernameRules" />
+      <Field type="text" name="username" :rules="usernameRules" />
       <ErrorMessage name="username" />
     </div>
     <div>
       <label>Email:</label>
-      <Field type="email" name="email" :rules?="emailRules" />
+      <Field type="email" name="email" :rules="emailRules" />
       <ErrorMessage name="email" />
     </div>
     <div>
       <label>Password:</label>
-      <Field name="password" type="password" :rules?="passwordRules" />
+      <Field name="password" type="password" :rules="passwordRules" />
       <ErrorMessage name="password" />
     </div>
     <div>
       <label>Repeat Password:</label>
-      <Field name="repeatPassword" type="password" :rules?="passwordRepeatRules" />
+      <Field name="repeatPassword" type="password" :rules="passwordRepeatRules" />
       <ErrorMessage name="password" />
     </div>
     <div>

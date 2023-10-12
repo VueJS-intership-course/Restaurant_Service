@@ -18,10 +18,11 @@ export const useOrderStore = defineStore({
     clearOrder() {
       this.orderItems = [];
     },
-    handleFinishOrder() {
+    handleFinishOrder(order) {
       console.log('handleFinish');
+      // console.log(order);
       
-      // orderServices.finishOrder(order);
+      orderServices.finishOrder(order);
     }
   },
 });

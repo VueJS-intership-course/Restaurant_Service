@@ -31,7 +31,7 @@
         name="repeatPassword"
         type="password"
       />
-      <ErrorMessage name="password" />
+      <ErrorMessage name="repeatPassword" />
     </div>
     <div>
       <ButtonComponent btn-style="default-button-small">Register</ButtonComponent>

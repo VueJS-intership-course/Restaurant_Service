@@ -1,6 +1,5 @@
 import fireBaseData from '../firebaseConfig';
 import { Menu } from '../menuServices/menuServices';
-import {useOrderStore} from '../../store/orderStore.ts';
 
 export class Orders {
   constructor(
@@ -21,7 +20,7 @@ function validateOrders(order: Orders) {
 }
 
 export default {
-  async finishOrder(order) {
+  async finishOrder(order: Orders) {
     try {
       validateOrders(order);
 

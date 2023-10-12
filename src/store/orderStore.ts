@@ -18,7 +18,7 @@ export const useOrderStore = defineStore({
     clearOrder() {
       this.orderItems = [];
     },
-    handleFinishOrder(order) {
+    handleFinishOrder(order: any) {
       orderServices.finishOrder(order);
     }
   },

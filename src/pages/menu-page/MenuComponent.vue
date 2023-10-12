@@ -11,77 +11,83 @@
         <option value="salads">Salads</option>
         <option value="drinks">Drinks</option>
       </select>
+
+      <label class="category-filter" for="search-input">Search by Name or Description:</label>
+      <input
+        id="search-input"
+        v-model="searchQuery"
+        @input="performSearch"
+        placeholder="Search..."
+      />
     </div>
-    <div
-      v-for="product in filteredProducts"
-      :key="product.id"
-      class="product-container"
+  </div>
+  <div
+    v-for="product in filteredProducts"
+    :key="product.id"
+    class="product-container"
+  >
+    <h2>{{ product.name }}</h2>
+    <p>{{ product.description }}</p>
+    <p>Price: ${{ product.price }}</p>
+    <p>Category: {{ product.category }}</p>
+    <ButtonComponent
+      btn-style="default-button-db"
+      @click="addToCart(product)"
+      v-if="!isAdmin"
     >
-      <h2>{{ product.name }}</h2>
-      <p>{{ product.description }}</p>
-      <p>Price: ${{ product.price }}</p>
-      <p>Category: {{ product.category }}</p>
-      <ButtonComponent
-        btn-style="default-button-db"
-        @click="addToCart(product)"
-        v-if="!isAdmin"
-      >
-        Add to Cart
-      </ButtonComponent>
-      <ButtonComponent
-        btn-style="default-button-db"
-        @click="editProduct(product)"
-        v-if="isAdmin"
-      >
-        Edit
-      </ButtonComponent>
-      <ButtonComponent
-        btn-style="button-danger"
-        @click="deleteProduct(product)"
-        v-if="isAdmin"
-      >
-        Delete
-      </ButtonComponent>
+      Add to Cart
+    </ButtonComponent>
+    <ButtonComponent
+      btn-style="default-button-db"
+      @click="editProduct(product)"
+      v-if="isAdmin"
+    >
+      Edit
+    </ButtonComponent>
+    <ButtonComponent
+      btn-style="button-danger"
+      @click="deleteProduct(product)"
+      v-if="isAdmin"
+    >
+      Delete
+    </ButtonComponent>
 
-      <!-- edit form -->
-      <div v-if="isEditing && product.id === editedProductId" class="edit-form">
-        <h3>Edit Product</h3>
-        <input v-model="editedProduct.name" placeholder="Name" />
-        <input v-model.number="editedProduct.price" placeholder="Price" />
-        <input v-model="editedProduct.description" placeholder="Description" />
-        <select v-model="editedProduct.category">
-          <option value="main dishes">Main Dishes</option>
-          <option value="desserts">Desserts</option>
-          <option value="salads">Salads</option>
-          <option value="drinks">Drinks</option>
-        </select>
-        <ButtonComponent
-          btn-style="default-button-db"
-          @click="saveEditedProduct"
-          >Save</ButtonComponent
-        >
-        <ButtonComponent @click="cancelEdit" btn-style="button-danger"
-          >Cancel</ButtonComponent
-        >
-      </div>
-    </div>
-
-    <div v-if="isAdmin" class="admin-container">
-      <h2>Add New Product</h2>
-      <input v-model="newProduct.id" placeholder="Id" />
-      <input v-model="newProduct.name" placeholder="Name" />
-      <input v-model.number="newProduct.price" placeholder="Price" />
-      <input v-model="newProduct.description" placeholder="Description" />
-      <select v-model="newProduct.category">
+    <!-- edit form -->
+    <div v-if="isEditing && product.id === editedProductId" class="edit-form">
+      <h3>Edit Product</h3>
+      <input v-model="editedProduct.name" placeholder="Name" />
+      <input v-model.number="editedProduct.price" placeholder="Price" />
+      <input v-model="editedProduct.description" placeholder="Description" />
+      <select v-model="editedProduct.category">
         <option value="main dishes">Main Dishes</option>
         <option value="desserts">Desserts</option>
         <option value="salads">Salads</option>
         <option value="drinks">Drinks</option>
       </select>
-      <ButtonComponent btn-style="default-button-db" @click="handleAddProduct"
-        >Create</ButtonComponent
+      <ButtonComponent btn-style="default-button-db" @click="saveEditedProduct"
+        >Save</ButtonComponent
+      >
+      <ButtonComponent @click="cancelEdit" btn-style="button-danger"
+        >Cancel</ButtonComponent
       >
     </div>
+  </div>
+
+  <div v-if="isAdmin" class="admin-container">
+    <h2>Add New Product</h2>
+    <input v-model="newProduct.id" placeholder="Id" />
+    <input v-model="newProduct.name" placeholder="Name" />
+    <input v-model.number="newProduct.price" placeholder="Price" />
+    <input v-model="newProduct.description" placeholder="Description" />
+    <select v-model="newProduct.category">
+      <option value="main dishes">Main Dishes</option>
+      <option value="desserts">Desserts</option>
+      <option value="salads">Salads</option>
+      <option value="drinks">Drinks</option>
+    </select>
+    <ButtonComponent btn-style="default-button-db" @click="handleAddProduct"
+      >Create</ButtonComponent
+    >
   </div>
 </template>
 
@@ -89,9 +95,8 @@
 import { ref, computed } from "vue";
 import { useProductStore } from "../../store/productStore.ts";
 import { Menu } from "../../services/menuServices/menuServices.ts";
-import {useOrderStore} from '../../store/orderStore.ts';
+import { useOrderStore } from "../../store/orderStore.ts";
 import ButtonComponent from "../../common-templates/ButtonComponent.vue";
-
 
 const store = useProductStore();
 const orderStore = useOrderStore();
@@ -159,20 +164,36 @@ const cancelEdit = () => {
   };
 };
 
+
+const searchQuery = ref("");
 const filteredProducts = computed(() => {
   if (!store.products) return [];
   if (!selectedCategory.value || selectedCategory.value === "all") {
-    return store.products;
+    return store.products.filter(
+      (product) =>
+        product.name.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
+        product.description
+          .toLowerCase()
+          .includes(searchQuery.value.toLowerCase())
+    );
   } else {
     return store.products.filter(
-      (product) => product.category === selectedCategory.value
+      (product) =>
+        product.category === selectedCategory.value &&
+        (product.name.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
+          product.description
+            .toLowerCase()
+            .includes(searchQuery.value.toLowerCase()))
     );
   }
 });
 
+const performSearch = () => {
+  selectedCategory.value = "all";
+};
+
 const addToCart = (product: Menu) => {
-//   TODO => implement add to cart
-orderStore.addToOrder(product);
+  orderStore.addToOrder(product);
 };
 </script>
 

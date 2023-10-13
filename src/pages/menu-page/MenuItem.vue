@@ -55,7 +55,7 @@
 </template>
 
 <script setup>
-import { ref, defineProps, defineEmits } from "vue";
+import { ref } from "vue";
 import ButtonComponent from "../../common-templates/ButtonComponent.vue";
 
 const { product, isAdmin, isEditing, editedProductId, editedProduct } =

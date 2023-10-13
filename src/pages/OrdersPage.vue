@@ -29,7 +29,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed, onMounted } from 'vue';
 import { useOrderStore } from '../store/orderStore.ts';
 import ButtonComponent from '../common-templates/ButtonComponent.vue';
 
@@ -98,7 +98,15 @@ const makeOrder = () => {
   };
 
   orderStore.handleFinishOrder(order);
+  localStorage.setItem('orderData', JSON.stringify(orderStore.orderItems));
 };
+
+onMounted(() => {
+  const orderData = localStorage.getItem('orderData');
+  if (orderData) {
+    orderStore.loadOrderFromLocalStorage();
+  }
+});
 </script>
 
 <style scoped lang="scss">

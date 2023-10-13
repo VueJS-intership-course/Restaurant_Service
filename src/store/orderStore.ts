@@ -1,9 +1,11 @@
-import { defineStore } from 'pinia';
-import { Menu } from '../services/menuServices/menuServices';
+import { defineStore } from "pinia";
+import { Menu } from "../services/menuServices/menuServices";
+import orderServices from "../services/orderServices/orderServices";
 
-export const useOrderStore = defineStore('order', {
+export const useOrderStore = defineStore({
+  id: "orders",
   state: () => ({
-    orderItems: [] as Menu[], 
+    orderItems: [] as Menu[],
   }),
   actions: {
     addToOrder(dish: Menu) {
@@ -16,5 +18,9 @@ export const useOrderStore = defineStore('order', {
     clearOrder() {
       this.orderItems = [];
     },
+    handleFinishOrder(order: any) {
+      orderServices.finishOrder(order);
+      this.orderItems = [];
+    }
   },
 });

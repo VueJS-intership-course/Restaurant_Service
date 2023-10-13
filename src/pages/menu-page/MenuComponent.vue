@@ -1,9 +1,7 @@
 <template>
   <div :class="{ 'admin-container': isAdmin, 'client-container': !isAdmin }">
     <div class="filters">
-      <label class="category-filter" for="category-filter"
-        >Filter by Category:</label
-      >
+      <label class="category-filter" for="category-filter">Filter by Category:</label>
       <select id="category-filter" v-model="selectedCategory">
         <option value="all">All</option>
         <option value="main dishes">Main Dishes</option>
@@ -12,15 +10,20 @@
         <option value="drinks">Drinks</option>
       </select>
 
-      <label class="category-filter" for="search-input"
-        >Search by Name or Description:</label
-      >
+      <label class="category-filter" for="search-input">Search by Name or Description:</label>
       <input
         id="search-input"
         v-model="searchQuery"
         @input="performSearch"
         placeholder="Search..."
       />
+      <ButtonComponent
+        class="addNewProductButton"
+        v-if="isAdmin"
+        @click="showAddProductModal"
+        btn-style="default-button-db"
+        >Add New Product</ButtonComponent
+      >
     </div>
   </div>
   <div v-for="product in filteredProducts" :key="product.id">
@@ -39,20 +42,31 @@
   </div>
 
   <div v-if="isAdmin" class="admin-container">
-    <h2>Add New Product</h2>
-    <input v-model="newProduct.id" placeholder="Id" />
-    <input v-model="newProduct.name" placeholder="Name" />
-    <input v-model.number="newProduct.price" placeholder="Price" />
-    <input v-model="newProduct.description" placeholder="Description" />
-    <select v-model="newProduct.category">
-      <option value="main dishes">Main Dishes</option>
-      <option value="desserts">Desserts</option>
-      <option value="salads">Salads</option>
-      <option value="drinks">Drinks</option>
-    </select>
-    <ButtonComponent btn-style="default-button-db" @click="handleAddProduct"
-      >Create</ButtonComponent
-    >
+    <!-- add New Product Modal -->
+    <div v-if="showAddModal" class="modal-container">
+      <div class="modal-content">
+        <h2>Add New Product</h2>
+        <div class="input-container">
+          <input v-model="newProduct.name" placeholder="Name" />
+          <input v-model.number="newProduct.price" placeholder="Price" />
+          <input v-model="newProduct.description" placeholder="Description" />
+          <select v-model="newProduct.category">
+            <option value="main dishes">Main Dishes</option>
+            <option value="desserts">Desserts</option>
+            <option value="salads">Salads</option>
+            <option value="drinks">Drinks</option>
+          </select>
+        </div>
+        <div class="button-container">
+          <ButtonComponent @click="handleAddProduct" btn-style="default-button-db"
+            >Add</ButtonComponent
+          >
+          <ButtonComponent @click="closeAddModal" btn-style="button-danger"
+            >Cancel</ButtonComponent
+          >
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -63,18 +77,40 @@ import { Menu } from "../../services/menuServices/menuServices.ts";
 import { useOrderStore } from "../../store/orderStore.ts";
 import ButtonComponent from "../../common-templates/ButtonComponent.vue";
 import ProductItem from "./MenuItem.vue";
+import showNotification from "../../utils/notifications.ts";
+
+const showAddModal = ref(false);
+
+const showAddProductModal = () => {
+  showAddModal.value = true;
+};
+
+const closeAddModal = () => {
+  showAddModal.value = false;
+};
 
 const store = useProductStore();
 const orderStore = useOrderStore();
 
-const isAdmin = computed(() => true); //TODO => implement check for admin
+const isAdmin = computed(() => false); //TODO => implement check for admin
 
 const handleAddProduct = () => {
+  showAddProductModal();
   store.addProduct(newProduct.value);
+  closeAddModal();
+
+  newProduct.value = {
+    id: "",
+    name: "",
+    price: 0,
+    description: "",
+    category: "main dishes",
+  };
 };
 
 const deleteProduct = (product: Menu) => {
   store.removeProduct(product);
+  showNotification(`${product.name} has been deleted from the menu!`);
 };
 
 const editProduct = (product: Menu) => {
@@ -138,18 +174,14 @@ const filteredProducts = computed(() => {
     return store.products.filter(
       (product) =>
         product.name.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
-        product.description
-          .toLowerCase()
-          .includes(searchQuery.value.toLowerCase())
+        product.description.toLowerCase().includes(searchQuery.value.toLowerCase())
     );
   } else {
     return store.products.filter(
       (product) =>
         product.category === selectedCategory.value &&
         (product.name.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
-          product.description
-            .toLowerCase()
-            .includes(searchQuery.value.toLowerCase()))
+          product.description.toLowerCase().includes(searchQuery.value.toLowerCase()))
     );
   }
 });
@@ -160,11 +192,48 @@ const performSearch = () => {
 
 const addToCart = (product: Menu) => {
   orderStore.addToOrder(product);
+  showNotification(`${product.name} has been added to the cart.`);
 };
 </script>
 
-<style lang="scss">
+<style scoped lang="scss">
 @import "../../styles/_variables.scss";
+
+.modal-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+  z-index: 1;
+}
+
+.modal-content {
+  background-color: white;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  max-width: 400px;
+  width: 90%;
+  text-align: center;
+  position: relative;
+}
+
+.input-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.button-container {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
 
 .admin-container {
   background-color: $light-green;

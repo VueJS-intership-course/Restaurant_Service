@@ -11,7 +11,7 @@
           <span>Login</span>
         </RouterLink>
       </li>
-      <li v-if="isLoggedIn">
+      <li v-if="store.currentUser">
          <span>{{ store.currentUser.email }}</span>
       </li>
       <li>
@@ -110,6 +110,9 @@ nav {
     }
   }
 
+  .active {
+    text-decoration: underline !important;
+  }
   .logo {
     height: 100px;
   }

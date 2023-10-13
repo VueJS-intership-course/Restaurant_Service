@@ -8,14 +8,14 @@ export const usersStore = defineStore({
   id: "usersStore",
   state: () => ({
     userList: [] as Employee[],
-    currentUser: {} as firebase.User,
+    currentUser: {} as firebase.User | null,
   }),
   actions: {
     async getAllUsers() {
       this.userList = await userServices.getAll();
     },
 
-    setCurrentUser(user: firebase.User) {
+    setCurrentUser(user: firebase.User | null) {
       this.currentUser = user;
     },
   },

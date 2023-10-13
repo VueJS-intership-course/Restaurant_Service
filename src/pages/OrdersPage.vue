@@ -1,5 +1,19 @@
 <template>
-  <div class="cart-page">
+  <div v-if="isAdmin" class="cart-page">
+    <div class="cart-container">
+      <h1>Orders</h1>
+      <div v-if="uniqueOrders.length === 0" class="meal-container">
+        <span>No orders placed!</span>
+      </div>
+      <div class="meal-container">
+        <span>Client: </span>
+        <span>Order: </span>
+        <span>Created at: </span>
+        <span>Status of order: </span>
+      </div>
+    </div>
+  </div>
+  <div v-else class="cart-page">
     <div class="cart-container">
       <h1>Cart</h1>
       <div v-if="uniqueOrders.length === 0" class="meal-container">
@@ -31,9 +45,13 @@
 <script setup lang="ts">
 import { computed, onMounted } from 'vue';
 import { useOrderStore } from '../store/orderStore.ts';
+import {usersStore} from '../store/usersStore'
 import ButtonComponent from '../common-templates/ButtonComponent.vue';
 
 const orderStore = useOrderStore();
+const userStore = usersStore();
+
+const isAdmin = computed(() => userStore.currentUser); 
 
 const calculateTotalSum = (): number => {
   let total: number = 0;

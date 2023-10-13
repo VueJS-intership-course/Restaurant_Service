@@ -1,4 +1,5 @@
 <template>
+  <ErrorModal v-if="errorMsg" :error-msg="errorMsg" @close-modal="closeModal"></ErrorModal>
   <Form @submit="signIn">
     <div>
       <h1>Sign In</h1>
@@ -30,6 +31,7 @@ import ButtonComponent from '../../common-templates/ButtonComponent.vue';
 import userServices from '../../services/userServices/userServices';
 import { useRouter } from 'vue-router';
 import { Field, Form, ErrorMessage, GenericObject, RuleExpression } from 'vee-validate';
+import ErrorModal from '../../common-templates/ErrorModal.vue';
 
 /*
     router
@@ -68,14 +70,23 @@ const passwordRules = (value: string) => {
     sign in
 */
 
-const signIn = <T extends GenericObject>(values: T): void => {
+const signIn =async <T extends GenericObject>(values: T) => {
   try {
-    userServices.signIn(values.email, values.password);
+   await userServices.signIn(values.email, values.password);
     router.push({ path: 'menu' });
   } catch (error: any) {
     errorMsg.value = error.message;
   }
 };
+
+
+/*
+    close modal
+*/
+
+const closeModal = () => {
+   errorMsg.value = '';
+}
 </script>
 
 

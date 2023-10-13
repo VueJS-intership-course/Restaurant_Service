@@ -74,8 +74,7 @@ export default {
           throw err.message;
         });
     } catch (error) {
-      console.error("Error signing in:", error);
-      throw error;
+      throw new Error('Invalid email or password')
     }
   },
 

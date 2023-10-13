@@ -58,9 +58,7 @@
           </select>
         </div>
         <div class="button-container">
-          <ButtonComponent
-            @click="handleAddProduct"
-            btn-style="default-button-db"
+          <ButtonComponent @click="handleAddProduct" btn-style="default-button-db"
             >Add</ButtonComponent
           >
           <ButtonComponent @click="closeAddModal" btn-style="button-danger"
@@ -79,8 +77,6 @@ import { Menu } from "../../services/menuServices/menuServices.ts";
 import { useOrderStore } from "../../store/orderStore.ts";
 import ButtonComponent from "../../common-templates/ButtonComponent.vue";
 import ProductItem from "./MenuItem.vue";
-import { toast } from "vue3-toastify";
-import "vue3-toastify/dist/index.css";
 import showNotification from "../../utils/notifications.ts";
 
 const showAddModal = ref(false);

@@ -104,7 +104,8 @@ const makeOrder = () => {
 <style scoped lang="scss">
 .cart-page {
   background-color: #79e59b;
-  min-height: 598px;
+  // min-height: 598px;
+  min-height: calc(100vh - 9rem);
   display: flex;
   flex-direction: row;
   gap: 79px;

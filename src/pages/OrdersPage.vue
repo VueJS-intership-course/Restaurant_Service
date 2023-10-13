@@ -98,7 +98,6 @@ const makeOrder = () => {
   };
 
   orderStore.handleFinishOrder(order);
-  localStorage.setItem('orderData', JSON.stringify(orderStore.orderItems));
 };
 
 onMounted(() => {
@@ -112,7 +111,6 @@ onMounted(() => {
 <style scoped lang="scss">
 .cart-page {
   background-color: #79e59b;
-  // min-height: 598px;
   min-height: calc(100vh - 9rem);
   display: flex;
   flex-direction: row;

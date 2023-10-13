@@ -11,6 +11,9 @@
           <span>Login</span>
         </RouterLink>
       </li>
+      <li v-if="isLoggedIn">
+         <span>{{ store.currentUser.email }}</span>
+      </li>
       <li>
         <RouterLink :to="'/control-panel'" class="navbar-link">
           <span>Admin Panel</span>

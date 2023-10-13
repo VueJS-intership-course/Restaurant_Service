@@ -20,7 +20,7 @@ import { foodImages } from '../utils/constants';
 </script>
 
 <style scoped lang="scss">
-@import '../styles/variables';
+@import "../styles/variables";
 
 .aboutUs {
     display: flex;

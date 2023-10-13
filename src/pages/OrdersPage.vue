@@ -6,12 +6,12 @@
         <span>Your cart is empty</span>
       </div>
       <div v-else v-for="order in uniqueOrders" :key="order.id" class="meal-container">
-        <span v-if="mealCounter(order.id) > 1">Meal: {{ mealCounter(order.id) }} {{ order.name
-        }}{{ plural(order.name) }}</span>
-        <span v-else>Meal: {{ order.name }}</span>
+        <span class="notification">{{ mealCounter(order.id) }}</span>
+        <span>Meal: {{ order.name }}</span>
         <span>Price: {{ order.price * order.count }}$</span>
+        <span>({{ order.price }}$ x {{ order.count }})</span>
         <ButtonComponent btn-style="button-danger" @click="handleRemoveMeal(order.id)"
-          style="width: 100px; align-self: center;">Remove</ButtonComponent>
+          style="width: 100px; align-self: center">Remove</ButtonComponent>
       </div>
     </div>
     <div class="total">
@@ -76,15 +76,15 @@ const uniqueOrders = computed(() => {
   return Array.from(groupedOrders.values());
 });
 
-const plural = (orderName: string) => {
-  if (orderName.endsWith('s')) {
-    return 'es';
-  } else if (orderName.endsWith('y')) {
-    return `${orderName.slice(0, -1)}ies`;
-  } else {
-    return 's';
-  }
-};
+// const plural = (orderName: string) => {
+//   if (orderName.endsWith('s')) {
+//     return 'es';
+//   } else if (orderName.endsWith('y')) {
+//     return `${orderName.slice(0, -1)}ies`;
+//   } else {
+//     return 's';
+//   }
+// };
 
 const makeOrder = () => {
   const possibleStatus = ['pending', 'done', 'confirmed'];
@@ -133,6 +133,17 @@ const makeOrder = () => {
       padding: 50px;
       margin-bottom: 10px;
       border-radius: 5px;
+
+      .notification {
+        display: flex;
+        align-self: end;
+        font-size: 16px;
+        color: #fff;
+        background-color: #266488;
+        width: 10px;
+        padding: 5px 10px;
+        border-radius: 10px;
+      }
 
       span {
         font-size: 20px;

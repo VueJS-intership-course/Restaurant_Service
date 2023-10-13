@@ -44,6 +44,7 @@ const routes = [
 const router = createRouter({
   history: createWebHistory(),
   routes,
+  linkActiveClass:'active'
 });
 
 router.beforeEach((to, _, next) => {

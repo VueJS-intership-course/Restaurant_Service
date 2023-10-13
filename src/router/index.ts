@@ -22,6 +22,7 @@ const routes = [
     path: "/control-panel",
     name: "controlPanel",
     component: AdminPanelPage,
+    meta: { requireAuth: true },
   },
   {
     path: "/login",
@@ -47,9 +48,9 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
   const store = usersStore();
-  const user = store.currentUser._delegate.email;
-  console.log(user);
-  if (!user) console.log("no user");
+  const user = store.currentUser;
+  if (to.meta.requireAuth && !user) next({ name: "employeeLogin" });
+  next();
 });
 
 export default router;

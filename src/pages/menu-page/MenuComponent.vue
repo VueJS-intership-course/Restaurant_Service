@@ -79,6 +79,7 @@
 <script setup lang="ts">
 import { ref, computed } from "vue";
 import { useProductStore } from "../../store/productStore.ts";
+import { usersStore } from "../../store/usersStore";
 import { Menu } from "../../services/menuServices/menuServices.ts";
 import { useOrderStore } from "../../store/orderStore.ts";
 import ButtonComponent from "../../common-templates/ButtonComponent.vue";
@@ -87,8 +88,9 @@ import showNotification from "../../utils/notifications.ts";
 
 const store = useProductStore();
 const orderStore = useOrderStore();
+const userStore = usersStore();
 
-const isAdmin = computed(() => true); //TODO => implement check for admin
+const isAdmin = computed(() => userStore.currentUser); 
 
 const showAddModal = ref(false);
 

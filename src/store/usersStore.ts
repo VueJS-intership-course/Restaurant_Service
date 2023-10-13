@@ -1,19 +1,21 @@
 import { defineStore } from "pinia";
 import userServices from "../services/userServices/userServices";
+import firebase from "firebase/compat/app"; 
+import "firebase/compat/auth"; 
 import { Employee } from "../services/userServices/userServices";
 
 export const usersStore = defineStore({
   id: "usersStore",
   state: () => ({
     userList: [] as Employee[],
-    currentUser: {},
+    currentUser: {} as firebase.User,
   }),
   actions: {
     async getAllUsers() {
       this.userList = await userServices.getAll();
     },
 
-    setCurrentUser(user: any) {
+    setCurrentUser(user: firebase.User) {
       this.currentUser = user;
     },
   },

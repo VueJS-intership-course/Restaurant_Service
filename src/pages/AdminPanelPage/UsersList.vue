@@ -27,7 +27,7 @@ import { usersStore } from "../../store/usersStore";
 
 const store = usersStore();
 
-const columnLabels: Ref<string[]> = ref(["ID", "Username", "Email"]);
+const columnLabels: Ref<string[]> = ref(["Username", "Email", "ID"]);
 
 onMounted(async () => {
   store.getAllUsers();

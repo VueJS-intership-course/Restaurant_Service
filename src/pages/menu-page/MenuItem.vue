@@ -4,25 +4,13 @@
     <p>{{ product.description }}</p>
     <p>Price: ${{ product.price }}</p>
     <p>Category: {{ product.category }}</p>
-    <ButtonComponent
-      btn-style="default-button-db"
-      @click="addToCartClicked"
-      v-if="!isAdmin"
-    >
+    <ButtonComponent btn-style="default-button-db" @click="addToCartClicked" v-if="!isAdmin">
       Add to Cart
     </ButtonComponent>
-    <ButtonComponent
-      btn-style="default-button-db"
-      @click="editProductClicked"
-      v-if="isAdmin"
-    >
+    <ButtonComponent btn-style="default-button-db" @click="editProductClicked" v-if="isAdmin">
       Edit
     </ButtonComponent>
-    <ButtonComponent
-      btn-style="button-danger"
-      @click="deleteProductClicked"
-      v-if="isAdmin"
-    >
+    <ButtonComponent btn-style="button-danger" @click="deleteProductClicked" v-if="isAdmin">
       Delete
     </ButtonComponent>
 
@@ -37,9 +25,7 @@
         <option value="salads">Salads</option>
         <option value="drinks">Drinks</option>
       </select>
-      <ButtonComponent
-        btn-style="default-button-db"
-        @click="saveEditedProductClicked"
+      <ButtonComponent btn-style="default-button-db" @click="saveEditedProductClicked"
         >Save</ButtonComponent
       >
       <ButtonComponent @click="cancelEditClicked" btn-style="button-danger"
@@ -50,18 +36,17 @@
 </template>
 
 <script setup>
-import { ref, computed, defineProps, defineEmits } from "vue";
+import { ref, computed } from "vue";
 import ButtonComponent from "../../common-templates/ButtonComponent.vue";
 
-const { product, isAdmin, isEditing, editedProductId, editedProduct } =
-  defineProps([
-    "product",
-    "isAdmin",
-    "isEditing",
-    "editedProductId",
-    "editedProduct",
-  ]);
-  
+const { product, isAdmin, isEditing, editedProductId, editedProduct } = defineProps([
+  "product",
+  "isAdmin",
+  "isEditing",
+  "editedProductId",
+  "editedProduct",
+]);
+
 const emits = defineEmits([
   "addToCart",
   "editProduct",

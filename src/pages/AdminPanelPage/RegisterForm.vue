@@ -70,46 +70,6 @@ const schema = yup.object({
 
 const store = usersStore();
 
-// const emailRules = (value: string) => {
-//   if (!value) {
-//     return "This field is required!";
-//   }
-//   const regex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
-//   if (!regex.test(value)) {
-//     return "Invalid email entered!";
-//   }
-//   return true;
-// };
-
-// const usernameRules = (value: string) => {
-//   if (!value) {
-//     return "This field is required!";
-//   }
-//   if (value.trim().length < 4) {
-//     return "Username should be atleast 4 symbols!";
-//   }
-
-//   return true;
-// };
-
-// const passwordRules = (value: string) => {
-//   if (!value) {
-//     return "This field is required!";
-//   }
-//   if (value.length < 8) {
-//     return "Password must be atleast 8 symbols!";
-//   }
-
-//   return true;
-// };
-
-// const passwordRepeatRules = (value: string) => {
-//   if (!value) {
-//     return "This field is required!";
-//   }
-//   return true;
-// };
-
 const register = (values: FormInputs, { resetForm }) => {
   try {
     userServices.signUp(

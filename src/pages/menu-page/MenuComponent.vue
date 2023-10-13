@@ -1,9 +1,7 @@
 <template>
   <div :class="{ 'admin-container': isAdmin, 'client-container': !isAdmin }">
     <div class="filters">
-      <label class="category-filter" for="category-filter"
-        >Filter by Category:</label
-      >
+      <label class="category-filter" for="category-filter">Filter by Category:</label>
       <select id="category-filter" v-model="selectedCategory">
         <option value="all">All</option>
         <option value="main dishes">Main Dishes</option>
@@ -12,9 +10,7 @@
         <option value="drinks">Drinks</option>
       </select>
 
-      <label class="category-filter" for="search-input"
-        >Search by Name or Description:</label
-      >
+      <label class="category-filter" for="search-input">Search by Name or Description:</label>
       <input
         id="search-input"
         v-model="searchQuery"
@@ -83,6 +79,8 @@ import { Menu } from "../../services/menuServices/menuServices.ts";
 import { useOrderStore } from "../../store/orderStore.ts";
 import ButtonComponent from "../../common-templates/ButtonComponent.vue";
 import ProductItem from "./MenuItem.vue";
+import { toast } from "vue3-toastify";
+import "vue3-toastify/dist/index.css";
 
 const showAddModal = ref(false);
 
@@ -115,6 +113,9 @@ const handleAddProduct = () => {
 
 const deleteProduct = (product: Menu) => {
   store.removeProduct(product);
+  toast(`${product.name} has been deleted from the menu!`, {
+    autoClose: 600,
+  });
 };
 
 const editProduct = (product: Menu) => {
@@ -178,18 +179,14 @@ const filteredProducts = computed(() => {
     return store.products.filter(
       (product) =>
         product.name.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
-        product.description
-          .toLowerCase()
-          .includes(searchQuery.value.toLowerCase())
+        product.description.toLowerCase().includes(searchQuery.value.toLowerCase())
     );
   } else {
     return store.products.filter(
       (product) =>
         product.category === selectedCategory.value &&
         (product.name.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
-          product.description
-            .toLowerCase()
-            .includes(searchQuery.value.toLowerCase()))
+          product.description.toLowerCase().includes(searchQuery.value.toLowerCase()))
     );
   }
 });
@@ -200,6 +197,9 @@ const performSearch = () => {
 
 const addToCart = (product: Menu) => {
   orderStore.addToOrder(product);
+  toast(`${product.name} has been added to cart.`, {
+    autoClose: 600,
+  });
 };
 </script>
 

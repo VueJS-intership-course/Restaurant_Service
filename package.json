@@ -19,10 +19,12 @@
     "vee-validate": "^4.11.8",
     "vue": "^3.3.4",
     "vue-router": "^4.2.5",
+    "vue3-toastify": "^0.1.13",
     "yup": "^1.3.2",
     "zod": "^3.22.4"
   },
   "devDependencies": {
+    "@types/firebase": "^3.2.1",
     "@typescript-eslint/parser": "^6.7.5",
     "@vitejs/plugin-vue": "^4.2.3",
     "eslint": "^8.51.0",

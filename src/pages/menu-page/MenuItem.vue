@@ -4,18 +4,10 @@
     <p>{{ product.description }}</p>
     <p>Price: ${{ product.price }}</p>
     <p>Category: {{ product.category }}</p>
-    <ButtonComponent
-      btn-style="default-button-db"
-      @click="addToCartClicked"
-      v-if="!isAdmin"
-    >
+    <ButtonComponent btn-style="default-button-db" @click="addToCartClicked" v-if="!isAdmin">
       Add to Cart
     </ButtonComponent>
-    <ButtonComponent
-      btn-style="default-button-db"
-      @click="editProductClicked"
-      v-if="isAdmin"
-    >
+    <ButtonComponent btn-style="default-button-db" @click="editProductClicked" v-if="isAdmin">
       Edit
     </ButtonComponent>
     <ButtonComponent

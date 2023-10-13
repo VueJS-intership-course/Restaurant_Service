@@ -7,7 +7,7 @@
     </div>
     <ul>
       <li>
-        <RouterLink :to="'/login'" class="navbar-link">
+        <RouterLink v-if="!isLoggedIn" :to="'/login'" class="navbar-link">
           <span>Login</span>
         </RouterLink>
       </li>
@@ -32,23 +32,53 @@
         </RouterLink>
       </li>
       <li>
-        <ButtonComponent @click="logout" class="default-button-small">Logout</ButtonComponent>
+        <ButtonComponent v-if="isLoggedIn" @click="logout" class="default-button-small">Logout</ButtonComponent>
       </li>
     </ul>
   </nav>
 </template>
 
 <script setup lang="ts">
+/*
+   imports
+*/
 import userServices from '../services/userServices/userServices'
 import ButtonComponent from './ButtonComponent.vue';
+import { computed } from 'vue';
+import { usersStore } from '../store/usersStore';
+import { useRouter } from 'vue-router';
+
+/*
+    router
+*/
+const router = useRouter();
+
+
+/*
+   logout
+*/
 const logout = async () => {
-  await userServices.logout()
+  await userServices.logout();
+  router.push({ path: '/' })
 }
+
+/*
+   store
+*/
+
+const store = usersStore();
+
+/*
+   Change in authentication
+*/
+
+const isLoggedIn = computed(() => store.currentUser !== null)
 </script>
 
 
 <style scoped lang="scss">
 @import "../styles/_variables.scss";
+
 nav {
   display: flex;
   background-color: $green;

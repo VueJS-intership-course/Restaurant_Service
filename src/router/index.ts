@@ -49,7 +49,7 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
   const store = usersStore();
   const user = store.currentUser;
-  if (to.meta.requireAuth && !user) next({ name: "employeeLogin" });
+  if (to.meta.requireAuth && !user) return next({ name: "employeeLogin" });
   next();
 });
 

@@ -1,7 +1,9 @@
 <template>
   <div :class="{ 'admin-container': isAdmin, 'client-container': !isAdmin }">
     <div class="filters">
-      <label class="category-filter" for="category-filter">Filter by Category:</label>
+      <label class="category-filter" for="category-filter"
+        >Filter by Category:</label
+      >
       <select id="category-filter" v-model="selectedCategory">
         <option value="all">All</option>
         <option value="main dishes">Main Dishes</option>
@@ -10,7 +12,9 @@
         <option value="drinks">Drinks</option>
       </select>
 
-      <label class="category-filter" for="search-input">Search by Name or Description:</label>
+      <label class="category-filter" for="search-input"
+        >Search by Name or Description:</label
+      >
       <input
         id="search-input"
         v-model="searchQuery"
@@ -58,7 +62,9 @@
           </select>
         </div>
         <div class="button-container">
-          <ButtonComponent @click="handleAddProduct" btn-style="default-button-db"
+          <ButtonComponent
+            @click="handleAddProduct"
+            btn-style="default-button-db"
             >Add</ButtonComponent
           >
           <ButtonComponent @click="closeAddModal" btn-style="button-danger"
@@ -73,11 +79,18 @@
 <script setup lang="ts">
 import { ref, computed } from "vue";
 import { useProductStore } from "../../store/productStore.ts";
+import { usersStore } from "../../store/usersStore";
 import { Menu } from "../../services/menuServices/menuServices.ts";
 import { useOrderStore } from "../../store/orderStore.ts";
 import ButtonComponent from "../../common-templates/ButtonComponent.vue";
 import ProductItem from "./MenuItem.vue";
 import showNotification from "../../utils/notifications.ts";
+
+const store = useProductStore();
+const orderStore = useOrderStore();
+const userStore = usersStore();
+
+const isAdmin = computed(() => userStore.currentUser); 
 
 const showAddModal = ref(false);
 
@@ -87,18 +100,6 @@ const showAddProductModal = () => {
 
 const closeAddModal = () => {
   showAddModal.value = false;
-};
-
-const store = useProductStore();
-const orderStore = useOrderStore();
-
-const isAdmin = computed(() => false); //TODO => implement check for admin
-
-const handleAddProduct = () => {
-  showAddProductModal();
-  store.addProduct(newProduct.value);
-  closeAddModal();
-
   newProduct.value = {
     id: "",
     name: "",
@@ -106,6 +107,12 @@ const handleAddProduct = () => {
     description: "",
     category: "main dishes",
   };
+};
+
+const handleAddProduct = () => {
+  showAddProductModal();
+  store.addProduct(newProduct.value);
+  closeAddModal();
 };
 
 const deleteProduct = (product: Menu) => {
@@ -174,14 +181,18 @@ const filteredProducts = computed(() => {
     return store.products.filter(
       (product) =>
         product.name.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
-        product.description.toLowerCase().includes(searchQuery.value.toLowerCase())
+        product.description
+          .toLowerCase()
+          .includes(searchQuery.value.toLowerCase())
     );
   } else {
     return store.products.filter(
       (product) =>
         product.category === selectedCategory.value &&
         (product.name.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
-          product.description.toLowerCase().includes(searchQuery.value.toLowerCase()))
+          product.description
+            .toLowerCase()
+            .includes(searchQuery.value.toLowerCase()))
     );
   }
 });

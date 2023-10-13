@@ -46,7 +46,7 @@ const router = createRouter({
   routes,
 });
 
-router.beforeEach((to, from, next) => {
+router.beforeEach((to, _, next) => {
   const store = usersStore();
   const user = store.currentUser;
   if (to.meta.requireAuth && !user) return next({ name: "employeeLogin" });

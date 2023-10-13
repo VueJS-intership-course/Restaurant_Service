@@ -12,3 +12,15 @@ export const foodImages = [
         alt: 'curry'
     }
 ]
+
+import * as yup from "yup";
+
+export const menuSchema = yup.object({
+    id: yup.string().required("Id is required"),
+    name: yup
+      .string()
+      .required("Name is required")
+      .min(3, "Name must be at least 3 characters long"),
+    price: yup.string().required("Price is required"),
+    description: yup.string().required("Description is required"),
+  });

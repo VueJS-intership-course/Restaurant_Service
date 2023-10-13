@@ -4,7 +4,7 @@ export class Menu {
   constructor(
     public id: string,
     public name: string,
-    public price: number,
+    public price: number | String,
     public description: string,
     public category: string
   ) {}
@@ -19,7 +19,7 @@ function validateMenu(menuItem: Menu) {
     throw new Error("Add proper description for the dish!");
   }
 
-  if (!menuItem.price || menuItem.price < 0) {
+  if (typeof menuItem.price === "number" && menuItem.price < 0) {
     throw new Error("Add valid and non negative price for the dish!");
   }
 }

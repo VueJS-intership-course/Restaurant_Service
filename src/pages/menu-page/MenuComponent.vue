@@ -46,31 +46,65 @@
   </div>
 
   <div v-if="isAdmin" class="admin-container">
-    <!-- add New Product Modal -->
     <div v-if="showAddModal" class="modal-container">
       <div class="modal-content">
         <h2>Add New Product</h2>
-        <div class="input-container">
-          <input v-model="newProduct.name" placeholder="Name" />
-          <input v-model.number="newProduct.price" placeholder="Price" />
-          <input v-model="newProduct.description" placeholder="Description" />
-          <select v-model="newProduct.category">
-            <option value="main dishes">Main Dishes</option>
-            <option value="desserts">Desserts</option>
-            <option value="salads">Salads</option>
-            <option value="drinks">Drinks</option>
-          </select>
-        </div>
-        <div class="button-container">
-          <ButtonComponent
-            @click="handleAddProduct"
-            btn-style="default-button-db"
-            >Add</ButtonComponent
-          >
-          <ButtonComponent @click="closeAddModal" btn-style="button-danger"
-            >Cancel</ButtonComponent
-          >
-        </div>
+        <Form @submit="handleAddProduct" :validation-schema="menuSchema">
+          <div class="input-container">
+            <label for="id">ID:</label>
+            <Field
+              type="number"
+              name="id"
+              v-model.number="newProduct.id"
+              placeholder="Id"
+              as="input"
+            />
+            <ErrorMessage name="id" />
+
+            <label for="name">Name:</label>
+            <Field
+              name="name"
+              v-model="newProduct.name"
+              placeholder="Name"
+              as="input"
+            />
+            <ErrorMessage name="name" />
+
+            <label for="price">Price:</label>
+            <Field
+              type="number"
+              name="price"
+              v-model.number="newProduct.price"
+              placeholder="Price"
+              as="input"
+            />
+            <ErrorMessage name="price" />
+
+            <label for="description">Description:</label>
+            <Field
+              name="description"
+              v-model="newProduct.description"
+              placeholder="Description"
+              as="input"
+            />
+            <ErrorMessage name="description" />
+
+            <label for="category">Category:</label>
+            <Field name="category" v-model="newProduct.category" as="select">
+              <option value="main dishes">Main Dishes</option>
+              <option value="desserts">Desserts</option>
+              <option value="salads">Salads</option>
+              <option value="drinks">Drinks</option>
+            </Field>
+          </div>
+          <div class="button-container">
+            <ButtonComponent btn-style="default-button-db">Add</ButtonComponent>
+
+            <ButtonComponent @click="closeAddModal" btn-style="button-danger"
+              >Cancel</ButtonComponent
+            >
+          </div>
+        </Form>
       </div>
     </div>
   </div>
@@ -85,12 +119,15 @@ import { useOrderStore } from "../../store/orderStore.ts";
 import ButtonComponent from "../../common-templates/ButtonComponent.vue";
 import ProductItem from "./MenuItem.vue";
 import showNotification from "../../utils/notifications.ts";
+import { Field, Form, ErrorMessage } from "vee-validate";
+import {menuSchema} from "../../utils/constants.ts"
+
 
 const store = useProductStore();
 const orderStore = useOrderStore();
 const userStore = usersStore();
 
-const isAdmin = computed(() => userStore.currentUser); 
+const isAdmin = computed(() => userStore.currentUser);
 
 const showAddModal = ref(false);
 
@@ -103,13 +140,13 @@ const closeAddModal = () => {
   newProduct.value = {
     id: "",
     name: "",
-    price: 0,
+    price: "",
     description: "",
     category: "main dishes",
   };
 };
 
-const handleAddProduct = () => {
+const handleAddProduct = async () => {
   showAddProductModal();
   store.addProduct(newProduct.value);
   closeAddModal();
@@ -132,7 +169,7 @@ const editedProductId = ref("");
 const editedProduct = ref<Menu>({
   id: "",
   name: "",
-  price: 0,
+  price: "",
   description: "",
   category: "main dishes",
 });
@@ -140,7 +177,7 @@ const editedProduct = ref<Menu>({
 const newProduct = ref<Menu>({
   id: "",
   name: "",
-  price: 0,
+  price: "",
   description: "",
   category: "main dishes",
 });
@@ -153,7 +190,7 @@ const saveEditedProduct = async () => {
     editedProduct.value = {
       id: "",
       name: "",
-      price: 0,
+      price: "",
       description: "",
       category: "main dishes",
     };
@@ -168,7 +205,7 @@ const cancelEdit = () => {
   editedProduct.value = {
     id: "",
     name: "",
-    price: 0,
+    price: "",
     description: "",
     category: "main dishes",
   };
@@ -209,6 +246,10 @@ const addToCart = (product: Menu) => {
 
 <style scoped lang="scss">
 @import "../../styles/_variables.scss";
+
+span {
+  color: red;
+}
 
 .modal-container {
   display: flex;

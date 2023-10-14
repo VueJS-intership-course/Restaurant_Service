@@ -6,7 +6,7 @@
     </div>
   </template>
   
-  <script setup>
+  <script setup lang="ts">
   import { computed } from 'vue';
   import { useProductStore } from '../../store/productStore.ts';
   import MenuItem from './MenuItem.vue';

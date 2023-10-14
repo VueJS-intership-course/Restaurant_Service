@@ -27,8 +27,8 @@
   </div>
 </template>
 
-<script setup>
-import { ref, computed } from "vue";
+<script setup lang="ts">
+import { computed } from "vue";
 import { useProductStore } from "../../store/productStore.ts";
 import ButtonComponent from "../../common-templates/ButtonComponent.vue";
 

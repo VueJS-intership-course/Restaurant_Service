@@ -1,5 +1,5 @@
 <template>
-  <div v-if="isAdmin" class="cart-page">
+  <div v-if="isAdmin" class="cart-page"> 
     <div class="cart-container">
       <h1>Orders</h1>
       <div v-if="uniqueOrders.length === 0" class="meal-container">
@@ -31,8 +31,8 @@
     <div class="total">
       <h1>Total</h1>
       <div>
-        <span v-if="calculateTotalSum() === 0">Choose meal</span>
-        <span v-else>Sum: {{ calculateTotalSum() }}$</span>
+        <span v-if="calculateTotalSum === 0">Choose meal</span>
+        <span v-else>Sum: {{ calculateTotalSum }}$</span>
         <div class="buttons">
           <button @click="handleClearOrder">Clear cart</button>
           <button @click="makeOrder">Order!</button>
@@ -53,14 +53,14 @@ const userStore = usersStore();
 
 const isAdmin = computed(() => userStore.currentUser); 
 
-const calculateTotalSum = (): number => {
+const calculateTotalSum = computed((): number => {
   let total: number = 0;
 
   for (const order of orderStore.orderItems) {
     total += order.price;
   }
   return total;
-};
+});
 
 const handleRemoveMeal = (mealId: string) => {
   const index = orderStore.orderItems.findIndex((order) => order.id === mealId);
@@ -93,16 +93,6 @@ const uniqueOrders = computed(() => {
 
   return Array.from(groupedOrders.values());
 });
-
-// const plural = (orderName: string) => {
-//   if (orderName.endsWith('s')) {
-//     return 'es';
-//   } else if (orderName.endsWith('y')) {
-//     return `${orderName.slice(0, -1)}ies`;
-//   } else {
-//     return 's';
-//   }
-// };
 
 const makeOrder = () => {
   const possibleStatus = ['pending', 'done', 'confirmed'];

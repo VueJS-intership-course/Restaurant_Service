@@ -2,8 +2,7 @@ import { defineStore } from "pinia";
 import { Menu } from "../services/menuServices/menuServices";
 import orderServices from "../services/orderServices/orderServices";
 
-export const useOrderStore = defineStore({
-  id: "orders",
+export const useOrderStore = defineStore('orders', {
   state: () => ({
     orderItems: [] as Menu[],
   }),

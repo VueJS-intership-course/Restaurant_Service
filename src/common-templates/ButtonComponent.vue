@@ -58,11 +58,11 @@ defineProps({
   cursor: pointer;
 }
 
-.default-button-large {
+.default-button-green {
   background-color: $green;
   color: white;
   border: none;
-  padding: 20px 60px;
+  padding: 10px 20px;
   margin: 5px;
   border-radius: 8px;
   cursor: pointer;

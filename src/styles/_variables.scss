@@ -41,3 +41,26 @@ $dark-green: #17882f;
         border-color: white;
     }
 }
+
+
+@mixin modal-style {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: $modal;
+    z-index: 2;
+}
+
+@mixin client-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;    
+    gap: 2rem;
+    padding: 3rem 6rem;
+    background-color: $green;
+    position: absolute;
+    top: 25%;
+    left: 30%;
+    border-radius: 8%;
+}

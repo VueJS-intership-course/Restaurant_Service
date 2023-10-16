@@ -2,18 +2,37 @@
     <card-component>
         <h1>Welcome to Ninja Turtles Restaurant</h1>
         <div>
-            <button @click="$router.push({name:'menu'})">Client</button>
-            <button @click="$router.push({name:'employeeLogin'})">Employee</button>
+            <button @click="showModal">Client</button>
+            <button @click="$router.push({ name: 'employeeLogin' })">Employee</button>
         </div>
     </card-component>
+    <client-modal v-if="isShown" @close-modal="closeModal"></client-modal>
 </template>
 
 <script setup lang="ts">
 /*
    imports
 */
-
+import { useRouter } from 'vue-router';
 import CardComponent from '../common-templates/CardComponent.vue';
+import ClientModal from '../common-templates/ClientModal.vue';
+import { ref } from 'vue';
+
+const isShown = ref<boolean>(false);
+const router = useRouter()
+
+const showModal = () => {
+    if (!localStorage.getItem('user')) {
+        isShown.value = true;
+    } else {
+        router.push({ name: 'menu' })
+    }
+}
+
+const closeModal = () => {
+    isShown.value = false;
+}
+
 </script>
 
 <style scoped lang="scss">

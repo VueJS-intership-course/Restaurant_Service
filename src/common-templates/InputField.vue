@@ -12,7 +12,7 @@ defineProps({
 </script>
 
 <style lang="scss" scoped>
-@import "../styles/_variables.scss";
+@import "@/styles/_variables.scss";
 
 .default-input {
   border: 2px solid $dark-blue;

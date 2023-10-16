@@ -5,15 +5,7 @@ import {
   browserLocalPersistence,
   getAuth,
 } from "firebase/auth";
-
-export class Employee {
-  constructor(
-    public username: string,
-    public email: string,
-    public id?: string,
-    public password?: string
-  ) { }
-}
+import { Employee } from "../classes";
 
 export default {
   async getAll() {

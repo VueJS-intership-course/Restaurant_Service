@@ -9,24 +9,23 @@
         btn-style="default-button-db"
         v-if="store.isAdmin"
         @click="showAddProductModal"
-      > Add New Product
+      >
+        Add New Product
       </ButtonComponent>
     </div>
     <MenuList />
     <AddProductModal v-if="showAddModal" />
-    <EditProductModal v-if="isEditing" />
   </div>
 </template>
 
 <script setup lang="ts">
 import { computed } from "vue";
-import { useProductStore } from "../../store/productStore.ts";
-import CategoryFilter from "./CategoryFilter.vue";
-import SearchInput from "./SearchInput.vue";
-import MenuList from "./MenuList.vue";
-import AddProductModal from "./AddProductModal.vue";
-import EditProductModal from "./EditProductModal.vue";
-import ButtonComponent from "../../common-templates/ButtonComponent.vue";
+import { useProductStore } from "@/store/productStore.ts";
+import CategoryFilter from "@/pages/MenuPage/CategoryFilter.vue";
+import SearchInput from "@/pages/MenuPage/SearchInput.vue";
+import MenuList from "@/pages/MenuPage/MenuList.vue";
+import AddProductModal from "@/pages/MenuPage/AddProductModal.vue";
+import ButtonComponent from "@/common-templates/ButtonComponent.vue";
 
 const store = useProductStore();
 store.getProductList();
@@ -35,7 +34,6 @@ const showAddProductModal = () => {
   store.showAddModal = true;
 };
 
-const isEditing = computed(() => store.isEditing);
 const showAddModal = computed(() => store.showAddModal);
 </script>
 
@@ -58,8 +56,6 @@ const showAddModal = computed(() => store.showAddModal);
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin: 0 30px
+  margin: 0 30px;
 }
-
-
 </style>

@@ -46,9 +46,10 @@ const schema = yup.object({
     .required("This field is required!")
     .min(2, "Name should be atleast two symbols!"),
   phone: yup
-    .number()
+    .string()
     .required("This field is required!")
-    .min(10, "Please enter a valid phone number!"),
+    .min(10, "Please enter a valid phone number!")
+    .max(13, "Please enter a valid phone number!"),
 });
 </script>
 

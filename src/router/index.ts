@@ -37,7 +37,7 @@ const routes = [
     beforeEnter: () => {
       const store = usersStore();
       if (store.currentUser) {
-        router.push({ name: "menu" });
+        router.push({ name: "controlPanel" });
       }
     },
   },

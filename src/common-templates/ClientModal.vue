@@ -54,7 +54,7 @@ const schema = yup.object({
 </script>
 
 <style scoped lang="scss">
-@import "../styles/variables";
+@import "@/styles/variables";
 
 .modal {
   @include modal-style;

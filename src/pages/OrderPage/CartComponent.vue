@@ -1,25 +1,39 @@
 <template>
-    <div class="cart-container">
-      <h1>Cart</h1>
-      <div v-if="orderStore.uniqueOrders.length === 0" class="meal-container">
-        <span>Your cart is empty</span>
+  <div class="cart-container">
+    <h1>Your Cart</h1>
+    <div class="cart-items">
+      <div v-if="orderStore.uniqueOrders.length === 0" class="empty-cart">
+        Your cart is empty
       </div>
-      <div v-else v-for="order in orderStore.uniqueOrders" :key="order.id" class="meal-container">
-        <span class="notification">{{ mealCounter(order.id) }}</span>
-        <span>Meal: {{ order.name }}</span>
-        <span>Price: {{ order.price * order.count }}$</span>
-        <span>({{ order.price }}$ x {{ order.count }})</span>
-        <ButtonComponent btn-style="button-danger" @click="handleRemoveMeal(order.id)"
-          style="width: 100px; align-self: center">Remove</ButtonComponent>
+      <div v-else class="meal-container" v-for="order in orderStore.uniqueOrders" :key="order.id">
+        <div class="cart-item">
+          <div class="item-info">
+            <span class="item-name">{{ order.name }}</span>
+            <span class="item-price">{{ order.price * order.count }}$</span>
+          </div>
+          <div class="item-quantity">
+            <span class="notification">{{ mealCounter(order.id) }}</span>
+          </div>
+          <div class="buttons">
+            <button @click="handleAddMeal(order.id)" class="remove-button">
+              +
+            </button>
+            <button @click="handleRemoveMeal(order.id)" class="remove-button">
+              -
+            </button>
+          </div>
+        </div>
       </div>
     </div>
+  </div>
 </template>
 
 <script setup lang="ts">
-import {useOrderStore} from '../../store/orderStore.ts';
-import ButtonComponent from '../../common-templates/ButtonComponent.vue';
+import { useOrderStore } from '../../store/orderStore.ts';
+import { useProductStore } from '../../store/productStore.ts';
 
 const orderStore = useOrderStore();
+const productStore = useProductStore();
 
 const mealCounter = (mealId: string) => {
   const count = orderStore.orderItems.filter(
@@ -28,52 +42,108 @@ const mealCounter = (mealId: string) => {
   return count;
 };
 
+const handleAddMeal = (mealId: string) => {
+  const [index] = productStore.products.filter((order) => order.id === mealId);
+
+  if (index) {
+    orderStore.addToOrder(index);
+  }
+}
+
 const handleRemoveMeal = (mealId: string) => {
+
   const index = orderStore.orderItems.findIndex((order) => order.id === mealId);
   if (index !== -1) {
+
     orderStore.removeFromOrder(index);
   }
 };
 </script>
 
-<style lang="scss">
+<style scoped lang="scss">
 .cart-container {
-    background-color: #f7cf64;
-    padding: 20px;
-    width: 72%;
-    min-height: 100px;
-    border-radius: 10px;
+  padding: 20px;
+  width: 500px;
 
-    h1 {
-      color: black;
+  .cart-items {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .empty-cart {
+      font-size: 24px;
+      color: #555;
     }
 
     .meal-container {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      gap: 25px;
-      margin-top: 10px;
-      background-color: rgb(167, 134, 3);
-      padding: 50px;
-      margin-bottom: 10px;
-      border-radius: 5px;
+      width: 100%;
+      max-width: 400px;
+      background-color: #f7cf64;
+      margin: 10px;
+      border-radius: 10px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 
-      .notification {
+      .cart-item {
         display: flex;
-        align-self: end;
-        font-size: 16px;
-        color: #fff;
-        background-color: #266488;
-        width: 10px;
-        padding: 5px 10px;
-        border-radius: 10px;
-      }
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px;
+        width: 350px;
+        height: 50px;
 
-      span {
-        font-size: 20px;
-        color: black;
+        .item-info {
+          flex: 2;
+          display: flex;
+          flex-direction: column;
+
+          .item-name {
+            font-size: 18px;
+            font-weight: bold;
+          }
+
+          .item-price {
+            font-size: 16px;
+            color: #555;
+          }
+        }
+
+        .item-quantity {
+          flex: 1;
+          display: flex;
+          align-items: center;
+
+          .notification {
+            display: flex;
+            align-self: flex-end;
+            font-size: 16px;
+            color: white;
+            background-color: #266488;
+            padding: 5px 10px;
+            border-radius: 10px;
+          }
+        }
+
+        .buttons {
+          display: flex;
+          gap: 10px;
+
+          .remove-button {
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 8px 15px;
+            max-height: 33px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+
+            .remove-button:hover {
+              background-color: #c82333;
+            }
+          }
+        }
       }
     }
   }
-  </style>
+}
+</style>

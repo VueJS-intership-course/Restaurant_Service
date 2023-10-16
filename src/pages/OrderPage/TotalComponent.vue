@@ -2,7 +2,11 @@
     <div class="total">
       <h1>Total</h1>
       <div>
-        <span v-if="calculateTotalSum === 0">Choose meal</span>
+        <span v-if="calculateTotalSum === 0">
+          <RouterLink :to="'/menu'" style="color: red;">
+            Choose meal
+          </RouterLink>
+        </span>
         <span v-else>Sum: {{ calculateTotalSum }}$</span>
         <div class="buttons">
           <button @click="handleClearOrder">Clear cart</button>

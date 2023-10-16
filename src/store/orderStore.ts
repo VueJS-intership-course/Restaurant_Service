@@ -5,7 +5,6 @@ import orderServices from "../services/orderServices/orderServices";
 export const useOrderStore = defineStore('orders', {
   state: () => ({
     orderItems: [] as Menu[],
-    uniqueOrders: [] as Menu[],
   }),
   getters: {
     uniqueOrders: (state) => {
@@ -24,11 +23,13 @@ export const useOrderStore = defineStore('orders', {
   actions: {
     addToOrder(dish: Menu) {
       this.orderItems.push(dish);
-      console.log(this.orderItems);
+      console.log(dish);
       this.saveOrderToLocalStorage();
     },
     removeFromOrder(index: number) {
       this.orderItems.splice(index, 1);
+      console.log(this.orderItems);
+      
       this.saveOrderToLocalStorage();
     },
     clearOrder() {

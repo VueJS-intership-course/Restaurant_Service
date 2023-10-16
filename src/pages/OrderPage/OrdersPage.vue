@@ -4,7 +4,7 @@
   </div>
   <div v-else class="cart-page">
     <CartComponent/>
-    <TotalComponent/>
+    <TotalComponent class="total"/>
   </div>
 </template>
 
@@ -35,9 +35,14 @@ onMounted(() => {
   min-height: calc(100vh - 9rem);
   display: flex;
   flex-direction: row;
-  gap: 79px;
+  justify-content: center;
+  gap: 100px;
   font-family: Arial, sans-serif;
   text-align: center;
   padding: 20px;
+
+  .total {
+    align-self: center;
+  }
 }
 </style>

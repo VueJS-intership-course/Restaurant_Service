@@ -2,8 +2,8 @@
     <card-component>
         <h1>Welcome to Ninja Turtles Restaurant</h1>
         <div>
-            <button @click="changePage('menu')">Client</button>
-            <button @click="changePage('login')">Employee</button>
+            <button @click="$router.push({name:'menu'})">Client</button>
+            <button @click="$router.push({name:'employeeLogin'})">Employee</button>
         </div>
     </card-component>
 </template>
@@ -14,19 +14,6 @@
 */
 
 import CardComponent from '../common-templates/CardComponent.vue';
-import { useRouter } from 'vue-router';
-
-/*
-    router
-*/
-
-
-const router = useRouter();
-
-const changePage = (page: string) => {
-    router.push({ path: page })
-}
-
 </script>
 
 <style scoped lang="scss">

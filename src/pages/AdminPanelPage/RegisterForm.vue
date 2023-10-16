@@ -4,7 +4,7 @@
   </div>
   <Form @submit="register" :validation-schema="schema">
     <div>
-      <label>Username</label>
+      <label>Username:</label>
       <!-- prettier-ignore -->
       <Field type="text" name="username" />
       <ErrorMessage name="username" />
@@ -84,6 +84,7 @@ const register = (values: FormInputs, { resetForm }) => {
     resetForm();
   } catch (error) {
     alert(error);
+    // Add toastify
   }
 };
 </script>

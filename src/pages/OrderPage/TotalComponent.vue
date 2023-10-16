@@ -26,7 +26,9 @@ const calculateTotalSum = computed((): number => {
   let total: number = 0;
 
   for (const order of orderStore.orderItems) {
-    total += order.price;
+    if (typeof order.price === 'number') {
+      total = total + order.price;
+    }
   }
   return total;
 });

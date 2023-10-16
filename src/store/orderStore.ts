@@ -17,9 +17,10 @@ export const useOrderStore = defineStore('orders', {
           groupedOrders.set(order.id, { ...order, count: 1 });
         }
       }
+
       console.log(Array.from(groupedOrders.values()));
 
-      return Array.from(groupedOrders.values());
+      return Array.from(groupedOrders.values()).sort((a, b) => a.name.localeCompare(b.name));
     },
   },
   actions: {

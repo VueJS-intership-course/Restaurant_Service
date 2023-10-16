@@ -15,7 +15,7 @@
             <span class="notification">{{ mealCounter(order.id) }}</span>
           </div>
           <div class="buttons">
-            <button @click="handleAddMeal(order.id, order.name)" class="remove-button">
+            <button @click="handleAddMeal(order.id, order.name)" class="add-button">
               +
             </button>
             <button @click="handleRemoveMeal(order.id, order.name)" class="remove-button">
@@ -42,7 +42,7 @@ const mealCounter = (mealId: string) => {
 };
 
 const handleAddMeal = (mealId: string, meal: string) => {
-  const [index] = orderStore.orderItems.filter((product) => product.id === mealId);
+  const index = orderStore.orderItems.find((product) => product.id === mealId);
   console.log(index);
   
   if (index) {
@@ -128,11 +128,23 @@ const handleRemoveMeal = (mealId: string, meal: string) => {
           display: flex;
           gap: 10px;
 
+          .add-button {
+            background-color: #5aaa6e;
+            color: white;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-weight: bold;
+            padding: 8px 15px;
+            max-height: 33px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+          }
           .remove-button {
             background-color: #dc3545;
             color: white;
-            border: none;
+            border: 1px solid #ccc;
             border-radius: 5px;
+            font-weight: bold;
             padding: 8px 15px;
             max-height: 33px;
             cursor: pointer;

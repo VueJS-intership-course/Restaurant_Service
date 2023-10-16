@@ -57,6 +57,7 @@ const makeOrder = () => {
     display: flex;
     flex-direction: column;
     align-items: center;
+    border: 5px solid #075f37;
     width: 22%;
     height: 200px;
     background-color: #266488;

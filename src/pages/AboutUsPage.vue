@@ -24,18 +24,18 @@
 </template>
 
 <script setup lang="ts">
-import { foodImages } from "../utils/constants";
+import { foodImages } from "@/utils/constants";
 </script>
 
 <style scoped lang="scss">
-@import "../styles/variables";
+@import "@/styles/variables";
 
 .aboutUs {
   display: flex;
   flex-direction: column;
   gap: 3rem;
   margin-top: 1rem;
-  
+
   .aboutUs-headings {
     border-radius: 10%;
     display: flex;
@@ -72,7 +72,7 @@ import { foodImages } from "../utils/constants";
         background-repeat: no-repeat;
         object-fit: cover;
         transition: all 0.6s;
-        border-radius: 50%; 
+        border-radius: 50%;
       }
 
       img:hover {

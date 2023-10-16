@@ -1,38 +1,40 @@
 <template>
-  <div>
-    <h3>Create an employee</h3>
+  <div class="wrapper">
+    <div>
+      <h3>Register</h3>
+    </div>
+    <Form @submit="register" :validation-schema="schema">
+      <div>
+        <label>Username:</label>
+        <Field type="text" name="username" />
+        <ErrorMessage name="username" />
+      </div>
+      <div>
+        <label>Email:</label>
+        <Field type="email" name="email" />
+        <ErrorMessage name="email" />
+      </div>
+      <div>
+        <label>Password:</label>
+        <Field name="password" type="password" />
+        <ErrorMessage name="password" />
+      </div>
+      <div>
+        <label>Repeat Password:</label>
+        <Field name="repeatPassword" type="password" />
+        <ErrorMessage name="repeatPassword" />
+      </div>
+      <div>
+        <ButtonComponent btn-style="default-button-small">Register</ButtonComponent>
+      </div>
+    </Form>
   </div>
-  <Form @submit="register" :validation-schema="schema">
-    <div>
-      <label>Username</label>
-      <Field type="text" name="username" />
-      <ErrorMessage name="username" />
-    </div>
-    <div>
-      <label>Email:</label>
-      <Field type="email" name="email" />
-      <ErrorMessage name="email" />
-    </div>
-    <div>
-      <label>Password:</label>
-      <Field name="password" type="password" />
-      <ErrorMessage name="password" />
-    </div>
-    <div>
-      <label>Repeat Password:</label>
-      <Field name="repeatPassword" type="password" />
-      <ErrorMessage name="repeatPassword" />
-    </div>
-    <div>
-      <ButtonComponent btn-style="default-button-small">Register</ButtonComponent>
-    </div>
-  </Form>
 </template>
 
 <script setup lang="ts">
-import ButtonComponent from "../../common-templates/ButtonComponent.vue";
-import { usersStore } from "../../store/usersStore";
-import userServices from "../../services/userServices/userServices";
+import ButtonComponent from "@/common-templates/ButtonComponent.vue";
+import { usersStore } from "@/store/usersStore";
+import userServices from "@/services/userServices/userServices";
 
 // import { RuleExpression } from "vee-validate";
 import { Field, Form, ErrorMessage } from "vee-validate";
@@ -82,6 +84,12 @@ const register = (values: FormInputs, { resetForm }) => {
 <style scoped lang="scss">
 @import "../../styles/variables";
 
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 form {
   display: flex;
   flex-direction: column;
@@ -91,12 +99,11 @@ form {
   padding: 3rem 12rem;
   background-color: $green;
   border-radius: 8%;
-}
-
-div {
-  text-align: center;
-  width: 100%;
-  position: relative;
+  div {
+    text-align: center;
+    width: 100%;
+    position: relative;
+  }
 }
 
 span {
@@ -113,6 +120,7 @@ input {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+  min-width: 12rem;
 }
 
 label {

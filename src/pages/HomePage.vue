@@ -36,31 +36,30 @@ const closeModal = () => {
 </script>
 
 <style scoped lang="scss">
-@import '../styles/variables';
+@import "@/styles/variables";
 
 h1 {
-    font-size: xx-large;
-    text-wrap: balance;
-    text-align: center;
-    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-    color: $yellow;
+  font-size: xx-large;
+  text-wrap: balance;
+  text-align: center;
+  font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+  color: $yellow;
 }
 
 div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
 
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 1rem;
+  button {
+    @include main-button;
+  }
 
-    button {
-        @include main-button;
-    }
-
-    button:hover {
-        opacity: 1;
-        background: $yellow;
-    }
+  button:hover {
+    opacity: 1;
+    background: $yellow;
+  }
 }
 </style>

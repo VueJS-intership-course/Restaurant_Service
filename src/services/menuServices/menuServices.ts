@@ -1,4 +1,4 @@
-import fireBaseData from "../firebaseConfig";
+import fireBaseData from "@/services/firebaseConfig";
 
 export class Menu {
   constructor(
@@ -28,9 +28,7 @@ export default {
   async getAll() {
     try {
       const data: Menu[] = [];
-      const querySnapshot = await fireBaseData.fireStore
-        .collection("menu")
-        .get();
+      const querySnapshot = await fireBaseData.fireStore.collection("menu").get();
 
       querySnapshot.forEach((doc: any) => {
         const { id, name, price, description, category } = doc.data();

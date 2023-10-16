@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
-import { Menu } from "../services/classes"
-import orderServices from "../services/orderServices/orderServices";
+import { Menu } from "@/services/classes";
+import orderServices from "@/services/orderServices/orderServices";
 
 export const useOrderStore = defineStore("orders", {
   state: () => ({
@@ -29,7 +29,7 @@ export const useOrderStore = defineStore("orders", {
     removeFromOrder(index: number) {
       this.orderItems.splice(index, 1);
       console.log(this.orderItems);
-      
+
       this.saveOrderToLocalStorage();
     },
     clearOrder() {

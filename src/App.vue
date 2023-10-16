@@ -7,6 +7,5 @@
 /*
    imports
 */
-import HeaderComponent from "./common-templates/HeaderComponent.vue";
-
+import HeaderComponent from "@/common-templates/HeaderComponent.vue";
 </script>

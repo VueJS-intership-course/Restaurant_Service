@@ -3,40 +3,42 @@
     <div>
       <h1>Admin Panel Page</h1>
     </div>
-    <ButtonComponent @click="panelChange">{{ viewName }}</ButtonComponent>
-    <div v-if="section">
-      <RegisterForm />
+    <div class="routes-wrapper">
+      <RouterLink :to="{ name: 'registerEmployee' }">Add Employee</RouterLink>
+      <RouterLink :to="{ name: 'usersList' }">Users List</RouterLink>
     </div>
-    <div v-else>
-      <UsersList />
-    </div>
+    <RouterView></RouterView>
   </div>
 </template>
 
-<script setup lang="ts">
-import ButtonComponent from "../../common-templates/ButtonComponent.vue";
-import RegisterForm from "./RegisterForm.vue";
-import UsersList from "./UsersList.vue";
-import { ref, computed } from "vue";
-import type { Ref } from "vue";
-
-const section: Ref<boolean> = ref(true);
-
-const panelChange = () => {
-  section.value = !section.value;
-};
-
-const viewName = computed(() => {
-  return section.value ? "Employees list" : "Create an Empoyee";
-});
-</script>
+<script setup lang="ts"></script>
 
 <style scoped lang="scss">
+@import "../../styles/variables";
 .wrapper {
   margin: auto;
   display: flex;
   width: 40%;
   flex-direction: column;
   align-items: center;
+}
+
+.routes-wrapper {
+  display: flex;
+  gap: 2rem;
+}
+
+a {
+  text-decoration: none;
+  padding: 1rem 2rem;
+  background-color: $yellow;
+  color: black;
+  border-radius: 1rem;
+  border: 2px solid transparent;
+}
+
+.active {
+  background-color: $light-yellow;
+  border: 2px solid $green;
 }
 </style>

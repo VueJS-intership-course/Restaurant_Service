@@ -6,6 +6,8 @@ import EmployeeLoginPage from "../pages/Authentication/EmployeeLoginPage.vue";
 import MenuPage from "../pages/MenuPage/MenuComponent.vue";
 import OrdersPage from "../pages/OrderPage/OrdersPage.vue";
 import { usersStore } from "../store/usersStore";
+import RegisterForm from "../pages/AdminPanelPage/RegisterForm.vue";
+import UsersList from "../pages/AdminPanelPage/UsersList.vue";
 
 const routes = [
   {
@@ -23,6 +25,10 @@ const routes = [
     name: "controlPanel",
     component: AdminPanelPage,
     meta: { requireAuth: true },
+    children: [
+      { path: "register-employee", name: "registerEmployee", component: RegisterForm },
+      { path: "users-list", name: "usersList", component: UsersList },
+    ],
   },
   {
     path: "/login",

@@ -34,6 +34,12 @@ const routes = [
     path: "/login",
     name: "employeeLogin",
     component: EmployeeLoginPage,
+    beforeEnter: () => {
+      const store = usersStore();
+      if (store.currentUser) {
+        router.push({ name: "menu" });
+      }
+    },
   },
   {
     path: "/menu",

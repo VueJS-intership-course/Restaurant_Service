@@ -17,13 +17,14 @@ export const useOrderStore = defineStore("orders", {
           groupedOrders.set(order.id, { ...order, count: 1 });
         }
       }
+      console.log(Array.from(groupedOrders.values()));
+
       return Array.from(groupedOrders.values());
     },
   },
   actions: {
     addToOrder(dish: Menu) {
       this.orderItems.push(dish);
-      console.log(dish);
       this.saveOrderToLocalStorage();
     },
     removeFromOrder(index: number) {
@@ -52,3 +53,4 @@ export const useOrderStore = defineStore("orders", {
     },
   },
 });
+

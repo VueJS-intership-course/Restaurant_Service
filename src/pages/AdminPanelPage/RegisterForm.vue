@@ -5,32 +5,22 @@
   <Form @submit="register" :validation-schema="schema">
     <div>
       <label>Username</label>
-      <!-- prettier-ignore -->
       <Field type="text" name="username" />
       <ErrorMessage name="username" />
     </div>
     <div>
       <label>Email:</label>
-      <!-- prettier-ignore -->
-      <Field type="email" name="email"  />
+      <Field type="email" name="email" />
       <ErrorMessage name="email" />
     </div>
     <div>
       <label>Password:</label>
-      <!-- prettier-ignore -->
-      <Field
-        name="password"
-        type="password"
-      />
+      <Field name="password" type="password" />
       <ErrorMessage name="password" />
     </div>
     <div>
       <label>Repeat Password:</label>
-      <!-- prettier-ignore -->
-      <Field
-        name="repeatPassword"
-        type="password"
-      />
+      <Field name="repeatPassword" type="password" />
       <ErrorMessage name="repeatPassword" />
     </div>
     <div>
@@ -84,6 +74,7 @@ const register = (values: FormInputs, { resetForm }) => {
     resetForm();
   } catch (error) {
     alert(error);
+    // Add toastify
   }
 };
 </script>

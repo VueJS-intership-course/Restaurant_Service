@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import { Menu } from "../services/menuServices/menuServices";
+import { Menu } from "../services/classes"
 import orderServices from "../services/orderServices/orderServices";
 
 export const useOrderStore = defineStore("orders", {

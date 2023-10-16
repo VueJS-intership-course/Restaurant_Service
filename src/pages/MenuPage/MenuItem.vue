@@ -32,7 +32,7 @@
 <script setup lang="ts">
 import { useProductStore } from "../../store/productStore";
 import { useOrderStore } from "../../store/orderStore";
-import { Menu } from "../../services/menuServices/menuServices";
+import { Menu } from "../../services/classes";
 import EditProductModal from "./EditProductModal.vue";
 import showNotification from "../../utils/notifications";
 import ButtonComponent from "../../common-templates/ButtonComponent.vue";

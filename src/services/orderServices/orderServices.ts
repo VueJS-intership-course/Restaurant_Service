@@ -1,13 +1,5 @@
 import fireBaseData from '../firebaseConfig';
-import { Menu } from '../menuServices/menuServices';
-
-export class Orders {
-  constructor(
-    public status: 'pending' | 'done' | 'confirmed',
-    public items: Menu[],
-    public createdAt: Date,
-  ) {}
-}
+import { Orders } from '../classes';
 
 function validateOrders(order: Orders) {
   if (!order.status) {

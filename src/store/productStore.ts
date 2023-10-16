@@ -1,6 +1,7 @@
 import { defineStore } from "pinia";
-import menuServices, { Menu } from "../services/menuServices/menuServices.ts";
+import menuServices from "../services/menuServices/menuServices.ts";
 import { usersStore } from "./usersStore.ts";
+import { Menu } from "../services/classes.ts";
 
 export const useProductStore = defineStore({
   id: "productStore",

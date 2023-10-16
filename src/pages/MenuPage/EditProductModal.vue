@@ -31,11 +31,13 @@
 import { computed } from "vue";
 import { useProductStore } from "../../store/productStore.ts";
 import ButtonComponent from "../../common-templates/ButtonComponent.vue";
+import showNotification from "../../utils/notifications";
 
 const store = useProductStore();
 const editedProduct = computed(() => store.editedProduct);
 
 const saveEditedProductClicked = () => {
+  showNotification(`${editedProduct.value.name} has been edited successfully`)
   store.editProduct(editedProduct.value);
   store.isEditing = false;
   store.resetEditedProduct();

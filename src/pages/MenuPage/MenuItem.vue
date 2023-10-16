@@ -39,6 +39,7 @@ import ButtonComponent from "../../common-templates/ButtonComponent.vue";
 
 const { product } = defineProps(["product"]);
 
+
 const store = useProductStore();
 const orderStore = useOrderStore();
 
@@ -48,9 +49,13 @@ const addToCartClicked = (product: Menu) => {
 };
 
 const editProductClicked = () => {
+  showNotification(`${product.name} is being edited(local)`);
+  store.getProductList();
+  store.resetEditedProduct();
   store.isEditing = true;
   store.editedProductId = product.id;
   store.editedProduct = { ...product };
+
 };
 
 const deleteProductClicked = () => {

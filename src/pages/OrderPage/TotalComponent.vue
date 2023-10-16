@@ -48,6 +48,7 @@ const makeOrder = () => {
     createdAt: new Date(),
   };
 
+  localStorage.removeItem('user');
   orderStore.handleFinishOrder(order);
 };
 </script>

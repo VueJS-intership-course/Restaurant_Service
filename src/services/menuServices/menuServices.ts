@@ -4,7 +4,7 @@ export class Menu {
   constructor(
     public id: string,
     public name: string,
-    public price: number,
+    public price: number | String,
     public description: string,
     public category: string
   ) {}
@@ -19,7 +19,7 @@ function validateMenu(menuItem: Menu) {
     throw new Error("Add proper description for the dish!");
   }
 
-  if (!menuItem.price || menuItem.price < 0) {
+  if (typeof menuItem.price === "number" && menuItem.price < 0) {
     throw new Error("Add valid and non negative price for the dish!");
   }
 }
@@ -28,7 +28,9 @@ export default {
   async getAll() {
     try {
       const data: Menu[] = [];
-      const querySnapshot = await fireBaseData.fireStore.collection("menu").get();
+      const querySnapshot = await fireBaseData.fireStore
+        .collection("menu")
+        .get();
 
       querySnapshot.forEach((doc: any) => {
         const { id, name, price, description, category } = doc.data();
@@ -60,45 +62,36 @@ export default {
   },
 
   async deleteProduct(product: Menu) {
-    fireBaseData.fireStore
+    const querySnapshot = await fireBaseData.fireStore
       .collection("menu")
       .where("id", "==", product.id)
-      .get()
-      .then((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-          doc.ref
-            .delete()
-            .then(() => {
-              console.log("Done deleting");
-            })
-            .catch((error) => {
-              console.error("Error removing item: ", error);
-            });
-        });
-      });
+      .get();
+    if (querySnapshot.docs.length > 0) {
+      const doc = querySnapshot.docs[0];
+      try {
+        await doc.ref.delete();
+      } catch (error) {
+        console.error("Error removing item: ", error);
+      }
+    }
   },
 
   async editProduct(product: Menu) {
-    fireBaseData.fireStore
+    const querySnapshot = await fireBaseData.fireStore
       .collection("menu")
       .where("id", "==", product.id)
-      .get()
-      .then((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-          doc.ref
-            .update({
-              name: product.name,
-              price: product.price,
-              description: product.description,
-              category: product.category,
-            })
-            .then(() => {
-              console.log("Done editing");
-            })
-            .catch((error) => {
-              console.error("Error removing item: ", error);
-            });
-        });
+      .get();
+
+    const doc = querySnapshot.docs[0];
+    try {
+      await doc.ref.update({
+        name: product.name,
+        price: product.price,
+        description: product.description,
+        category: product.category,
       });
+    } catch (error) {
+      console.error("Error editing item: ", error);
+    }
   },
 };

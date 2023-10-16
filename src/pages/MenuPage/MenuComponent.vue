@@ -14,7 +14,6 @@
     </div>
     <MenuList />
     <AddProductModal v-if="showAddModal" />
-    <EditProductModal v-if="isEditing" />
   </div>
 </template>
 
@@ -25,7 +24,6 @@ import CategoryFilter from "./CategoryFilter.vue";
 import SearchInput from "./SearchInput.vue";
 import MenuList from "./MenuList.vue";
 import AddProductModal from "./AddProductModal.vue";
-import EditProductModal from "./EditProductModal.vue";
 import ButtonComponent from "../../common-templates/ButtonComponent.vue";
 
 const store = useProductStore();
@@ -35,7 +33,6 @@ const showAddProductModal = () => {
   store.showAddModal = true;
 };
 
-const isEditing = computed(() => store.isEditing);
 const showAddModal = computed(() => store.showAddModal);
 </script>
 

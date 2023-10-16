@@ -1,17 +1,17 @@
 <template>
-  <div v-if="isAdmin" class="cart-page"> 
-    <AdminView/>
+  <div v-if="isAdmin" class="cart-page">
+    <AdminView />
   </div>
   <div v-else class="cart-page">
-    <CartComponent/>
-    <TotalComponent class="total"/>
+    <CartComponent />
+    <TotalComponent class="total" />
   </div>
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted } from 'vue';
+import { computed } from 'vue';
 import { useOrderStore } from '../../store/orderStore.ts';
-import {usersStore} from '../../store/usersStore'
+import { usersStore } from '../../store/usersStore';
 import CartComponent from './CartComponent.vue';
 import AdminView from './AdminView.vue';
 import TotalComponent from './TotalComponent.vue';
@@ -21,12 +21,10 @@ const userStore = usersStore();
 
 const isAdmin = computed(() => userStore.currentUser);
 
-onMounted(() => {
-  const orderData = localStorage.getItem('orderData');
-  if (orderData) {
-    orderStore.loadOrderFromLocalStorage();
-  }
-});
+const orderData = localStorage.getItem('orderData');
+if (orderData) {
+  orderStore.loadOrderFromLocalStorage();
+}
 </script>
 
 <style scoped lang="scss">

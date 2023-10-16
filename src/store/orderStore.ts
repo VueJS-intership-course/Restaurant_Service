@@ -1,6 +1,6 @@
-import { defineStore } from "pinia";
-import { Menu } from "../services/menuServices/menuServices";
-import orderServices from "../services/orderServices/orderServices";
+import { defineStore } from 'pinia';
+import { Menu } from '../services/menuServices/menuServices';
+import orderServices from '../services/orderServices/orderServices';
 
 export const useOrderStore = defineStore('orders', {
   state: () => ({
@@ -17,24 +17,24 @@ export const useOrderStore = defineStore('orders', {
           groupedOrders.set(order.id, { ...order, count: 1 });
         }
       }
+      console.log(Array.from(groupedOrders.values()));
+
       return Array.from(groupedOrders.values());
     },
   },
   actions: {
     addToOrder(dish: Menu) {
       this.orderItems.push(dish);
-      console.log(dish);
       this.saveOrderToLocalStorage();
     },
     removeFromOrder(index: number) {
       this.orderItems.splice(index, 1);
-      console.log(this.orderItems);
-      
+      // this.orderItems = this.orderItems.filter((_, i) => i !== index);
       this.saveOrderToLocalStorage();
     },
     clearOrder() {
       this.orderItems = [];
-      localStorage.removeItem('orderData')
+      localStorage.removeItem('orderData');
     },
     handleFinishOrder(order: any) {
       orderServices.finishOrder(order);

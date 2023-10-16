@@ -15,10 +15,10 @@
             <span class="notification">{{ mealCounter(order.id) }}</span>
           </div>
           <div class="buttons">
-            <button @click="handleAddMeal(order.id)" class="remove-button">
+            <button @click="handleAddMeal(order.id, order.name)" class="remove-button">
               +
             </button>
-            <button @click="handleRemoveMeal(order.id)" class="remove-button">
+            <button @click="handleRemoveMeal(order.id, order.name)" class="remove-button">
               -
             </button>
           </div>
@@ -30,10 +30,9 @@
 
 <script setup lang="ts">
 import { useOrderStore } from '../../store/orderStore.ts';
-import { useProductStore } from '../../store/productStore.ts';
+import showNotification from "../../utils/notifications";
 
 const orderStore = useOrderStore();
-const productStore = useProductStore();
 
 const mealCounter = (mealId: string) => {
   const count = orderStore.orderItems.filter(
@@ -42,20 +41,22 @@ const mealCounter = (mealId: string) => {
   return count;
 };
 
-const handleAddMeal = (mealId: string) => {
-  const [index] = productStore.products.filter((order) => order.id === mealId);
-
+const handleAddMeal = (mealId: string, meal: string) => {
+  const [index] = orderStore.orderItems.filter((product) => product.id === mealId);
+  console.log(index);
+  
   if (index) {
     orderStore.addToOrder(index);
+    showNotification(`${meal} has been added to cart.`)
   }
-}
+};
 
-const handleRemoveMeal = (mealId: string) => {
-
+const handleRemoveMeal = (mealId: string, meal: string) => {
   const index = orderStore.orderItems.findIndex((order) => order.id === mealId);
-  if (index !== -1) {
 
+  if (index !== -1) {
     orderStore.removeFromOrder(index);
+    showNotification(`${meal} has been removed from cart.`)
   }
 };
 </script>

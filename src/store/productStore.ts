@@ -1,7 +1,7 @@
 import { defineStore } from "pinia";
-import menuServices from "../services/menuServices/menuServices.ts";
-import { usersStore } from "./usersStore.ts";
-import { Menu } from "../services/classes.ts";
+import menuServices from "@/services/menuServices/menuServices.ts";
+import { usersStore } from "@/store/usersStore.ts";
+import { Menu } from "@/services/classes.ts";
 
 export const useProductStore = defineStore({
   id: "productStore",
@@ -94,23 +94,15 @@ export const useProductStore = defineStore({
       if (!this.products || this.selectedCategory === "all") {
         return this.products.filter(
           (product) =>
-            product.name
-              .toLowerCase()
-              .includes(this.searchQuery.toLowerCase()) ||
-            product.description
-              .toLowerCase()
-              .includes(this.searchQuery.toLowerCase())
+            product.name.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
+            product.description.toLowerCase().includes(this.searchQuery.toLowerCase())
         );
       }
       return this.products.filter(
         (product) =>
           product.category === this.selectedCategory &&
-          (product.name
-            .toLowerCase()
-            .includes(this.searchQuery.toLowerCase()) ||
-            product.description
-              .toLowerCase()
-              .includes(this.searchQuery.toLowerCase()))
+          (product.name.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
+            product.description.toLowerCase().includes(this.searchQuery.toLowerCase()))
       );
     },
 

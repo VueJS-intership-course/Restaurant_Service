@@ -12,7 +12,7 @@
         </RouterLink>
       </li>
       <li v-if="store.currentUser">
-         <span>{{ store.currentUser.email }}</span>
+        <span>{{ store.currentUser.email }}</span>
       </li>
       <li>
         <RouterLink :to="'/control-panel'" class="navbar-link">
@@ -35,7 +35,9 @@
         </RouterLink>
       </li>
       <li>
-        <ButtonComponent v-if="isLoggedIn" @click="logout" class="default-button-small">Logout</ButtonComponent>
+        <ButtonComponent v-if="isLoggedIn" @click="logout" class="default-button-small"
+          >Logout</ButtonComponent
+        >
       </li>
     </ul>
   </nav>
@@ -45,25 +47,24 @@
 /*
    imports
 */
-import userServices from '../services/userServices/userServices'
-import ButtonComponent from './ButtonComponent.vue';
-import { computed } from 'vue';
-import { usersStore } from '../store/usersStore';
-import { useRouter } from 'vue-router';
+import userServices from "@/services/userServices/userServices";
+import ButtonComponent from "@/common-templates/ButtonComponent.vue";
+import { computed } from "vue";
+import { usersStore } from "@/store/usersStore";
+import { useRouter } from "vue-router";
 
 /*
     router
 */
 const router = useRouter();
 
-
 /*
    logout
 */
 const logout = async () => {
   await userServices.logout();
-  router.push({ path: '/' })
-}
+  router.push({ path: "/" });
+};
 
 /*
    store
@@ -75,9 +76,8 @@ const store = usersStore();
    Change in authentication
 */
 
-const isLoggedIn = computed(() => store.currentUser !== null)
+const isLoggedIn = computed(() => store.currentUser !== null);
 </script>
-
 
 <style scoped lang="scss">
 @import "../styles/_variables.scss";

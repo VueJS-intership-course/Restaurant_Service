@@ -14,9 +14,7 @@
         </select>
       </div>
       <div class="button-container">
-        <ButtonComponent
-          btnStyle="default-button-green"
-          @click="saveEditedProductClicked"
+        <ButtonComponent btnStyle="default-button-green" @click="saveEditedProductClicked"
           >Save</ButtonComponent
         >
         <ButtonComponent btnStyle="button-danger" @click="cancelEditClicked"
@@ -29,15 +27,15 @@
 
 <script setup lang="ts">
 import { computed } from "vue";
-import { useProductStore } from "../../store/productStore.ts";
-import ButtonComponent from "../../common-templates/ButtonComponent.vue";
-import showNotification from "../../utils/notifications";
+import { useProductStore } from "@/store/productStore.ts";
+import ButtonComponent from "@/common-templates/ButtonComponent.vue";
+import showNotification from "@/utils/notifications";
 
 const store = useProductStore();
 const editedProduct = computed(() => store.editedProduct);
 
 const saveEditedProductClicked = () => {
-  showNotification(`${editedProduct.value.name} has been edited successfully`)
+  showNotification(`${editedProduct.value.name} has been edited successfully`);
   store.editProduct(editedProduct.value);
   store.isEditing = false;
   store.resetEditedProduct();

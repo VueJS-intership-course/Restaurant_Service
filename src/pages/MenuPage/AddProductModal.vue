@@ -14,9 +14,7 @@
         </select>
       </div>
       <div class="button-container">
-        <ButtonComponent
-          btnStyle="default-button-green"
-          @click="addProductClicked"
+        <ButtonComponent btnStyle="default-button-green" @click="addProductClicked"
           >Add</ButtonComponent
         >
         <ButtonComponent btnStyle="button-danger" @click="cancelAddClicked"
@@ -29,9 +27,9 @@
 
 <script setup lang="ts">
 import { ref } from "vue";
-import { useProductStore } from "../../store/productStore.ts";
-import ButtonComponent from "../../common-templates/ButtonComponent.vue";
-import showNotification from "../../utils/notifications";
+import { useProductStore } from "@/store/productStore.ts";
+import ButtonComponent from "@/common-templates/ButtonComponent.vue";
+import showNotification from "@/utils/notifications";
 
 const store = useProductStore();
 const newProduct = ref(store.newProduct);

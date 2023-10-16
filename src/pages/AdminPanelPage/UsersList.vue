@@ -21,7 +21,7 @@
 import { ref } from "vue";
 import type { Ref } from "vue";
 import { onMounted } from "vue";
-import { usersStore } from "../../store/usersStore";
+import { usersStore } from "@/store/usersStore";
 
 // const users = ref();
 

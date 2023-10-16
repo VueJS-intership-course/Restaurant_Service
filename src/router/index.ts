@@ -1,13 +1,13 @@
 import { createRouter, createWebHistory } from "vue-router";
-import HomePage from "../pages/HomePage.vue";
-import AboutUsPage from "../pages/AboutUsPage.vue";
-import AdminPanelPage from "../pages/AdminPanelPage/AdminPanelPage.vue";
-import EmployeeLoginPage from "../pages/Authentication/EmployeeLoginPage.vue";
-import MenuPage from "../pages/MenuPage/MenuComponent.vue";
-import OrdersPage from "../pages/OrderPage/OrdersPage.vue";
-import { usersStore } from "../store/usersStore";
-import RegisterForm from "../pages/AdminPanelPage/RegisterForm.vue";
-import UsersList from "../pages/AdminPanelPage/UsersList.vue";
+import HomePage from "@/pages/HomePage.vue";
+import AboutUsPage from "@/pages/AboutUsPage.vue";
+import AdminPanelPage from "@/pages/AdminPanelPage/AdminPanelPage.vue";
+import EmployeeLoginPage from "@/pages/Authentication/EmployeeLoginPage.vue";
+import MenuPage from "@/pages/MenuPage/MenuComponent.vue";
+import OrdersPage from "@/pages/OrderPage/OrdersPage.vue";
+import { usersStore } from "@/store/usersStore";
+import RegisterForm from "@/pages/AdminPanelPage/RegisterForm.vue";
+import UsersList from "@/pages/AdminPanelPage/UsersList.vue";
 
 const routes = [
   {

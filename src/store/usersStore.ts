@@ -1,8 +1,8 @@
 import { defineStore } from "pinia";
-import userServices from "../services/userServices/userServices";
-import firebase from "firebase/compat/app"; 
-import "firebase/compat/auth"; 
-import { Employee } from "../services/classes";
+import userServices from "@/services/userServices/userServices";
+import firebase from "firebase/compat/app";
+import "firebase/compat/auth";
+import { Employee } from "@/services/classes";
 
 export const usersStore = defineStore({
   id: "usersStore",

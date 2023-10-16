@@ -14,7 +14,7 @@
 <script setup lang="ts"></script>
 
 <style scoped lang="scss">
-@import "../../styles/variables";
+@import "@/styles/variables";
 .wrapper {
   margin: auto;
   display: flex;

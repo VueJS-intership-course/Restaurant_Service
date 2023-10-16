@@ -32,9 +32,9 @@
 </template>
 
 <script setup lang="ts">
-import ButtonComponent from "../../common-templates/ButtonComponent.vue";
-import { usersStore } from "../../store/usersStore";
-import userServices from "../../services/userServices/userServices";
+import ButtonComponent from "@/common-templates/ButtonComponent.vue";
+import { usersStore } from "@/store/usersStore";
+import userServices from "@/services/userServices/userServices";
 
 // import { RuleExpression } from "vee-validate";
 import { Field, Form, ErrorMessage } from "vee-validate";

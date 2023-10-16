@@ -13,11 +13,11 @@
    imports
 */
 
-import CardComponent from "../common-templates/CardComponent.vue";
+import CardComponent from "@/common-templates/CardComponent.vue";
 </script>
 
 <style scoped lang="scss">
-@import "../styles/variables";
+@import "@/styles/variables";
 
 h1 {
   font-size: xx-large;

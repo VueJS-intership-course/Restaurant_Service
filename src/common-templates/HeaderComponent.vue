@@ -17,7 +17,7 @@
       <li v-if="store.currentUser">
         <span>{{ store.currentUser.email }}</span>
       </li>
-      <li>
+      <li v-if="!store.client?.name">
         <RouterLink :to="'/control-panel'" class="navbar-link">
           <span>Admin Panel</span>
         </RouterLink>

@@ -24,7 +24,6 @@ const cartStore = useCartStore();
 const orderList = computed(() => cartStore.orderItems);
 cartStore.loadClientOrder();
 
-
 </script>
 
 <style lang="scss">

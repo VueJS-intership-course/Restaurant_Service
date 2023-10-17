@@ -1,26 +1,31 @@
 <template>
-  <div class="product-list">
-    <div v-for="product in filteredProducts" :key="`${product.id}-${product.name}`">
+    <div class="product-list">
+      <div v-for="product in filteredProducts" :key="generateUniqueKey()">
       <menu-item :product="product" />
+      </div>
     </div>
-  </div>
-</template>
+  </template>
+  
+  <script setup lang="ts">
+  import { computed } from 'vue';
+  import { useProductStore } from '../../store/productStore.ts';
+  import MenuItem from './MenuItem.vue';
 
-<script setup lang="ts">
-import { computed } from "vue";
-import { useProductStore } from "@/store/productStore.ts";
-import MenuItem from "@/pages/MenuPage/MenuItem.vue";
+  const store = useProductStore();
+  const filteredProducts = computed(() => store.filteredProducts);
+  
+  const generateUniqueKey = () => {
+  return crypto.randomUUID();
+};
 
-const store = useProductStore();
-const filteredProducts = computed(() => store.filteredProducts);
-</script>
-
-<style scoped lang="scss">
-@import "@/styles/_variables.scss";
-.product-list {
-  display: flex;
-  flex-direction: column;
-  align-items: left;
-  margin-left: 30px;
-}
-</style>
+  </script>
+  
+  <style scoped lang="scss">
+  @import '../../styles/_variables.scss';
+  .product-list {
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    margin-left: 30px;
+  }
+  </style>

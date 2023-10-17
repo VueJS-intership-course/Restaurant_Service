@@ -76,17 +76,6 @@ export const useProductStore = defineStore({
         category: "main dishes",
       };
     },
-
-    resetEditedProduct() {
-      this.editedProduct = {
-        id: "",
-        name: "",
-        price: "",
-        description: "",
-        category: "main dishes",
-      };
-      this.editedProductId = "";
-    },
   },
 
   getters: {
@@ -108,6 +97,10 @@ export const useProductStore = defineStore({
 
     isAdmin() {
       return usersStore().currentUser;
+    },
+
+    modalVisibility(): boolean {
+      return this.isEditing || this.showAddModal;
     },
   },
 });

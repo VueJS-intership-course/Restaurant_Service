@@ -1,15 +1,15 @@
 <template>
   <div class="cart-container">
     <h1>Orders</h1>
-    <div v-if="cartStore.orderItems.length === 0" class="empty-orders">
+    <div v-if="orderItems.length === 0" class="empty-orders">
       No orders placed!
     </div>
-    <div v-if="cartStore.orderItems.length > 0" v-for="order in cartStore.orderItems" class="meal-container">
+    <div v-if="orderItems.length > 0" v-for="order in orderItems" :key="order.clientId" class="meal-container">
       <div class="cart-item">
-        <span>Client: {{ order.name }}</span>
-        <span>Order: {{ order.id }} </span>
-        <span>Created at: {{ order.price }} </span>
-        <span>Status of order: {{ order.description }}</span>
+        <span>Client: {{ order.clientId }}</span>
+        <span>Order: {{ order.items }} </span>
+        <span>Created at: {{ order.createdAt }} </span>
+        <span>Status of order: {{ order.status }}</span>
       </div>
     </div>
   </div>
@@ -19,6 +19,12 @@
 import { useCartStore } from '../../store/orderStore.ts';
 
 const cartStore = useCartStore();
+
+cartStore.loadClientOrder();
+
+const orderItems = cartStore.orderItems;
+console.log(orderItems);
+
 </script>
 
 <style lang="scss">

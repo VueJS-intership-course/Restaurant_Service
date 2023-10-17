@@ -18,9 +18,11 @@
 
 <script setup lang="ts">
 import { computed } from 'vue';
-import {useCartStore} from '../../store/orderStore.ts'
+import {useCartStore} from '../../store/orderStore.ts';
+import {usersStore} from '@/store/usersStore.ts';
 
 const cartStore = useCartStore();
+const userStore = usersStore();
 
 const calculateTotalSum = computed((): number => {
   let total: number = 0;
@@ -38,14 +40,14 @@ const handleClearOrder = () => {
 };
 
 const makeOrder = () => {
-  const possibleStatus = ['pending', 'done', 'confirmed'];
-  const randomIndex = Math.floor(Math.random() * possibleStatus.length);
-  const randomStatus = possibleStatus[randomIndex];
+
+  const user = userStore.client;
 
   const order = {
-    status: randomStatus,
+    status: 'pending',
     items: cartStore.uniqueOrders,
     createdAt: new Date(),
+    clientId: user?.phone
   };
 
   localStorage.removeItem('user');

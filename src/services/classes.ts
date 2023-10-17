@@ -15,6 +15,7 @@ export class Orders {
         public status: 'pending' | 'done' | 'confirmed',
         public items: Menu[],
         public createdAt: Date,
+        public clientId?: string
     ) { }
 }
 

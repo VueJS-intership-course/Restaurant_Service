@@ -5,20 +5,16 @@
     </div>
     <form @submit="onSubmit">
       <div>
-        <label>Username:</label>
-        <BasicInput name="username" />
+        <BasicInput name="username" label="Username" />
       </div>
       <div>
-        <label>Email:</label>
-        <BasicInput name="email" type="email" />
+        <BasicInput name="email" type="email" label="Email" />
       </div>
       <div>
-        <label>Password:</label>
-        <BasicInput name="password" type="password" />
+        <BasicInput name="password" type="password" label="Password" />
       </div>
       <div>
-        <label>Repeat Password:</label>
-        <BasicInput name="passwordConfirm" type="password" />
+        <BasicInput name="passwordConfirm" type="password" label="Repeat Password" />
       </div>
       <div>
         <ButtonComponent btn-style="default-button-small">Register</ButtonComponent>
@@ -99,27 +95,7 @@ form {
   }
 }
 
-span {
-  position: absolute;
-  color: red;
-  left: 0%;
-}
-
 h3 {
   color: $yellow;
-}
-
-input {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  min-width: 12rem;
-}
-
-label {
-  font-size: larger;
-  text-align: center;
-  color: white;
-  font-weight: bold;
 }
 </style>

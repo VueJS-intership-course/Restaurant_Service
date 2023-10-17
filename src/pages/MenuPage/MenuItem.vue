@@ -20,10 +20,6 @@
       v-if="store.isAdmin"
       >Delete</ButtonComponent
     >
-
-    <edit-product-modal
-      v-if="store.isEditing && product.id === store.editedProductId"
-    ></edit-product-modal>
   </div>
 </template>
 
@@ -31,9 +27,9 @@
 import { useProductStore } from "@/store/productStore";
 import { useCartStore } from "@/store/orderStore.ts";
 import { Menu } from "@/services/classes";
-import EditProductModal from "@/pages/MenuPage/EditProductModal.vue";
 import showNotification from "@/utils/notifications";
 import ButtonComponent from "@/common-templates/ButtonComponent.vue";
+
 
 const { product } = defineProps(["product"]);
 
@@ -46,9 +42,6 @@ const addToCartClicked = (product: Menu) => {
 };
 
 const editProductClicked = () => {
-  showNotification(`${product.name} is being edited(local)`);
-  store.getProductList();
-  store.resetEditedProduct();
   store.isEditing = true;
   store.editedProductId = product.id;
   store.editedProduct = { ...product };

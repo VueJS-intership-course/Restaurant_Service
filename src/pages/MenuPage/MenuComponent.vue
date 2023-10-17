@@ -14,18 +14,18 @@
       </ButtonComponent>
     </div>
     <MenuList />
-    <AddProductModal v-if="showAddModal" />
+    <ModalComponent v-if="store.modalVisibility"/>
   </div>
 </template>
 
 <script setup lang="ts">
-import { computed } from "vue";
+// import { computed } from "vue";
 import { useProductStore } from "@/store/productStore.ts";
 import CategoryFilter from "@/pages/MenuPage/CategoryFilter.vue";
 import SearchInput from "@/pages/MenuPage/SearchInput.vue";
 import MenuList from "@/pages/MenuPage/MenuList.vue";
-import AddProductModal from "@/pages/MenuPage/AddProductModal.vue";
 import ButtonComponent from "@/common-templates/ButtonComponent.vue";
+import ModalComponent from "@/pages/MenuPage/ModalComponent.vue";
 
 const store = useProductStore();
 store.getProductList();
@@ -34,7 +34,7 @@ const showAddProductModal = () => {
   store.showAddModal = true;
 };
 
-const showAddModal = computed(() => store.showAddModal);
+// const showAddModal = computed(() => store.showAddModal);
 </script>
 
 <style scoped lang="scss">

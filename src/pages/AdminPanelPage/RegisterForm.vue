@@ -48,16 +48,19 @@ interface FormInputs {
 }
 
 const schema = yup.object({
-  email: yup.string().email().required(),
-  username: yup.string().required().min(4, "Username must be at least 4 symbols!"),
+  email: yup.string().email("Enter a valid email!").required("This field is required!"),
+  username: yup
+    .string()
+    .required("This field is required!")
+    .min(4, "Username must be at least 4 symbols!"),
   password: yup
     .string()
     .min(8, "Password must be at least 8 symbols!")
     .required("This field is required!"),
   repeatPassword: yup
     .string()
-    .required()
-    .oneOf([yup.ref("password")], "Passwords does not match"),
+    .required("This field is required!")
+    .oneOf([yup.ref("password")], "Passwords does not match!"),
 });
 
 const store = usersStore();

@@ -6,15 +6,18 @@
       </RouterLink>
     </div>
     <ul>
+      <li v-if="store.client?.name">
+        <h2>Hello, {{ store.client.name}}</h2>
+      </li>
       <li>
-        <RouterLink v-if="!isLoggedIn" :to="'/login'" class="navbar-link">
+        <RouterLink v-if="!isLoggedIn && !store.client?.name" :to="'/login'" class="navbar-link">
           <span>Login</span>
         </RouterLink>
       </li>
       <li v-if="store.currentUser">
         <span>{{ store.currentUser.email }}</span>
       </li>
-      <li>
+      <li v-if="!store.client?.name">
         <RouterLink :to="'/control-panel'" class="navbar-link">
           <span>Admin Panel</span>
         </RouterLink>
@@ -35,9 +38,7 @@
         </RouterLink>
       </li>
       <li>
-        <ButtonComponent v-if="isLoggedIn" @click="logout" class="default-button-small"
-          >Logout</ButtonComponent
-        >
+        <ButtonComponent v-if="isLoggedIn || store.client?.name" @click="logout" class="default-button-small">Logout</ButtonComponent>
       </li>
     </ul>
   </nav>
@@ -53,6 +54,7 @@ import { computed } from "vue";
 import { usersStore } from "@/store/usersStore";
 import { useRouter } from "vue-router";
 
+
 /*
     router
 */
@@ -63,6 +65,7 @@ const router = useRouter();
 */
 const logout = async () => {
   await userServices.logout();
+  store.clearClient()
   router.push({ path: "/" });
 };
 
@@ -77,6 +80,9 @@ const store = usersStore();
 */
 
 const isLoggedIn = computed(() => store.currentUser !== null);
+
+store.getClientDataFromlocal()
+
 </script>
 
 <style scoped lang="scss">
@@ -113,6 +119,7 @@ nav {
   .active {
     text-decoration: underline !important;
   }
+
   .logo {
     height: 100px;
   }

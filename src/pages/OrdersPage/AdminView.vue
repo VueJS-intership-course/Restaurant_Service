@@ -1,6 +1,10 @@
 <template>
   <div class="cart-container">
     <h1>Orders</h1>
+    <div v-if="orderList.length === 0" class="empty-orders">
+      No orders placed!
+    </div>
+    <div v-if="orderList.length > 0" v-for="order in orderList" :key="order.clientId" class="meal-container">
     <div v-if="ordersList.length === 0" class="empty-orders">No orders placed!</div>
     <div
       v-if="ordersList.length > 0"
@@ -24,7 +28,9 @@ import { useCartStore } from "../../store/orderStore.ts";
 
 const cartStore = useCartStore();
 
+const orderList = computed(() => cartStore.orderItems);
 cartStore.loadClientOrder();
+
 
 const ordersList = computed(() => cartStore.orderItems);
 

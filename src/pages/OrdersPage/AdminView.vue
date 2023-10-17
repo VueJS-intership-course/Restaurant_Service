@@ -11,7 +11,7 @@
       <div class="cart-item">
         <span>Client: {{ order.clientId }}</span>
         <span>Order items: {{ order.items.length }} </span>
-        <span>Created at: {{ order.createdAt }} </span>
+        <span>Created at: {{ order.createdAt.seconds }} </span>
         <span>Status of order: {{ order.status }}</span>
       </div>
     </div>
@@ -28,8 +28,8 @@ cartStore.loadClientOrder();
 
 const ordersList = computed(() => cartStore.orderItems);
 
-const orderItems = cartStore.orderItems;
-console.log(orderItems);
+// const orderItems = cartStore.orderItems;
+// console.log(orderItems);
 </script>
 
 <style lang="scss">

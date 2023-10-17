@@ -5,9 +5,16 @@
       No orders placed!
     </div>
     <div v-if="orderList.length > 0" v-for="order in orderList" :key="order.clientId" class="meal-container">
+    <div v-if="ordersList.length === 0" class="empty-orders">No orders placed!</div>
+    <div
+      v-if="ordersList.length > 0"
+      v-for="order in ordersList"
+      :key="order.clientId"
+      class="meal-container"
+    >
       <div class="cart-item">
         <span>Client: {{ order.clientId }}</span>
-        <span>Order: {{ order.items }} </span>
+        <span>Order items: {{ order.items.length }} </span>
         <span>Created at: {{ order.createdAt }} </span>
         <span>Status of order: {{ order.status }}</span>
       </div>
@@ -16,14 +23,19 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
-import { useCartStore } from '../../store/orderStore.ts';
+import { computed } from "vue";
+import { useCartStore } from "../../store/orderStore.ts";
 
 const cartStore = useCartStore();
 
 const orderList = computed(() => cartStore.orderItems);
 cartStore.loadClientOrder();
 
+
+const ordersList = computed(() => cartStore.orderItems);
+
+const orderItems = cartStore.orderItems;
+console.log(orderItems);
 </script>
 
 <style lang="scss">
@@ -36,7 +48,7 @@ cartStore.loadClientOrder();
 
   .empty-orders {
     font-size: 24px;
-      color: #555;
+    color: #555;
   }
 
   .meal-container {
@@ -49,13 +61,12 @@ cartStore.loadClientOrder();
 
     .cart-item {
       display: flex;
-          justify-content: space-between;
-          align-items: center;
-          padding: 15px;
-          width: 350px;
-          height: 50px;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px;
+      width: 350px;
+      height: 50px;
     }
-
   }
 }
 </style>

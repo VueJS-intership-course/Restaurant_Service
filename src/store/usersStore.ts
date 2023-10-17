@@ -5,8 +5,8 @@ import "firebase/compat/auth";
 import { Employee } from "@/services/classes";
 
 interface User {
-  name: string,
-  phone: string
+  name: string;
+  phone: string;
 }
 
 export const usersStore = defineStore({
@@ -14,13 +14,16 @@ export const usersStore = defineStore({
   state: () => ({
     userList: [] as Employee[],
     currentUser: {} as firebase.User | null,
-    client: {} as User | null
+    client: {} as User | null,
   }),
 
   getters: {
     isClientEmpty(state) {
-      return state.client !== null
-    }
+      return state.client !== null;
+    },
+    getCurrentClient(state) {
+      return state.client;
+    },
   },
   actions: {
     async getAllUsers() {
@@ -32,15 +35,15 @@ export const usersStore = defineStore({
     },
 
     getClientDataFromlocal() {
-      const clientCreden = localStorage.getItem('user');
+      const clientCreden = localStorage.getItem("user");
       if (clientCreden) {
         this.client = JSON.parse(clientCreden);
       }
     },
 
     clearClient() {
-      localStorage.removeItem('user');
-      this.client = null
-    }
+      localStorage.removeItem("user");
+      this.client = null;
+    },
   },
 });

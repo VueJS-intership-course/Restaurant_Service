@@ -1,10 +1,10 @@
 <template>
   <div class="cart-container">
     <h1>Orders</h1>
-    <div v-if="orderItems.length === 0" class="empty-orders">
+    <div v-if="orderList.length === 0" class="empty-orders">
       No orders placed!
     </div>
-    <div v-if="orderItems.length > 0" v-for="order in orderItems" :key="order.clientId" class="meal-container">
+    <div v-if="orderList.length > 0" v-for="order in orderList" :key="order.clientId" class="meal-container">
       <div class="cart-item">
         <span>Client: {{ order.clientId }}</span>
         <span>Order: {{ order.items }} </span>
@@ -16,14 +16,14 @@
 </template>
 
 <script setup lang="ts">
+import { computed } from 'vue';
 import { useCartStore } from '../../store/orderStore.ts';
 
 const cartStore = useCartStore();
 
+const orderList = computed(() => cartStore.orderItems);
 cartStore.loadClientOrder();
 
-const orderItems = cartStore.orderItems;
-console.log(orderItems);
 
 </script>
 

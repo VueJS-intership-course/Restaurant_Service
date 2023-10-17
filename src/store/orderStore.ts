@@ -50,8 +50,8 @@ export const useCartStore = defineStore("orders", {
     saveOrderToLocalStorage() {
       localStorage.setItem("orderData", JSON.stringify(this.cartItems));
     },
-    async loadClientOrder() {
-      const clientOrder = await orderServices.getOrder();
+    loadClientOrder() {
+      const clientOrder = orderServices.getOrder();
       console.log(clientOrder);
       
       if (clientOrder) {

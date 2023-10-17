@@ -17,25 +17,19 @@
 </template>
 
 <script setup lang="ts">
-// import userServices from "../../services/userServices/userServices";
 import { ref } from "vue";
 import type { Ref } from "vue";
-import { onMounted } from "vue";
 import { usersStore } from "@/store/usersStore";
-
-// const users = ref();
 
 const store = usersStore();
 
 const columnLabels: Ref<string[]> = ref(["Username", "Email", "ID"]);
 
-onMounted(async () => {
-  store.getAllUsers();
-});
+store.getAllUsers();
 </script>
 
 <style lang="scss" scoped>
-@import "../../styles/variables";
+@import "@/styles/variables";
 
 li {
   list-style-type: none;

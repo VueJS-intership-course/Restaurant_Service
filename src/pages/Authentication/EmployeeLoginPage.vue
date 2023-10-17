@@ -1,29 +1,23 @@
 <template>
   <ErrorModal v-if="errorMsg" :error-msg="errorMsg" @close-modal="closeModal"></ErrorModal>
-  <Form @submit="signIn">
+  <Form @submit="signIn" :validation-schema="schema">
     <div>
       <h1>Sign In</h1>
     </div>
     <div class="form-inputs">
       <div class="form-inputs_username">
         <label for="email">Email:</label>
-        <Field type="email" name="email" :rules="emailRules as RuleExpression<unknown>" />
+        <Field type="email" name="email" />
         <ErrorMessage name="email" />
       </div>
       <div class="form-inputs_password">
         <label for="password">Password:</label>
-        <Field
-          name="password"
-          type="password"
-          :rules="passwordRules as RuleExpression<unknown>"
-        />
+        <Field name="password" type="password" />
         <ErrorMessage name="password" />
       </div>
     </div>
     <div class="form-controls">
-      <button-component type="submit" btn-style="default-button-small"
-        >Submit</button-component
-      >
+      <button-component type="submit" btn-style="default-button-small">Submit</button-component>
     </div>
   </Form>
 </template>
@@ -36,8 +30,9 @@ import { ref } from "vue";
 import ButtonComponent from "@/common-templates/ButtonComponent.vue";
 import userServices from "@/services/userServices/userServices";
 import { useRouter } from "vue-router";
-import { Field, Form, ErrorMessage, GenericObject, RuleExpression } from "vee-validate";
+import { Field, Form, ErrorMessage, GenericObject } from "vee-validate";
 import ErrorModal from "@/common-templates/ErrorModal.vue";
+import * as yup from 'yup';
 
 /*
     router
@@ -51,26 +46,14 @@ const router = useRouter();
 
 const errorMsg = ref<string>("");
 
-const emailRules = (value: string) => {
-  if (!value) {
-    return "Email field is required!";
-  }
-  const regex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
-  if (!regex.test(value)) {
-    return "Invalid email entered!";
-  }
-  return true;
-};
+const schema = yup.object({
+  email: yup.string().email("Enter a valid email!").required("This field is required!"),
+  password: yup
+    .string()
+    .min(8, "Password must be at least 8 symbols!")
+    .required("This field is required!"),
+});
 
-const passwordRules = (value: string) => {
-  if (!value) {
-    return "Password field is required!";
-  }
-  if (value.length < 8) {
-    return "Password must be at least 8 symbols!";
-  }
-  return true;
-};
 
 /*
     sign in
@@ -102,17 +85,7 @@ h1 {
 }
 
 form {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 1rem;
-  padding: 3rem 6rem;
-  background-color: $green;
-  position: absolute;
-  top: 35%;
-  left: 40%;
-  border-radius: 8%;
+  @include client-form;
 
   span {
     color: red;

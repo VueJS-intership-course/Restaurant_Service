@@ -2,10 +2,10 @@
   <div class="cart-container">
     <h1>Your Cart</h1>
     <div class="cart-items">
-      <div v-if="orderStore.uniqueOrders.length === 0" class="empty-cart">
+      <div v-if="cartStore.uniqueOrders.length === 0" class="empty-cart">
         Your cart is empty
       </div>
-      <div v-else class="meal-container" v-for="order in orderStore.uniqueOrders" :key="order.id">
+      <div v-else class="meal-container" v-for="order in cartStore.uniqueOrders" :key="order.id">
         <div class="cart-item">
           <div class="item-info">
             <span class="item-name">{{ order.name }}</span>
@@ -29,33 +29,33 @@
 </template>
 
 <script setup lang="ts">
-import { useOrderStore } from '../../store/orderStore.ts';
+import { useCartStore } from '../../store/orderStore.ts';
 import showNotification from "../../utils/notifications";
 
-const orderStore = useOrderStore();
+const cartStore = useCartStore();
 
 const mealCounter = (mealId: string) => {
-  const count = orderStore.orderItems.filter(
+  const count = cartStore.cartItems.filter(
     (order) => order.id === mealId
   ).length;
   return count;
 };
 
 const handleAddMeal = (mealId: string, meal: string) => {
-  const index = orderStore.orderItems.find((product) => product.id === mealId);
+  const index = cartStore.cartItems.find((product) => product.id === mealId);
   console.log(index);
   
   if (index) {
-    orderStore.addToOrder(index);
+    cartStore.addToCart(index);
     showNotification(`${meal} has been added to cart.`)
   }
 };
 
 const handleRemoveMeal = (mealId: string, meal: string) => {
-  const index = orderStore.orderItems.findIndex((order) => order.id === mealId);
+  const index = cartStore.cartItems.findIndex((order) => order.id === mealId);
 
   if (index !== -1) {
-    orderStore.removeFromOrder(index);
+    cartStore.removeFromCart(index);
     showNotification(`${meal} has been removed from cart.`)
   }
 };

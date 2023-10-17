@@ -10,20 +10,25 @@
 
 <script setup lang="ts">
 import { computed } from 'vue';
-import { useOrderStore } from '../../store/orderStore.ts';
+import { useCartStore } from '../../store/orderStore.ts';
 import { usersStore } from '../../store/usersStore';
 import CartComponent from './CartComponent.vue';
 import AdminView from './AdminView.vue';
 import TotalComponent from './TotalComponent.vue';
 
-const orderStore = useOrderStore();
+const cartStore = useCartStore();
 const userStore = usersStore();
 
 const isAdmin = computed(() => userStore.currentUser);
 
 const orderData = localStorage.getItem('orderData');
 if (orderData) {
-  orderStore.loadOrderFromLocalStorage();
+  cartStore.loadOrderFromLocalStorage();
+}
+
+const clientOrder = localStorage.getItem('orderData');
+if (clientOrder) {
+  cartStore.loadClientOrderFromLocalStorage();
 }
 </script>
 

@@ -21,5 +21,5 @@ export default {
     } catch (error) {
       console.error("Error placing the order:", error);
     }
-  },
+  }
 };

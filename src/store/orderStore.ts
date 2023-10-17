@@ -2,56 +2,64 @@ import { defineStore } from "pinia";
 import { Menu } from "@/services/classes";
 import orderServices from "@/services/orderServices/orderServices";
 
-export const useOrderStore = defineStore("orders", {
+export const useCartStore = defineStore("orders", {
   state: () => ({
-    orderItems: [] as Menu[],
+    cartItems: [] as Menu[],
+    orderItems: []
   }),
   getters: {
     uniqueOrders: (state) => {
-      const groupedOrders = new Map();
-      for (const order of state.orderItems) {
-        if (groupedOrders.has(order.id)) {
-          const existingOrder = groupedOrders.get(order.id);
+      
+      const groupedOrders = state.cartItems.reduce((acc, order) => {
+        if (acc.has(order.id)) {
+          const existingOrder = acc.get(order.id);
           existingOrder.count++;
         } else {
-          groupedOrders.set(order.id, { ...order, count: 1 });
+          acc.set(order.id, { ...order, count: 1 })
         }
-      }
+        return acc;
+      }, new Map())
 
       console.log(Array.from(groupedOrders.values()));
 
       return Array.from(groupedOrders.values()).sort((a, b) => a.name.localeCompare(b.name));
-    },
+    }
   },
   actions: {
-    addToOrder(dish: Menu) {
-      this.orderItems.push(dish);
+    addToCart(dish: Menu) {
+      this.cartItems.push(dish);
       this.saveOrderToLocalStorage();
     },
-    removeFromOrder(index: number) {
-      this.orderItems.splice(index, 1);
-      console.log(this.orderItems);
+    removeFromCart(index: number) {
+      this.cartItems.splice(index, 1);
+      console.log(this.cartItems);
 
       this.saveOrderToLocalStorage();
     },
-    clearOrder() {
-      this.orderItems = [];
+    clearCart() {
+      this.cartItems = [];
       localStorage.removeItem("orderData");
     },
     handleFinishOrder(order: any) {
       orderServices.finishOrder(order);
-      this.orderItems = [];
+      this.cartItems = [];
       localStorage.removeItem("orderData");
     },
     loadOrderFromLocalStorage() {
       const orderData = localStorage.getItem("orderData");
       if (orderData) {
-        this.orderItems = JSON.parse(orderData);
+        this.cartItems = JSON.parse(orderData);
       }
     },
     saveOrderToLocalStorage() {
-      localStorage.setItem("orderData", JSON.stringify(this.orderItems));
+      localStorage.setItem("orderData", JSON.stringify(this.cartItems));
     },
+    loadClientOrderFromLocalStorage() {
+      const clientOrder = localStorage.getItem('orderData');
+      if (clientOrder) {
+        this.orderItems = JSON.parse(clientOrder);
+      }
+    }
   },
 });
 

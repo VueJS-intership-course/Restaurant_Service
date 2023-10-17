@@ -18,14 +18,14 @@
 
 <script setup lang="ts">
 import { computed } from 'vue';
-import { useOrderStore } from '../../store/orderStore';
+import {useCartStore} from '../../store/orderStore.ts'
 
-const orderStore = useOrderStore();
+const cartStore = useCartStore();
 
 const calculateTotalSum = computed((): number => {
   let total: number = 0;
 
-  for (const order of orderStore.orderItems) {
+  for (const order of cartStore.cartItems) {
     if (typeof order.price === 'number') {
       total = total + order.price;
     }
@@ -34,7 +34,7 @@ const calculateTotalSum = computed((): number => {
 });
 
 const handleClearOrder = () => {
-  orderStore.clearOrder();
+  cartStore.clearCart();
 };
 
 const makeOrder = () => {
@@ -44,12 +44,12 @@ const makeOrder = () => {
 
   const order = {
     status: randomStatus,
-    items: orderStore.uniqueOrders,
+    items: cartStore.uniqueOrders,
     createdAt: new Date(),
   };
 
   localStorage.removeItem('user');
-  orderStore.handleFinishOrder(order);
+  cartStore.handleFinishOrder(order);
 };
 </script>
 

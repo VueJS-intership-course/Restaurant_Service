@@ -29,7 +29,7 @@
 
 <script setup lang="ts">
 import { useProductStore } from "@/store/productStore";
-import { useOrderStore } from "@/store/orderStore";
+import { useCartStore } from "@/store/orderStore.ts";
 import { Menu } from "@/services/classes";
 import EditProductModal from "@/pages/MenuPage/EditProductModal.vue";
 import showNotification from "@/utils/notifications";
@@ -38,10 +38,10 @@ import ButtonComponent from "@/common-templates/ButtonComponent.vue";
 const { product } = defineProps(["product"]);
 
 const store = useProductStore();
-const orderStore = useOrderStore();
+const cartStore = useCartStore();
 
 const addToCartClicked = (product: Menu) => {
-  orderStore.addToOrder(product);
+  cartStore.addToCart(product);
   showNotification(`${product.name} has been added to the cart.`);
 };
 

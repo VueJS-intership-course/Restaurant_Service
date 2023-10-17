@@ -31,7 +31,7 @@ export const usersStore = defineStore({
       this.currentUser = user;
     },
 
-    getItemsFromLocal() {
+    getClientDataFromlocal() {
       const clientCreden = localStorage.getItem('user');
       if (clientCreden) {
         this.client = JSON.parse(clientCreden);

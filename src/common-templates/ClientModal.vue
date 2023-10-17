@@ -24,23 +24,48 @@
 </template>
 
 <script setup lang="ts">
+/*
+   imports
+*/
 import { Field, Form, ErrorMessage, GenericObject } from "vee-validate";
 import ButtonComponent from "./ButtonComponent.vue";
 import { useRouter } from "vue-router";
 import * as yup from "yup";
 import { usersStore } from "@/store/usersStore";
 
+/*
+   emits
+*/
+
 const emits = defineEmits(["close-modal"]);
+
+/*
+    router
+*/
+
 const router = useRouter();
+
+/*
+   store
+*/
 const userStore = usersStore()
+
+
+/*
+   handling client data
+*/
 
 const handleSubmit = <T extends GenericObject>(values: T) => {
     localStorage.setItem("user", JSON.stringify(values));
-    userStore.getItemsFromLocal()
+    userStore.getClientDataFromlocal()
     emits("close-modal");
     router.push({ name: "menu" });
 };
 
+
+/*
+    validation schema
+*/
 const schema = yup.object({
     name: yup
         .string()

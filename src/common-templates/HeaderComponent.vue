@@ -10,7 +10,7 @@
         <h2>Hello, {{ store.client.name}}</h2>
       </li>
       <li>
-        <RouterLink v-if="!isLoggedIn" :to="'/login'" class="navbar-link">
+        <RouterLink v-if="!isLoggedIn && !store.client?.name" :to="'/login'" class="navbar-link">
           <span>Login</span>
         </RouterLink>
       </li>
@@ -38,7 +38,7 @@
         </RouterLink>
       </li>
       <li>
-        <ButtonComponent v-if="isLoggedIn" @click="logout" class="default-button-small">Logout</ButtonComponent>
+        <ButtonComponent v-if="isLoggedIn || store.client?.name" @click="logout" class="default-button-small">Logout</ButtonComponent>
       </li>
     </ul>
   </nav>
@@ -65,6 +65,7 @@ const router = useRouter();
 */
 const logout = async () => {
   await userServices.logout();
+  store.clearClient()
   router.push({ path: "/" });
 };
 
@@ -80,7 +81,7 @@ const store = usersStore();
 
 const isLoggedIn = computed(() => store.currentUser !== null);
 
-store.getItemsFromLocal()
+store.getClientDataFromlocal()
 
 </script>
 

@@ -19,9 +19,7 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import { useOrderStore } from '../../store/orderStore';
-import { usersStore } from '@/store/usersStore';
 
-const userStore = usersStore()
 const orderStore = useOrderStore();
 
 const calculateTotalSum = computed((): number => {
@@ -50,7 +48,6 @@ const makeOrder = () => {
     createdAt: new Date(),
   };
 
-  userStore.clearClient()
   orderStore.handleFinishOrder(order);
 };
 </script>

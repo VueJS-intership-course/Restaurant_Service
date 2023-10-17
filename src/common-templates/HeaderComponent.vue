@@ -6,6 +6,9 @@
       </RouterLink>
     </div>
     <ul>
+      <li v-if="store.client?.name">
+        <h2>Hello, {{ store.client.name}}</h2>
+      </li>
       <li>
         <RouterLink v-if="!isLoggedIn" :to="'/login'" class="navbar-link">
           <span>Login</span>
@@ -35,9 +38,7 @@
         </RouterLink>
       </li>
       <li>
-        <ButtonComponent v-if="isLoggedIn" @click="logout" class="default-button-small"
-          >Logout</ButtonComponent
-        >
+        <ButtonComponent v-if="isLoggedIn" @click="logout" class="default-button-small">Logout</ButtonComponent>
       </li>
     </ul>
   </nav>
@@ -52,6 +53,7 @@ import ButtonComponent from "@/common-templates/ButtonComponent.vue";
 import { computed } from "vue";
 import { usersStore } from "@/store/usersStore";
 import { useRouter } from "vue-router";
+
 
 /*
     router
@@ -77,6 +79,9 @@ const store = usersStore();
 */
 
 const isLoggedIn = computed(() => store.currentUser !== null);
+
+store.getItemsFromLocal()
+
 </script>
 
 <style scoped lang="scss">
@@ -113,6 +118,7 @@ nav {
   .active {
     text-decoration: underline !important;
   }
+
   .logo {
     height: 100px;
   }

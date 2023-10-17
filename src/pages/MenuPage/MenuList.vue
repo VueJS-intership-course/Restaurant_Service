@@ -1,6 +1,6 @@
 <template>
   <div class="product-list">
-    <div v-for="product in filteredProducts" :key="product.id">
+    <div v-for="product in filteredProducts" :key="`${product.id}-${product.name}`">
       <menu-item :product="product" />
     </div>
   </div>

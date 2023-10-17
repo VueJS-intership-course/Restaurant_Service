@@ -3,7 +3,7 @@ import "vue3-toastify/dist/index.css";
 
 const showNotification = (msg: string) => {
   toast(msg, {
-    autoClose: 600,
+    autoClose: 1000,
   });
 };
 

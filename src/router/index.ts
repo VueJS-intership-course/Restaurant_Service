@@ -50,6 +50,11 @@ const routes = [
     path: "/orders",
     name: "orders",
     component: OrdersPage,
+    beforeEnter: () => {
+      const store = usersStore();
+      const client = store.client?.name;
+      if (!client) router.push({ name: "entry" });
+    },
   },
 ];
 

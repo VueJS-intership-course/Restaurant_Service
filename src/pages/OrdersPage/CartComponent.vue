@@ -5,7 +5,12 @@
       <div v-if="cartStore.uniqueOrders.length === 0" class="empty-cart">
         Your cart is empty
       </div>
-      <div v-else class="meal-container" v-for="order in cartStore.uniqueOrders" :key="order.id">
+      <div
+        v-else
+        class="meal-container"
+        v-for="order in cartStore.uniqueOrders"
+        :key="order.id"
+      >
         <div class="cart-item">
           <div class="item-info">
             <span class="item-name">{{ order.name }}</span>
@@ -15,9 +20,7 @@
             <span class="notification">{{ mealCounter(order.id) }}</span>
           </div>
           <div class="buttons">
-            <button @click="handleAddMeal(order.id, order.name)" class="add-button">
-              +
-            </button>
+            <button @click="handleAddMeal(order.id, order.name)" class="add-button">+</button>
             <button @click="handleRemoveMeal(order.id, order.name)" class="remove-button">
               -
             </button>
@@ -29,25 +32,22 @@
 </template>
 
 <script setup lang="ts">
-import { useCartStore } from '../../store/orderStore.ts';
+import { useCartStore } from "../../store/orderStore.ts";
 import showNotification from "../../utils/notifications";
 
 const cartStore = useCartStore();
 
 const mealCounter = (mealId: string) => {
-  const count = cartStore.cartItems.filter(
-    (order) => order.id === mealId
-  ).length;
+  const count = cartStore.cartItems.filter((order) => order.id === mealId).length;
   return count;
 };
 
 const handleAddMeal = (mealId: string, meal: string) => {
   const index = cartStore.cartItems.find((product) => product.id === mealId);
-  console.log(index);
-  
+
   if (index) {
     cartStore.addToCart(index);
-    showNotification(`${meal} has been added to cart.`)
+    showNotification(`${meal} has been added to cart.`);
   }
 };
 
@@ -56,7 +56,7 @@ const handleRemoveMeal = (mealId: string, meal: string) => {
 
   if (index !== -1) {
     cartStore.removeFromCart(index);
-    showNotification(`${meal} has been removed from cart.`)
+    showNotification(`${meal} has been removed from cart.`);
   }
 };
 </script>

@@ -16,10 +16,9 @@ export default {
     try {
       validateOrders(order);
 
-      console.log(order);
       await fireBaseData.fireStore.collection("orders").doc().set(order);
     } catch (error) {
       console.error("Error placing the order:", error);
     }
-  }
+  },
 };

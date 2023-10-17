@@ -22,7 +22,7 @@ export const usersStore = defineStore({
       return state.client !== null;
     },
     getCurrentClient(state) {
-      return state.client;
+      if (state.client !== null) return state.client;
     },
   },
   actions: {

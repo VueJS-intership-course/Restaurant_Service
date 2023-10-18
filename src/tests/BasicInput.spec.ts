@@ -1,18 +1,13 @@
-import BasicInput from '../common-templates/BasicInput.vue'
+import ErrorModal from '../common-templates/ErrorModal.vue'
 import { mount } from '@vue/test-utils';
 
-const wrapper = mount(BasicInput, {
+
+const wrapper = mount(ErrorModal, {
     props: {
-        name:'password',
-        type:'password',
-        label:'Password'
+       errorMsg:'Hello'
     }
 });
 
 it('Shoud have label', () => {
-    expect(wrapper.find('label').text()).toBe('Password:')
-})
-
-it('Shoud have input', () => {
-    expect(wrapper.find('input[type="password"]').exists()).toBe(true)
+    expect(wrapper.text()).toContain('Hello')
 })

@@ -1,11 +1,20 @@
+/** @type {import('ts-jest').JestConfigWithTsJest} */
 module.exports = {
-  transform: {
-    "^.+\\.vue$": "@vue/vue3-jest",
-    "^.+\\.jsx?$": "babel-jest",
-  },
   testEnvironment: "jsdom",
-  testEnvironmentOptions: {
-    customExportConditions: ["node", "node-addons"],
+  transform: {
+    "^.+\\.(js|jsx|ts|tsx)$": "babel-jest",
+    "^.+\\.(ts|tsx)?$": "ts-jest",
+    "^.+\\.vue$": "@vue/vue3-jest"
   },
-  snapshotSerializers: ["jest-serializer-vue"],
+  testRegex: "(/src/tests/.*|(\\.|/)(test|spec))\\.(js|ts)$",
+  moduleFileExtensions: ["vue", "js", "ts"],
+  moduleNameMapper: {
+      "^@/(.*)$": "<rootDir>/src/$1",
+  },
+  coveragePathIgnorePatterns: ["/node_modules/", "/tests/"],
+  coverageReporters: ["text", "json-summary"],
+  testEnvironmentOptions: {
+      customExportConditions: ["node", "node-addons"],
+  },
+  transformIgnorePatterns: ["/node_modules/(?!vue-loading-spinner)"]
 };

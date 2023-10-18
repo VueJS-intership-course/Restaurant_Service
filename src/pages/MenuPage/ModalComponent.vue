@@ -4,11 +4,26 @@
       <h2>{{ modalTitle }}</h2>
       <Form @submit="saveClicked" :validationSchema="productSchema">
         <div class="input-container">
-          <Field name="productName" type="text" v-model="product.name" placeholder="Name" />
+          <Field
+            name="productName"
+            type="text"
+            v-model="product.name"
+            placeholder="Name"
+          />
           <ErrorMessage name="productName" />
-          <Field name="productPrice" type="number" v-model.number="product.price" placeholder="Price" />
+          <Field
+            name="productPrice"
+            type="number"
+            v-model.number="product.price"
+            placeholder="Price"
+          />
           <ErrorMessage name="productPrice" />
-          <Field name="productDescription" type="text" v-model="product.description" placeholder="Description" />
+          <Field
+            name="productDescription"
+            type="text"
+            v-model="product.description"
+            placeholder="Description"
+          />
           <ErrorMessage name="productDescription" />
 
           <select v-model="product.category">
@@ -19,13 +34,19 @@
           </select>
         </div>
 
-        <input type="file" placeholder="Post product image" @change="handleProductImage">
+        <input
+          type="file"
+          placeholder="Post product image"
+          @change="handleProductImage"
+        />
 
         <div class="button-container">
           <ButtonComponent btnStyle="default-button-green">{{
             saveButtonText
           }}</ButtonComponent>
-          <ButtonComponent btnStyle="button-danger" @click="reset">Cancel</ButtonComponent>
+          <ButtonComponent btnStyle="button-danger" @click="reset"
+            >Cancel</ButtonComponent
+          >
         </div>
       </Form>
     </div>
@@ -78,12 +99,12 @@ const reset = () => {
   product.value = store.isEditing ? store.editedProduct : store.newProduct;
 };
 
-const handleProductImage = (event:any) => {
+const handleProductImage = (event: any) => {
   const file = event.target.files[0];
-  if(file) {
-    product.value.imgSrc = file
+  if (file) {
+    product.value.imgSrc = file;
   }
-}
+};
 </script>
 
 <style scoped lang="scss">
@@ -91,6 +112,9 @@ const handleProductImage = (event:any) => {
 
 span {
   color: red;
+  margin: 0;
+  padding: 0;
+  font-size: 13px;
 }
 
 .product-modal {
@@ -109,7 +133,7 @@ span {
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-  height: 400px;
+  height: 450px;
   width: 300px;
   text-align: center;
   position: relative;

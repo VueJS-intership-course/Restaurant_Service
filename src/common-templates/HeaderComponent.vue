@@ -38,7 +38,7 @@
         </RouterLink>
       </li>
       <li>
-        <ButtonComponent v-if="isLoggedIn || store.client?.name" @click="logout" class="default-button-small">Logout</ButtonComponent>
+        <ButtonComponent v-if="isLoggedIn || store.client?.name" id="logout" @click="logout" class="default-button-small">Logout</ButtonComponent>
       </li>
     </ul>
   </nav>

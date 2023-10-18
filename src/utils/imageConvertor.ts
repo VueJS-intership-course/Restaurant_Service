@@ -1,9 +1,9 @@
 import firebase from "firebase/compat/app";
 import 'firebase/storage'
 
-function uploadImage(file:File, collectionName:string) {
+function uploadImage(file:File,) {
     const storageRef = firebase.storage().ref();
-    const collectionRef = storageRef.child(collectionName); 
+    const collectionRef = storageRef.child('products/subdirectory' + file.name); 
   
     if (file.size > 1024 * 1024) {
       console.log('Image size bigger 1MB limit');

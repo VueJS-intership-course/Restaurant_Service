@@ -5,7 +5,8 @@ export class Menu {
         public name: string,
         public price: number | String,
         public description: string,
-        public category: string
+        public category: string,
+        public imgSrc: string
     ) { }
 }
 

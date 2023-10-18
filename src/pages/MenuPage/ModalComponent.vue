@@ -63,9 +63,11 @@ import * as yup from "yup";
 const store = useProductStore();
 const product = ref(store.newProduct);
 const show = computed(() => store.modalVisibility);
+
 const modalTitle = computed(() =>
   store.isEditing ? "Edit Product" : "Add New Product"
 );
+
 const saveButtonText = computed(() => (store.isEditing ? "Save" : "Add"));
 
 const productSchema = yup.object({

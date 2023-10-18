@@ -19,7 +19,6 @@
 </template>
 
 <script setup lang="ts">
-// import { computed } from "vue";
 import { useProductStore } from "@/store/productStore.ts";
 import CategoryFilter from "@/pages/MenuPage/CategoryFilter.vue";
 import SearchInput from "@/pages/MenuPage/SearchInput.vue";
@@ -33,8 +32,6 @@ store.getProductList();
 const showAddProductModal = () => {
   store.showAddModal = true;
 };
-
-// const showAddModal = computed(() => store.showAddModal);
 </script>
 
 <style scoped lang="scss">

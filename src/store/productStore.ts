@@ -17,6 +17,7 @@ export const useProductStore = defineStore({
       price: "",
       description: "",
       category: "main dishes",
+      imgSrc: {} as File | null
     },
     newProduct: {
       id: "",
@@ -24,6 +25,7 @@ export const useProductStore = defineStore({
       price: "",
       description: "",
       category: "main dishes",
+      imgSrc:{} as File | null
     },
     showAddModal: false,
     showEditModal: false,
@@ -38,9 +40,9 @@ export const useProductStore = defineStore({
       }
     },
 
-    async addProduct(product: Menu) {
+    async addProduct(product: Menu, file:File) {
       try {
-        await menuServices.addProduct(product);
+        await menuServices.addProduct(product, file);
         await this.getProductList();
         this.showAddModal = false;
       } catch (error) {
@@ -74,6 +76,7 @@ export const useProductStore = defineStore({
         price: "",
         description: "",
         category: "main dishes",
+        imgSrc:null
       };
     },
   },

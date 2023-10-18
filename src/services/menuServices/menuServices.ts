@@ -1,4 +1,5 @@
 import fireBaseData from "@/services/firebaseConfig";
+import uploadImage from "@/utils/imageConvertor";
 
 export class Menu {
   constructor(
@@ -6,7 +7,8 @@ export class Menu {
     public name: string,
     public price: number | String,
     public description: string,
-    public category: string
+    public category: string,
+    public imgSrc?: File 
   ) {}
 }
 
@@ -31,8 +33,8 @@ export default {
       const querySnapshot = await fireBaseData.fireStore.collection("menu").get();
 
       querySnapshot.forEach((doc: any) => {
-        const { id, name, price, description, category } = doc.data();
-        const menu = new Menu(id, name, price, description, category);
+        const { id, name, price, description, category, imgSrc } = doc.data();
+        const menu = new Menu(id, name, price, description, category, imgSrc);
         data.push(menu);
       });
       return data;
@@ -42,9 +44,12 @@ export default {
     }
   },
 
-  async addProduct(product: Menu) {
+  async addProduct(product: Menu, file:File) {
     try {
       validateMenu(product);
+
+       
+      const blobImg =  await uploadImage(file, 'menu');
 
       await fireBaseData.fireStore.collection("menu").add({
         id: product.id,
@@ -52,6 +57,7 @@ export default {
         price: product.price,
         description: product.description,
         category: product.category,
+        imgSrc: blobImg,
       });
     } catch (error) {
       console.error("Error validating menu item:", error);

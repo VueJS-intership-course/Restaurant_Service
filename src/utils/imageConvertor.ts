@@ -20,12 +20,11 @@ function uploadImage(file: File,): Promise<string> {
       console.log('Image uploaded successfully.');
       snapshot.ref.getDownloadURL().then(downloadURL => {
         resolve(downloadURL);
-      }).catch(error => {
-        reject(error);
+      }).catch(_ => {
+        return
       });
-    }).catch(error => {
-      console.error(error);
-      reject(error);
+    }).catch(_ => {
+      return
     });
   });
 }

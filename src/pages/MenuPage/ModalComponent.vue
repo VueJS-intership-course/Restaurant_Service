@@ -4,26 +4,11 @@
       <h2>{{ modalTitle }}</h2>
       <Form @submit="saveClicked" :validationSchema="productSchema">
         <div class="input-container">
-          <Field
-            name="productName"
-            type="text"
-            v-model="product.name"
-            placeholder="Name"
-          />
+          <Field name="productName" type="text" v-model="product.name" placeholder="Name" />
           <ErrorMessage name="productName" />
-          <Field
-            name="productPrice"
-            type="number"
-            v-model.number="product.price"
-            placeholder="Price"
-          />
+          <Field name="productPrice" type="number" v-model.number="product.price" placeholder="Price" />
           <ErrorMessage name="productPrice" />
-          <Field
-            name="productDescription"
-            type="text"
-            v-model="product.description"
-            placeholder="Description"
-          />
+          <Field name="productDescription" type="text" v-model="product.description" placeholder="Description" />
           <ErrorMessage name="productDescription" />
 
           <select v-model="product.category">
@@ -33,13 +18,14 @@
             <option value="drinks">Drinks</option>
           </select>
         </div>
+
+        <input type="file" placeholder="Post product image" @change="handleProductImage">
+
         <div class="button-container">
           <ButtonComponent btnStyle="default-button-green">{{
             saveButtonText
           }}</ButtonComponent>
-          <ButtonComponent btnStyle="button-danger" @click="reset"
-            >Cancel</ButtonComponent
-          >
+          <ButtonComponent btnStyle="button-danger" @click="reset">Cancel</ButtonComponent>
         </div>
       </Form>
     </div>
@@ -80,7 +66,7 @@ const saveClicked = () => {
   if (store.isEditing) {
     store.editProduct(product.value);
   } else {
-    store.addProduct(product.value);
+    store.addProduct(product.value, product.value.imgSrc as File);
   }
   reset();
 };
@@ -91,6 +77,13 @@ const reset = () => {
   store.showAddModal = false;
   product.value = store.isEditing ? store.editedProduct : store.newProduct;
 };
+
+const handleProductImage = (event:any) => {
+  const file = event.target.files[0];
+  if(file) {
+    product.value.imgSrc = file
+  }
+}
 </script>
 
 <style scoped lang="scss">
@@ -99,6 +92,7 @@ const reset = () => {
 span {
   color: red;
 }
+
 .product-modal {
   display: flex;
   align-items: center;

@@ -46,6 +46,7 @@ export default {
         price: product.price,
         description: product.description,
         category: product.category,
+        imgSrc: blobImg
       });
     } catch (error) {
       console.error("Error validating menu item:", error);

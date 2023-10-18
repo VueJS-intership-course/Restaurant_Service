@@ -2,7 +2,7 @@
   <div v-if="isAdmin" class="cart-page">
     <AdminView />
   </div>
-  <div v-else class="cart-page">
+  <div v-if="!isAdmin" class="cart-page">
     <CartComponent />
     <TotalComponent class="total" />
   </div>

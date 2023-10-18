@@ -5,7 +5,7 @@ import orderServices from "@/services/orderServices/orderServices";
 export const useCartStore = defineStore("orders", {
   state: () => ({
     cartItems: [] as Menu[],
-    orderItems: [] as Orders[] 
+    orderItems: [] as Orders[]
   }),
   getters: {
     uniqueOrders: (state) => {
@@ -50,14 +50,22 @@ export const useCartStore = defineStore("orders", {
     saveOrderToLocalStorage() {
       localStorage.setItem("orderData", JSON.stringify(this.cartItems));
     },
-    loadClientOrder() {
-      const clientOrder = orderServices.getOrder();
+    async loadClientOrder() {
+      const clientOrder = await orderServices.getOrder();
       console.log(clientOrder);
       
       if (clientOrder) {
         this.orderItems = clientOrder;
       }
     },
+    async confirmOrder(order: Orders) {
+      order.status = "confirmed";
+      await orderServices.updateOrderStatus(order);
+    },
+    async deliverOrder(order: Orders) {
+      order.status = "delivered";
+      await orderServices.updateOrderStatus(order);
+    }
   },
 });
 

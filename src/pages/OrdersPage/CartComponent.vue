@@ -44,7 +44,7 @@ const mealCounter = (mealId: string) => {
 const handleAddMeal = (mealId: string, meal: string) => {
   const index = cartStore.cartItems.find((product) => product.id === mealId);
   console.log(index);
-  
+
   if (index) {
     cartStore.addToCart(index);
     showNotification(`${meal} has been added to cart.`)
@@ -139,6 +139,7 @@ const handleRemoveMeal = (mealId: string, meal: string) => {
             cursor: pointer;
             transition: background-color 0.3s;
           }
+
           .remove-button {
             background-color: #dc3545;
             color: white;

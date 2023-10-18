@@ -12,7 +12,7 @@ export class Menu {
 
 export class Orders {
     constructor(
-        public status: 'pending' | 'done' | 'confirmed',
+        public status: 'pending' | 'delivered' | 'confirmed',
         public items: Menu[],
         public createdAt: Date,
         public clientId?: string

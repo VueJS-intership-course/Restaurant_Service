@@ -15,7 +15,6 @@ export default {
   async finishOrder(order: Orders): Promise<void> {
     try {
       validateOrders(order);
-      // console.log(order);
       await fireBaseData.fireStore.collection("orders").doc().set(order);
     } catch (error) {
       console.error("Error placing the order:", error);
@@ -33,12 +32,22 @@ export default {
         const order = new Orders(status, items, createdAt, clientId);
         orders.push(order);
       });
-      console.log(orders);
       
       return orders;
     } catch (error) {
       console.error('Error fetching order: ' + error);
       return [];
     }
-  }
+  },
+  async updateOrderStatus(order: Orders) {
+    try {
+      validateOrders(order);
+
+      await fireBaseData.fireStore.collection("orders").doc(order.clientId).update({
+        status: order.status,
+      });
+    } catch (error) {
+      console.error("Error updating the order status:", error);
+    }
+  },
 };

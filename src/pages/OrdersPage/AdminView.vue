@@ -10,7 +10,7 @@
         </div>
         <ul class="item-list">
           <span>Products:</span>
-          <li v-for="item in order.items" :key="item.id">{{ item.name }}</li>
+          <li v-for="item in order.items" :key="item.id">{{ item.name }} (x{{ item.count }})</li>
         </ul>
         <div class="order-status">
           <div>Status: <span :class="statusColor(order.status)">{{ order.status }}</span></div>

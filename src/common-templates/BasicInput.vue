@@ -11,7 +11,7 @@ const props = defineProps({
   label: String,
 });
 
-const { value, errorMessage } = useField(() => props.name);
+const { value, errorMessage } = useField(() => props.name as string);
 </script>
 
 <style lang="scss" scoped>

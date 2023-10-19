@@ -7,9 +7,6 @@ import { createRouter, createWebHistory } from 'vue-router'
 import { routes } from "@/router"
 import userServices from "@/services/userServices/userServices";
 
-
-
-
 setActivePinia(createPinia())
 
 jest.mock('@/services/userServices/userServices', () => {
@@ -29,6 +26,11 @@ jest.mock('firebase/app', () => {
 
 
 jest.mock("@/common-templates/ButtonComponent.vue");
+
+jest.mock('vue3-toastify', () => ({
+    toast: jest.fn
+}))
+
 
 
 const router = createRouter({

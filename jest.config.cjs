@@ -13,6 +13,7 @@ module.exports = {
   moduleNameMapper: {
     "^@/(.*)$": "<rootDir>/src/$1",
     "firebase": "firebase/compat/app",
+    '^vue3-toastify$': 'vue3-toastify'
   },
   coveragePathIgnorePatterns: ["/node_modules/", "/tests/"],
   coverageReporters: ["text", "json-summary"],

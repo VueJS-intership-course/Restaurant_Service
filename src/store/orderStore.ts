@@ -1,11 +1,11 @@
 import { defineStore } from "pinia";
-import { Menu } from "@/services/classes";
+import { Menu, Orders } from "@/services/classes";
 import orderServices from "@/services/orderServices/orderServices";
 
 export const useCartStore = defineStore("orders", {
   state: () => ({
     cartItems: [] as Menu[],
-    orderItems: [],
+    orderItems: [] as Orders[]
   }),
   getters: {
     uniqueOrders: (state) => {
@@ -19,8 +19,6 @@ export const useCartStore = defineStore("orders", {
         return acc;
       }, new Map());
 
-      console.log(Array.from(groupedOrders.values()));
-
       return Array.from(groupedOrders.values()).sort((a, b) => a.name.localeCompare(b.name));
     },
   },
@@ -31,15 +29,14 @@ export const useCartStore = defineStore("orders", {
     },
     removeFromCart(index: number) {
       this.cartItems.splice(index, 1);
-
       this.saveOrderToLocalStorage();
     },
     clearCart() {
       this.cartItems = [];
       localStorage.removeItem("orderData");
     },
-    handleFinishOrder(order: any) {
-      orderServices.finishOrder(order);
+    async handleFinishOrder(order: any) {
+      await orderServices.finishOrder(order);
       this.cartItems = [];
       localStorage.removeItem("orderData");
     },
@@ -52,11 +49,21 @@ export const useCartStore = defineStore("orders", {
     saveOrderToLocalStorage() {
       localStorage.setItem("orderData", JSON.stringify(this.cartItems));
     },
-    loadClientOrderFromLocalStorage() {
-      const clientOrder = localStorage.getItem("orderData");
+    async loadClientOrder() {
+      const clientOrder = await orderServices.getOrder();
+      console.log(clientOrder);
+      
       if (clientOrder) {
-        this.orderItems = JSON.parse(clientOrder);
+        this.orderItems = clientOrder;
       }
     },
+    async confirmOrder(order: Orders) {
+      order.status = "confirmed";
+      await orderServices.updateOrderStatus(order);
+    },
+    async deliverOrder(order: Orders) {
+      order.status = "delivered";
+      await orderServices.updateOrderStatus(order);
+    }
   },
 });

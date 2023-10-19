@@ -19,12 +19,16 @@ export const useCartStore = defineStore("orders", {
         return acc;
       }, new Map());
 
+      console.log(Array.from(groupedOrders.values()).sort((a, b) => a.name.localeCompare(b.name)));
+      
       return Array.from(groupedOrders.values()).sort((a, b) => a.name.localeCompare(b.name));
     },
   },
   actions: {
     addToCart(dish: Menu) {
       this.cartItems.push(dish);
+      console.log(dish);
+      
       this.saveOrderToLocalStorage();
     },
     removeFromCart(index: number) {

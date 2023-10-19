@@ -4,13 +4,13 @@ import 'firebase/compat/auth';
 
 
 const firebaseConfig = {
-  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
-  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
-  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
-  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGE_SENDER_ID,
-  appId: import.meta.env.VITE_FIREBASE_APP_ID,
-  measurementId: import.meta.env.VITE_FIREBASE_MEASURMENT_ID
+  apiKey: "AIzaSyBsYhazj1y-sKeng24krpe45EwI9UR1PtY",
+  authDomain: "restaurant-project-dec9e.firebaseapp.com",
+  projectId: "restaurant-project-dec9e",
+  storageBucket: "restaurant-project-dec9e.appspot.com",
+  messagingSenderId: "522703657584",
+  appId: "1:522703657584:web:176a77cf505ebcfc2972b5",
+  measurementId: "G-FK413PQTT5"
 };
 
 firebase.initializeApp(firebaseConfig);

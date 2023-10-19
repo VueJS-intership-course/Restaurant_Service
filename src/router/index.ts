@@ -9,7 +9,7 @@ import { usersStore } from "@/store/usersStore";
 import RegisterForm from "@/pages/AdminPanelPage/RegisterForm.vue";
 import UsersList from "@/pages/AdminPanelPage/UsersList.vue";
 
-const routes = [
+export const routes = [
   {
     path: "/",
     name: "entry",

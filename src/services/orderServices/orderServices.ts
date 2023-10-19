@@ -44,7 +44,7 @@ export default {
       .collection("orders")
       .doc(order.orderId)
       .get();
-      
+
     try {
       await doc.ref.update({
         status: order.status
@@ -53,28 +53,4 @@ export default {
       console.error("Error editing item: ", error);
     }
   },
-  // async updateOrderStatus(order: Orders) {
-  //   try {
-  //     validateOrders(order);
-
-  //     const orderUid = fireBaseData.fireStore.collection("orders").doc().id;
-  //     console.log(orderUid);
-      
-  
-  //     const orderDoc = fireBaseData.fireStore.collection("orders").doc(orderUid).get();
-  //     console.log(orderDoc);
-      
-  //     // const orderDoc = await orderRef.get();
-  
-  //     if (orderDoc) {
-  //       await orderDoc.update({
-  //         status: order.status,
-  //       });
-  //     } else {
-  //       throw new Error(`Order with clientId ${order.clientId} does not exist.`);
-  //     }
-  //   } catch (error) {
-  //     console.error("Error updating the order status:", error);
-  //   }
-  // }
 };

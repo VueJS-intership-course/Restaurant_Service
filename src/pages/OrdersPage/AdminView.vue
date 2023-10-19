@@ -6,17 +6,26 @@
       <div class="order-details">
         <div class="order-info">
           <div class="client">Client: {{ order.clientId }}</div>
-          <div class="created-at">Created at: {{ formatTimestamp(order.createdAt) }}</div>
+          <div v-if="order.createdAt !== undefined" class="created-at">
+            Created at: {{ formatTimestamp(order.createdAt) }}
+          </div>
         </div>
         <ul class="item-list">
           <span>Products:</span>
-          <li v-for="item in order.items" :key="item.id">{{ item.name }} (x{{ item.count }})</li>
+          <li v-for="item in order.items" :key="item.id">
+            {{ item.name }} (x{{ itemCounter(item) }})
+          </li>
         </ul>
         <div class="order-status">
-          <div>Status: <span :class="statusColor(order.status)">{{ order.status }}</span></div>
           <div>
-            <ButtonComponent @click="handleConfirmOrder(order)" style="background-color: #266488">Confirm</ButtonComponent>
-            <ButtonComponent @click="handleDeliveredOrder(order)" style="background-color: green">Delivered</ButtonComponent>
+            Status:
+            <span :class="statusColor(order.status)">{{ order.status }}</span>
+          </div>
+          <div>
+            <ButtonComponent @click="handleConfirmOrder(order)" style="background-color: #266488">Confirm
+            </ButtonComponent>
+            <ButtonComponent @click="handleDeliveredOrder(order)" style="background-color: green">Delivered
+            </ButtonComponent>
           </div>
         </div>
       </div>
@@ -34,14 +43,19 @@ cartStore.loadClientOrder();
 
 const handleConfirmOrder = (order: any) => {
   cartStore.confirmOrder(order);
-}
+};
+
+const itemCounter = (item: any) => {
+  return item.count;
+};
 
 const handleDeliveredOrder = (order: any) => {
   cartStore.deliverOrder(order);
-}
+};
 
 const formatTimestamp = (timestamp: any): string => {
-  const date = new Date(timestamp.seconds * 1000);
+  const time = timestamp.seconds;
+  const date = new Date(time * 1000);
   return date.toLocaleString();
 };
 
@@ -53,7 +67,7 @@ const statusColor = (status: any) => {
   } else if (status === 'delivered') {
     return 'status-delivered';
   }
-}
+};
 
 const ordersList = computed(() => cartStore.orderItems);
 const isEmptyOrders = computed(() => ordersList.value.length === 0);
@@ -66,55 +80,61 @@ const isEmptyOrders = computed(() => ordersList.value.length === 0);
   display: flex;
   flex-direction: column;
   align-items: center;
+
   .title {
     font-size: 24px;
     margin-bottom: 20px;
     color: #333;
   }
-  
+
   .empty-orders {
     font-size: 20px;
     color: #555;
   }
+
   .order-card {
     width: 100%;
     background-color: #f7cf64;
     margin: 10px 0;
     border-radius: 10px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  
+
     .order-details {
       display: flex;
       justify-content: space-between;
       align-items: center;
       padding: 15px;
-  
+
       .order-info {
         .client {
           font-weight: bold;
+          margin-bottom: 10px;
         }
-  
+
         .created-at {
+          margin-top: 10px;
           color: #777;
         }
       }
-  
+
       .item-list {
         list-style: none;
         margin: 0;
         padding: 0;
+
         span {
           font-weight: bold;
         }
+
         li {
-          margin-left: 20px;
           color: #333;
         }
       }
-  
+
       .order-status {
         display: flex;
         flex-direction: column;
+
         .status-pending {
           color: red;
           font-weight: bold;

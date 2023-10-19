@@ -20,6 +20,7 @@
 import { computed } from 'vue';
 import { useCartStore } from '../../store/orderStore.ts';
 import { usersStore } from '@/store/usersStore.ts';
+import fireBaseData from "@/services/firebaseConfig";
 
 const cartStore = useCartStore();
 const userStore = usersStore();
@@ -47,7 +48,8 @@ const makeOrder = () => {
     status: 'pending',
     items: cartStore.uniqueOrders,
     createdAt: new Date(),
-    clientId: user?.phone
+    clientId: user?.phone,
+    orderId: fireBaseData.fireStore.collection("orders").doc().id
   };
 
   localStorage.removeItem('user');

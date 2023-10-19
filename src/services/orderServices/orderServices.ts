@@ -15,7 +15,7 @@ export default {
   async finishOrder(order: Orders): Promise<void> {
     try {
       validateOrders(order);
-      await fireBaseData.fireStore.collection("orders").doc().set(order);
+      await fireBaseData.fireStore.collection("orders").doc(order.orderId).set(order);
     } catch (error) {
       console.error("Error placing the order:", error);
     }
@@ -28,8 +28,8 @@ export default {
       const orders: Orders[] = [];
 
       querySnapshot.forEach((doc) => {
-        const {status, items, createdAt, clientId} = doc.data();
-        const order = new Orders(status, items, createdAt, clientId);
+        const {status, items, createdAt, clientId, orderId} = doc.data();
+        const order = new Orders(status, items, createdAt, clientId, orderId);
         orders.push(order);
       });
       
@@ -40,14 +40,41 @@ export default {
     }
   },
   async updateOrderStatus(order: Orders) {
+    const doc = await fireBaseData.fireStore
+      .collection("orders")
+      .doc(order.orderId)
+      .get();
+      
     try {
-      validateOrders(order);
-
-      await fireBaseData.fireStore.collection("orders").doc(order.clientId).update({
-        status: order.status,
+      await doc.ref.update({
+        status: order.status
       });
     } catch (error) {
-      console.error("Error updating the order status:", error);
+      console.error("Error editing item: ", error);
     }
   },
+  // async updateOrderStatus(order: Orders) {
+  //   try {
+  //     validateOrders(order);
+
+  //     const orderUid = fireBaseData.fireStore.collection("orders").doc().id;
+  //     console.log(orderUid);
+      
+  
+  //     const orderDoc = fireBaseData.fireStore.collection("orders").doc(orderUid).get();
+  //     console.log(orderDoc);
+      
+  //     // const orderDoc = await orderRef.get();
+  
+  //     if (orderDoc) {
+  //       await orderDoc.update({
+  //         status: order.status,
+  //       });
+  //     } else {
+  //       throw new Error(`Order with clientId ${order.clientId} does not exist.`);
+  //     }
+  //   } catch (error) {
+  //     console.error("Error updating the order status:", error);
+  //   }
+  // }
 };

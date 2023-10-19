@@ -15,7 +15,8 @@ export class Orders {
         public status: 'pending' | 'delivered' | 'confirmed',
         public items: Menu[],
         public createdAt: Date,
-        public clientId?: string
+        public clientId?: string,
+        public orderId?: string
     ) { }
 }
 

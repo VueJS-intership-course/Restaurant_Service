@@ -24,7 +24,8 @@
       </li>
       <li>
         <RouterLink :to="'/orders'" class="navbar-link">
-          <span>Cart</span>
+          <span v-if="isAdmin">Orders</span>
+          <span v-if="!isAdmin">Cart</span>
         </RouterLink>
       </li>
       <li>
@@ -80,6 +81,7 @@ const store = usersStore();
 */
 
 const isLoggedIn = computed(() => store.currentUser !== null);
+const isAdmin = computed(() => store.currentUser);
 
 store.getClientDataFromlocal()
 

@@ -2,7 +2,7 @@
   <div v-if="isAdmin" class="cart-page">
     <AdminView />
   </div>
-  <div v-else class="cart-page">
+  <div v-if="!isAdmin" class="cart-page">
     <CartComponent />
     <TotalComponent class="total" />
   </div>
@@ -26,10 +26,7 @@ if (orderData) {
   cartStore.loadOrderFromLocalStorage();
 }
 
-const clientOrder = localStorage.getItem('orderData');
-if (clientOrder) {
-  cartStore.loadClientOrderFromLocalStorage();
-}
+cartStore.loadClientOrder();
 </script>
 
 <style scoped lang="scss">

@@ -18,7 +18,7 @@
         <span>{{ store.currentUser.email }}</span>
       </li>
       <li v-if="!store.client?.name">
-        <RouterLink :to="'/control-panel'" class="navbar-link">
+        <RouterLink :to="'/control-panel'" class="navbar-link" id="admin-panel">
           <span>Admin Panel</span>
         </RouterLink>
       </li>
@@ -54,7 +54,6 @@ import { computed } from "vue";
 import { usersStore } from "@/store/usersStore";
 import { useRouter } from "vue-router";
 
-
 /*
     router
 */
@@ -66,7 +65,7 @@ const router = useRouter();
 const logout = async () => {
   await userServices.logout();
   store.clearClient()
-  router.push({ path: "/" });
+  router.push({ name: "entry" });
 };
 
 /*

@@ -4,6 +4,7 @@
     <p>{{ product.description }}</p>
     <p>Category: {{ product.category }}</p>
     <p class="price">Price: ${{ product.price }}</p>
+    <img :src="product.imgSrc">
 
     <ButtonComponent @click="addToCartClicked(product)" v-if="!store.isAdmin"
       >Add to Cart</ButtonComponent

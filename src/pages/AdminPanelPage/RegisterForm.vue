@@ -3,31 +3,23 @@
     <div>
       <h3>Register</h3>
     </div>
-    <Form @submit="register" :validation-schema="schema">
+    <form @submit="onSubmit">
       <div>
-        <label>Username:</label>
-        <Field type="text" name="username" />
-        <ErrorMessage name="username" />
+        <BasicInput name="username" label="Username" />
       </div>
       <div>
-        <label>Email:</label>
-        <Field type="email" name="email" />
-        <ErrorMessage name="email" />
+        <BasicInput name="email" type="email" label="Email" />
       </div>
       <div>
-        <label>Password:</label>
-        <Field name="password" type="password" />
-        <ErrorMessage name="password" />
+        <BasicInput name="password" type="password" label="Password" />
       </div>
       <div>
-        <label>Repeat Password:</label>
-        <Field name="repeatPassword" type="password" />
-        <ErrorMessage name="repeatPassword" />
+        <BasicInput name="passwordConfirm" type="password" label="Repeat Password" />
       </div>
       <div>
         <ButtonComponent btn-style="default-button-small">Register</ButtonComponent>
       </div>
-    </Form>
+    </form>
   </div>
 </template>
 
@@ -35,37 +27,31 @@
 import ButtonComponent from "@/common-templates/ButtonComponent.vue";
 import { usersStore } from "@/store/usersStore";
 import userServices from "@/services/userServices/userServices";
-
-// import { RuleExpression } from "vee-validate";
-import { Field, Form, ErrorMessage } from "vee-validate";
+import BasicInput from "@/common-templates/BasicInput.vue";
+import { useForm } from "vee-validate";
 import * as yup from "yup";
 
-interface FormInputs {
-  username: string;
-  email: string;
-  password: string;
-  repeatPassword: string;
-}
-
-const schema = yup.object({
-  email: yup.string().email("Enter a valid email!").required("This field is required!"),
-  username: yup
-    .string()
-    .required("This field is required!")
-    .min(4, "Username must be at least 4 symbols!"),
-  password: yup
-    .string()
-    .min(8, "Password must be at least 8 symbols!")
-    .required("This field is required!"),
-  repeatPassword: yup
-    .string()
-    .required("This field is required!")
-    .oneOf([yup.ref("password")], "Passwords does not match!"),
+const { handleSubmit } = useForm({
+  validationSchema: yup.object({
+    email: yup.string().email("Enter a valid email!").required("This field is required!"),
+    username: yup
+      .string()
+      .required("This field is required!")
+      .min(4, "Username must be at least 4 symbols!"),
+    password: yup
+      .string()
+      .min(8, "Password must be at least 8 symbols!")
+      .required("This field is required!"),
+    passwordConfirm: yup
+      .string()
+      .required("This field is required!")
+      .oneOf([yup.ref("password")], "Passwords does not match!"),
+  }),
 });
 
 const store = usersStore();
 
-const register = (values: FormInputs, { resetForm }) => {
+const onSubmit = handleSubmit((values, { resetForm }) => {
   try {
     userServices.signUp(
       {
@@ -81,11 +67,11 @@ const register = (values: FormInputs, { resetForm }) => {
     alert(error);
     // Add toastify
   }
-};
+});
 </script>
 
 <style scoped lang="scss">
-@import "../../styles/variables";
+@import "@/styles/variables";
 
 .wrapper {
   display: flex;
@@ -109,27 +95,7 @@ form {
   }
 }
 
-span {
-  position: absolute;
-  color: red;
-  left: 0%;
-}
-
 h3 {
   color: $yellow;
-}
-
-input {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  min-width: 12rem;
-}
-
-label {
-  font-size: larger;
-  text-align: center;
-  color: white;
-  font-weight: bold;
 }
 </style>

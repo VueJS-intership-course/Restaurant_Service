@@ -139,6 +139,7 @@ const handleRemoveMeal = (mealId: string, meal: string) => {
             cursor: pointer;
             transition: background-color 0.3s;
           }
+
           .remove-button {
             background-color: #dc3545;
             color: white;

@@ -6,7 +6,7 @@
     <p class="price">Price: ${{ product.price }}</p>
     <img :src="product.imgSrc">
 
-    <ButtonComponent @click="addToCartClicked(product)" v-if="!store.isAdmin"
+    <ButtonComponent  @click="addToCartClicked(product)" v-if="!store.isAdmin&&userStore.client"
       >Add to Cart</ButtonComponent
     >
     <ButtonComponent
@@ -30,12 +30,14 @@ import { useCartStore } from "@/store/orderStore.ts";
 import { Menu } from "@/services/classes";
 import showNotification from "@/utils/notifications";
 import ButtonComponent from "@/common-templates/ButtonComponent.vue";
+import { usersStore } from "@/store/usersStore";
 
 
 const { product } = defineProps(["product"]);
 
 const store = useProductStore();
 const cartStore = useCartStore();
+const userStore = usersStore();
 
 const addToCartClicked = (product: Menu) => {
   cartStore.addToCart(product);

@@ -1,9 +1,12 @@
-import OrdersPageVue from '@/pages/OrdersPage/OrdersPage.vue';
-import { mount, shallowMount } from '@vue/test-utils';
-import { useCartStore } from '@/store/orderStore.ts';
-import { createTestingPinia } from '@pinia/testing';
+import OrdersPageVue from "@/pages/OrdersPage/OrdersPage.vue";
+import { mount, shallowMount } from "@vue/test-utils";
+import { useCartStore } from "@/store/orderStore.ts";
+import { createTestingPinia } from "@pinia/testing";
+import { createPinia, setActivePinia } from "pinia";
 
-jest.mock('firebase/app', () => {
+setActivePinia(createPinia());
+
+jest.mock("firebase/app", () => {
   return {
     initializeApp: jest.fn(),
     auth: jest.fn(),
@@ -11,7 +14,7 @@ jest.mock('firebase/app', () => {
   };
 });
 
-const wrapper = mount(OrdersPageVue, {
+const wrapper = shallowMount(OrdersPageVue, {
   global: {
     plugins: [
       createTestingPinia({
@@ -27,17 +30,17 @@ const cartStore = useCartStore();
 cartStore.$patch({
   cartItems: [
     {
-      category: 'drinks',
-      description: 'Sweat rum',
-      id: '24',
-      name: 'Rum',
-      price: 6
+      category: "drinks",
+      description: "Sweat rum",
+      id: "24",
+      name: "Rum",
+      price: 6,
     },
   ],
 });
 
-describe('OrdersPageVue', () => {
-  it('renders the OrdersPageVue component correctly', () => {
+describe("OrdersPageVue", () => {
+  it("renders the OrdersPageVue component correctly", () => {
     expect(wrapper.exists()).toBe(true);
   });
 });

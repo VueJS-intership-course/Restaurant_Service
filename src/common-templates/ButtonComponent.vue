@@ -14,23 +14,38 @@ defineProps({
 </script>
 
 <style lang="scss" scoped>
-@import "../styles/_variables.scss";
+@import "@/styles/_variables.scss";
 .default-button {
   background-color: $blue;
   color: white;
   border: none;
   padding: 10px 20px;
+  margin: 5px;
   border-radius: 8px;
   cursor: pointer;
 }
 
+.default-button-db {
+  background-color: $dark-blue;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  margin: 5px;
+  border-radius: 8px;
+  cursor: pointer;
+}
 .default-button-small {
   background-color: $yellow;
   color: white;
   border: none;
   padding: 10px 20px;
+  margin: 5px;
   border-radius: 8px;
   cursor: pointer;
+
+  &:hover {
+    background-color: $dark-yellow;
+  }
 }
 
 .default-button-medium {
@@ -38,15 +53,17 @@ defineProps({
   color: white;
   border: none;
   padding: 15px 40px;
+  margin: 5px;
   border-radius: 8px;
   cursor: pointer;
 }
 
-.default-button-large {
+.default-button-green {
   background-color: $green;
   color: white;
   border: none;
-  padding: 20px 60px;
+  padding: 10px 20px;
+  margin: 5px;
   border-radius: 8px;
   cursor: pointer;
 }
@@ -55,6 +72,7 @@ defineProps({
   color: white;
   border: none;
   padding: 10px 20px;
+  margin: 5px;
   border-radius: 8px;
   cursor: pointer;
 }

@@ -6,14 +6,31 @@
       </RouterLink>
     </div>
     <ul>
+      <li v-if="store.client?.name">
+        <h2>Hello, {{ store.client.name}}</h2>
+      </li>
       <li>
-        <RouterLink :to="'/login'" class="navbar-link">
+        <RouterLink v-if="!isLoggedIn && !store.client?.name" :to="'/login'" class="navbar-link">
           <span>Login</span>
+        </RouterLink>
+      </li>
+      <li v-if="store.currentUser">
+        <span>{{ store.currentUser.email }}</span>
+      </li>
+      <li v-if="!store.client?.name">
+        <RouterLink :to="'/control-panel'" class="navbar-link" id="admin-panel">
+          <span>Admin Panel</span>
         </RouterLink>
       </li>
       <li>
         <RouterLink :to="'/orders'" class="navbar-link">
-          <span>Orders</span>
+          <span v-if="isAdmin">Orders</span>
+          <span v-if="!isAdmin">Cart</span>
+        </RouterLink>
+      </li>
+      <li>
+        <RouterLink :to="'/menu'" class="navbar-link">
+          <span>Menu</span>
         </RouterLink>
       </li>
       <li>
@@ -21,12 +38,57 @@
           <span>About Us</span>
         </RouterLink>
       </li>
+      <li>
+        <ButtonComponent v-if="isLoggedIn || store.client?.name" id="logout" @click="logout" class="default-button-small">Logout</ButtonComponent>
+      </li>
     </ul>
   </nav>
 </template>
 
+<script setup lang="ts">
+/*
+   imports
+*/
+import userServices from "@/services/userServices/userServices";
+import ButtonComponent from "@/common-templates/ButtonComponent.vue";
+import { computed } from "vue";
+import { usersStore } from "@/store/usersStore";
+import { useRouter } from "vue-router";
+
+/*
+    router
+*/
+const router = useRouter();
+
+/*
+   logout
+*/
+const logout = async () => {
+  await userServices.logout();
+  store.clearClient()
+  router.push({ name: "entry" });
+};
+
+/*
+   store
+*/
+
+const store = usersStore();
+
+/*
+   Change in authentication
+*/
+
+const isLoggedIn = computed(() => store.currentUser !== null);
+const isAdmin = computed(() => store.currentUser);
+
+store.getClientDataFromlocal()
+
+</script>
+
 <style scoped lang="scss">
-@import '../styles/_variables.scss';
+@import "../styles/_variables.scss";
+
 nav {
   display: flex;
   background-color: $green;
@@ -49,10 +111,14 @@ nav {
         color: #f7cf64;
 
         :hover {
-          color: #79E59B;
+          color: #79e59b;
         }
       }
     }
+  }
+
+  .active {
+    text-decoration: underline !important;
   }
 
   .logo {

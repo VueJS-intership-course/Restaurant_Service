@@ -25,7 +25,7 @@ jest.mock('firebase/app', () => {
 })
 
 
-jest.mock("@/common-templates/ButtonComponent.vue");
+// jest.mock("@/common-templates/ButtonComponent.vue");
 
 jest.mock('vue3-toastify', () => ({
     toast: jest.fn
@@ -37,7 +37,6 @@ const router = createRouter({
     history: createWebHistory(),
     routes: routes,
 })
-
 
 
 const wrapper = shallowMount(HeaderComponentVue, {
